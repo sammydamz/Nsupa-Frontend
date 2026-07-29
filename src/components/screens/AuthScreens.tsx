@@ -32,7 +32,8 @@ export const AuthScreens: React.FC<AuthScreensProps> = ({
           </Button>
 
           <Button 
-            className="w-full h-14 flex items-center justify-start gap-4 rounded-2xl px-6 bg-slate-800 text-white hover:bg-slate-700" 
+            className="w-full h-14 flex items-center justify-start gap-4 rounded-2xl px-6" 
+            variant="secondary"
             onClick={() => onAuthSuccess('driver')}
           >
             <Truck className="w-5 h-5" />
@@ -40,7 +41,8 @@ export const AuthScreens: React.FC<AuthScreensProps> = ({
           </Button>
 
           <Button 
-            className="w-full h-14 flex items-center justify-start gap-4 rounded-2xl px-6 bg-amber-600 text-white hover:bg-amber-700" 
+            className="w-full h-14 flex items-center justify-start gap-4 rounded-2xl px-6" 
+            variant="outline"
             onClick={() => onAuthSuccess('depot')}
           >
             <Building2 className="w-5 h-5" />
@@ -48,7 +50,8 @@ export const AuthScreens: React.FC<AuthScreensProps> = ({
           </Button>
 
           <Button 
-            className="w-full h-14 flex items-center justify-start gap-4 rounded-2xl px-6 bg-rose-600 text-white hover:bg-rose-700" 
+            className="w-full h-14 flex items-center justify-start gap-4 rounded-2xl px-6" 
+            variant="ghost"
             onClick={() => onAuthSuccess('admin')}
           >
             <Shield className="w-5 h-5" />
