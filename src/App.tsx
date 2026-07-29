@@ -25,7 +25,8 @@ import { AdminDashboardScreen } from './components/screens/AdminDashboardScreen'
 export default function App() {
   // App Role State
   const [role, setRole] = useState<UserRole>('customer');
-  const [screen, setScreen] = useState<ScreenId>('home');
+  const [screen, setScreen] = useState<ScreenId>('login');
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [isMobileView, setIsMobileView] = useState<boolean>(false);
   const [isAIPredictorOpen, setIsAIPredictorOpen] = useState<boolean>(false);
 
@@ -50,13 +51,19 @@ export default function App() {
 
   const unreadNotifCount = notifications.filter((n) => !n.read).length;
 
-  const handleRoleChange = (newRole: UserRole) => {
+  const handleLogin = (newRole: UserRole) => {
     setRole(newRole);
     if (newRole === 'customer') {
       setScreen('home');
     } else {
       setScreen(`${newRole}_dashboard` as ScreenId);
     }
+    setIsAuthenticated(true);
+  };
+
+  const handleLogout = () => {
+    setIsAuthenticated(false);
+    setScreen('login');
   };
 
   const handleOrderPlaced = (newOrder: Order) => {
@@ -122,9 +129,7 @@ export default function App() {
       case 'otp':
         return (
           <AuthScreens
-            initialMode={screen as 'login' | 'signup' | 'otp'}
-            onAuthSuccess={() => setScreen('home')}
-            onNavigate={(s) => setScreen(s)}
+            onAuthSuccess={handleLogin}
           />
         );
 
@@ -213,7 +218,7 @@ export default function App() {
             userName={userName}
             userPhone={userPhone}
             userAddress={userAddress}
-            onLogout={() => setScreen('login')}
+            onLogout={handleLogout}
             onNavigate={(s) => setScreen(s)}
           />
         );
@@ -250,16 +255,18 @@ export default function App() {
   return (
     <div className="min-h-screen bg-[#F3FAFF] text-slate-800 font-sans antialiased selection:bg-blue-200">
       {/* Top Universal App Bar */}
-      <Header
-        role={role}
-        onRoleChange={handleRoleChange}
-        currentScreen={screen}
-        onNavigate={(s) => setScreen(s)}
-        unreadCount={unreadNotifCount}
-        isMobileView={isMobileView}
-        onToggleMobileView={() => setIsMobileView(!isMobileView)}
-        onOpenAIPredictor={() => setIsAIPredictorOpen(true)}
-      />
+      {isAuthenticated && (
+        <Header
+          role={role}
+          currentScreen={screen}
+          onNavigate={(s) => setScreen(s)}
+          unreadCount={unreadNotifCount}
+          isMobileView={isMobileView}
+          onToggleMobileView={() => setIsMobileView(!isMobileView)}
+          onOpenAIPredictor={() => setIsAIPredictorOpen(true)}
+          onLogout={handleLogout}
+        />
+      )}
 
       {/* Main Container: Mobile phone mockup vs full layout */}
       <main className={`mx-auto transition-all duration-300 ${isMobileView ? 'max-w-md py-4 px-3' : 'max-w-7xl py-6 px-4 sm:px-6 lg:px-8'}`}>
@@ -269,7 +276,7 @@ export default function App() {
       </main>
 
       {/* Customer Bottom Navigation Bar */}
-      {role === 'customer' && !['splash', 'onboarding', 'login', 'signup', 'otp'].includes(screen) && (
+      {isAuthenticated && role === 'customer' && !['splash', 'onboarding', 'login', 'signup', 'otp'].includes(screen) && (
         <BottomNav
           currentScreen={screen as CustomerScreenId}
           onNavigate={(s) => setScreen(s)}
