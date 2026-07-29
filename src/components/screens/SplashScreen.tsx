@@ -13,7 +13,7 @@ export const SplashScreen: React.FC<SplashScreenProps> = ({ onStart }) => {
       <div className="w-full pt-8 flex flex-col items-center">
         {/* Animated Brand Water Icon */}
         <div className="relative mb-6">
-          <div className="w-24 h-24 rounded-3xl bg-gradient-to-tr from-sky-600 via-sky-500 to-sky-400 flex items-center justify-center text-white shadow-xl animate-pulse">
+          <div className="w-24 h-24 rounded-3xl bg-gradient-to-tr from-sky-600 via-sky-500 to-sky-400 flex items-center justify-center text-white shadow-lg animate-pulse">
             <Droplet className="w-12 h-12 fill-white" />
           </div>
           <div className="absolute -bottom-2 -right-2 bg-emerald-500 text-white p-2 rounded-2xl shadow-md border-2 border-white">
@@ -51,7 +51,7 @@ export const SplashScreen: React.FC<SplashScreenProps> = ({ onStart }) => {
       <div className="w-full max-w-xs space-y-3 pb-4">
         <Button
           onClick={onStart}
-          className="w-full h-12 bg-gradient-to-r from-sky-600 to-sky-500 hover:from-sky-500 hover:to-sky-600 text-white font-bold rounded-2xl text-sm flex items-center justify-center gap-2 shadow-md transition-all"
+          className="w-full sm:w-auto h-12 bg-gradient-to-r from-sky-600 to-sky-500 hover:from-sky-500 hover:to-sky-600 text-white font-bold rounded-2xl text-sm flex items-center justify-center gap-2 shadow-md transition-all"
         >
           <span>Get Started</span>
           <ArrowRight className="w-4 h-4" />

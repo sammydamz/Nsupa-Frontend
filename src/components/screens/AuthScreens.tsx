@@ -13,7 +13,7 @@ export const AuthScreens: React.FC<AuthScreensProps> = ({
 }) => {
   return (
     <div className="absolute inset-0 flex flex-col justify-center items-center p-6 bg-[#277df1]">
-      <Card className="w-full max-w-sm shadow-xl bg-white/10 backdrop-blur-md border-white/20 text-white">
+      <Card className="w-full max-w-sm shadow-lg bg-white/10 backdrop-blur-md border-white/20 text-white">
         <CardHeader className="text-center space-y-2">
           <div className="mx-auto flex justify-center mb-2">
             <img src="/nsupa_blue.svg" alt="Nsupa Logo" className="w-20 h-20 drop-shadow-md" />

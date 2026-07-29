@@ -31,7 +31,7 @@ export const QRScannerScreen: React.FC<QRScannerScreenProps> = ({
       <Card className="rounded-3xl border-blue-50 shadow-sm">
         <CardContent className="p-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-blue-50 text-[#0288D1] rounded-2xl flex items-center justify-center font-bold">
+            <div className="w-10 h-10 bg-blue-50 text-primary rounded-2xl flex items-center justify-center font-bold">
               <QrCode className="w-5 h-5" />
             </div>
             <div>
@@ -44,7 +44,7 @@ export const QRScannerScreen: React.FC<QRScannerScreenProps> = ({
             variant="outline"
             size="sm"
             onClick={() => setIsScanning(!isScanning)}
-            className="bg-blue-50 text-[#0288D1] hover:bg-blue-100 hover:text-[#0288D1] text-xs font-bold rounded-xl border-blue-100"
+            className="bg-blue-50 text-primary hover:bg-blue-100 hover:text-primary text-xs font-bold rounded-xl border-blue-100"
           >
             {isScanning ? 'Inspect Log' : 'Camera Mode'}
           </Button>
@@ -102,16 +102,16 @@ export const QRScannerScreen: React.FC<QRScannerScreenProps> = ({
               <CardContent className="p-5 space-y-3">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <div className="p-2.5 bg-[#0288D1] text-white rounded-2xl">
+                    <div className="p-2.5 bg-primary text-white rounded-2xl">
                       <ShieldCheck className="w-6 h-6" />
                     </div>
                     <div>
-                      <span className="text-[10px] font-bold uppercase text-[#0288D1] tracking-wider block">Container QR Asset Verified</span>
+                      <span className="text-[10px] font-bold uppercase text-primary tracking-wider block">Container QR Asset Verified</span>
                       <h2 className="text-base font-extrabold text-slate-900">{scannedBottle.qrCode}</h2>
                     </div>
                   </div>
 
-                  <Badge className="bg-blue-100 hover:bg-blue-100 text-[#0288D1] text-xs font-extrabold rounded-full border-none">
+                  <Badge className="bg-blue-100 hover:bg-blue-100 text-primary text-xs font-extrabold rounded-full border-none">
                     Depot Verified
                   </Badge>
                 </div>
@@ -135,10 +135,10 @@ export const QRScannerScreen: React.FC<QRScannerScreenProps> = ({
               <CardContent className="p-5 space-y-4">
                 <div className="flex items-center justify-between border-b border-slate-100 pb-3">
                   <div className="flex items-center gap-2">
-                    <Factory className="w-5 h-5 text-[#0288D1]" />
+                    <Factory className="w-5 h-5 text-primary" />
                     <h3 className="text-xs font-bold uppercase text-slate-800 tracking-wider">Depot Refill Cycle Counter</h3>
                   </div>
-                  <Badge variant="outline" className="text-sm font-black text-[#0288D1] bg-blue-50 rounded-full border-blue-100">
+                  <Badge variant="outline" className="text-sm font-black text-primary bg-blue-50 rounded-full border-blue-100">
                     {scannedBottle.refillCount} Cycles
                   </Badge>
                 </div>
@@ -195,7 +195,7 @@ export const QRScannerScreen: React.FC<QRScannerScreenProps> = ({
             <Button
               variant="outline"
               onClick={() => setIsScanning(true)}
-              className="w-full h-12 bg-blue-50 text-[#0288D1] hover:bg-blue-100 hover:text-[#0288D1] font-bold rounded-2xl text-xs flex items-center justify-center gap-2 border-blue-100 transition-colors"
+              className="w-full sm:w-auto h-12 bg-blue-50 text-primary hover:bg-blue-100 hover:text-primary font-bold rounded-2xl text-xs flex items-center justify-center gap-2 border-blue-100 transition-colors"
             >
               <QrCode className="w-4 h-4" />
               <span>Scan Another Container QR Code</span>

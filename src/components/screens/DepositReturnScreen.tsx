@@ -30,7 +30,7 @@ export const DepositReturnScreen: React.FC<DepositReturnScreenProps> = ({
       <Card className="rounded-3xl border-blue-50 shadow-sm">
         <CardContent className="p-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-blue-50 text-[#0288D1] rounded-2xl flex items-center justify-center font-bold">
+            <div className="w-10 h-10 bg-blue-50 text-primary rounded-2xl flex items-center justify-center font-bold">
               <RotateCcw className="w-5 h-5" />
             </div>
             <div>
@@ -42,7 +42,7 @@ export const DepositReturnScreen: React.FC<DepositReturnScreenProps> = ({
       </Card>
 
       {/* Visual Flowchart Card - Replicating the exact Diagram */}
-      <Card className="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 rounded-3xl text-white shadow-xl border border-slate-700/60">
+      <Card className="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 rounded-3xl text-white shadow-lg border border-slate-700/60">
         <CardContent className="p-5 space-y-4">
           <div className="flex items-center justify-between border-b border-slate-700 pb-2">
             <div className="flex items-center gap-2">
@@ -149,7 +149,7 @@ export const DepositReturnScreen: React.FC<DepositReturnScreenProps> = ({
                   <Button
                     variant="outline"
                     onClick={() => onNavigate('qr_scanner')}
-                    className="flex-1 h-10 bg-blue-50 text-[#0288D1] font-bold rounded-2xl text-xs flex items-center justify-center gap-1.5 hover:bg-blue-100 hover:text-[#0288D1] border border-blue-100"
+                    className="flex-1 h-10 bg-blue-50 text-primary font-bold rounded-2xl text-xs flex items-center justify-center gap-1.5 hover:bg-blue-100 hover:text-primary border border-blue-100"
                   >
                     <QrCode className="w-4 h-4" />
                     <span>Scan QR Code</span>
@@ -157,7 +157,7 @@ export const DepositReturnScreen: React.FC<DepositReturnScreenProps> = ({
 
                   <Button
                     onClick={() => onNavigate('order')}
-                    className="flex-1 h-10 bg-[#0288D1] hover:bg-[#0277BD] text-white font-bold rounded-2xl text-xs flex items-center justify-center gap-1.5 shadow-sm"
+                    className="flex-1 h-10 bg-primary hover:bg-primary/90 text-white font-bold rounded-2xl text-xs flex items-center justify-center gap-1.5 shadow-sm"
                   >
                     <RefreshCw className="w-4 h-4" />
                     <span>Order Refill & Swap</span>

@@ -31,7 +31,7 @@ export const ContainerRewardsScreen: React.FC<ContainerRewardsScreenProps> = ({
       <Card className="rounded-3xl border-blue-50 shadow-sm">
         <CardContent className="p-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-blue-50 text-[#0288D1] rounded-2xl flex items-center justify-center font-bold">
+            <div className="w-10 h-10 bg-blue-50 text-primary rounded-2xl flex items-center justify-center font-bold">
               <Award className="w-5 h-5" />
             </div>
             <div>
@@ -39,14 +39,14 @@ export const ContainerRewardsScreen: React.FC<ContainerRewardsScreenProps> = ({
               <p className="text-xs text-slate-500">Track containers & earn every 10th swap free</p>
             </div>
           </div>
-          <Badge className="bg-blue-100 text-[#0288D1] hover:bg-blue-100 font-extrabold px-2.5 py-1 rounded-full uppercase">
+          <Badge className="bg-blue-100 text-primary hover:bg-blue-100 font-extrabold px-2.5 py-1 rounded-full uppercase">
             No Deposits
           </Badge>
         </CardContent>
       </Card>
 
       {/* Prominent Milestone Reward Card */}
-      <Card className="bg-gradient-to-br from-[#0288D1] via-[#0277BD] to-[#01579B] rounded-3xl text-white shadow-xl shadow-blue-200/50 border-none relative overflow-hidden">
+      <Card className="bg-gradient-to-br from-primary via-primary/90 to-primary/70 rounded-3xl text-white shadow-lg shadow-primary/10 border-none relative overflow-hidden">
         <CardContent className="p-6 space-y-5">
           {/* Background Decorative Graphic */}
           <div className="absolute right-[-20px] top-[-20px] opacity-10 pointer-events-none">
@@ -115,7 +115,7 @@ export const ContainerRewardsScreen: React.FC<ContainerRewardsScreenProps> = ({
               variant="secondary"
               size="sm"
               onClick={() => onNavigate('order')}
-              className="bg-white text-[#0288D1] hover:text-[#0288D1] font-extrabold rounded-xl text-xs hover:bg-blue-50 transition-colors shrink-0 shadow-sm"
+              className="bg-white text-primary hover:text-primary font-extrabold rounded-xl text-xs hover:bg-blue-50 transition-colors shrink-0 shadow-sm"
             >
               Swap Water Now
             </Button>
@@ -127,7 +127,7 @@ export const ContainerRewardsScreen: React.FC<ContainerRewardsScreenProps> = ({
       <Card className="bg-[#F3FAFF] border-blue-100 rounded-3xl shadow-none">
         <CardContent className="p-4 space-y-1 text-slate-700">
           <div className="flex items-center gap-2">
-            <Shield className="w-4 h-4 text-[#0288D1]" />
+            <Shield className="w-4 h-4 text-primary" />
             <span className="text-xs font-extrabold text-slate-900">How Container Swapping Works</span>
           </div>
           <p className="text-[11px] text-slate-600 leading-relaxed">
@@ -140,7 +140,7 @@ export const ContainerRewardsScreen: React.FC<ContainerRewardsScreenProps> = ({
       <div className="space-y-3">
         <div className="flex items-center justify-between">
           <h2 className="text-xs font-bold uppercase text-slate-800 tracking-wider">Containers Currently Held ({bottles.length})</h2>
-          <span className="text-[11px] text-[#0288D1] font-bold">100% Owned by You</span>
+          <span className="text-[11px] text-primary font-bold">100% Owned by You</span>
         </div>
 
         <div className="space-y-3">
@@ -178,7 +178,7 @@ export const ContainerRewardsScreen: React.FC<ContainerRewardsScreenProps> = ({
                   <Button
                     variant="outline"
                     onClick={() => onNavigate('qr_scanner')}
-                    className="flex-1 h-10 bg-blue-50 text-[#0288D1] font-bold rounded-2xl text-xs flex items-center justify-center gap-1.5 hover:bg-blue-100 hover:text-[#0288D1] border border-blue-100"
+                    className="flex-1 h-10 bg-blue-50 text-primary font-bold rounded-2xl text-xs flex items-center justify-center gap-1.5 hover:bg-blue-100 hover:text-primary border border-blue-100"
                   >
                     <QrCode className="w-4 h-4" />
                     <span>Scan QR Code</span>
@@ -186,7 +186,7 @@ export const ContainerRewardsScreen: React.FC<ContainerRewardsScreenProps> = ({
 
                   <Button
                     onClick={() => onNavigate('order')}
-                    className="flex-1 h-10 bg-[#0288D1] hover:bg-[#0277BD] text-white font-bold rounded-2xl text-xs flex items-center justify-center gap-1.5 shadow-sm"
+                    className="flex-1 h-10 bg-primary hover:bg-primary/90 text-white font-bold rounded-2xl text-xs flex items-center justify-center gap-1.5 shadow-sm"
                   >
                     <RefreshCw className="w-4 h-4" />
                     <span>Order Refill Swap</span>

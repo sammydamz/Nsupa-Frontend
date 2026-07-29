@@ -98,7 +98,7 @@ export const DeliveryTrackingScreen: React.FC<DeliveryTrackingScreenProps> = ({ 
           <g transform="translate(180, 120)">
             <circle cx="0" cy="0" r="14" fill="#38BDF8" />
             <circle cx="0" cy="0" r="20" fill="#38BDF8" opacity="0.3" className="animate-ping" />
-            <text x="0" y="4" textAnchor="middle" fill="#0F172A" fontSize="11" fontWeight="bold">🛵</text>
+            <text x="0" y="4" textAnchor="middle" fill="#0F172A" fontSize="11" fontWeight="bold">R</text>
           </g>
         </svg>
 
@@ -113,7 +113,7 @@ export const DeliveryTrackingScreen: React.FC<DeliveryTrackingScreenProps> = ({ 
 
         {/* Map Legend Badge */}
         <div className="absolute bottom-3 right-3 bg-slate-900/90 backdrop-blur-sm px-3 py-1 rounded-xl text-[10px] text-slate-300 font-semibold border border-slate-700">
-          📍 Accra Delivery Network
+          <span className="flex items-center gap-1"><MapPin className="w-3 h-3" /> Accra Delivery Network</span>
         </div>
       </div>
 
@@ -246,7 +246,7 @@ export const DeliveryTrackingScreen: React.FC<DeliveryTrackingScreenProps> = ({ 
             <Button
               variant="destructive"
               onClick={() => setShowCallModal(false)}
-              className="w-full h-12 bg-red-600 hover:bg-red-700 text-white font-bold rounded-2xl text-xs flex items-center justify-center gap-1"
+              className="w-full sm:w-auto h-12 bg-red-600 hover:bg-red-700 text-white font-bold rounded-2xl text-xs flex items-center justify-center gap-1"
             >
               <X className="w-4 h-4" />
               <span>End Call</span>

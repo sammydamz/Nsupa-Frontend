@@ -4,6 +4,7 @@ import { Bottle } from '../../types';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { DashboardHeader, MetricCard } from '../shared';
 
 interface DepotDashboardScreenProps {
   bottles: Bottle[];
@@ -15,53 +16,34 @@ export const DepotDashboardScreen: React.FC<DepotDashboardScreenProps> = ({ bott
   return (
     <div className="space-y-5 pb-24">
       {/* Title */}
-      <Card className="bg-slate-900 text-white rounded-2xl shadow-md border-none">
-        <CardContent className="p-4 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-sky-500 text-white flex items-center justify-center font-bold">
-              <Building2 className="w-6 h-6" />
-            </div>
-            <div>
-              <h1 className="text-sm font-extrabold leading-tight">Achimota Certified Depot #1</h1>
-              <p className="text-[11px] text-sky-300">Ghana Bottling & Sanitization Station</p>
-            </div>
-          </div>
-
-          <Badge className="bg-emerald-500 hover:bg-emerald-500 text-white border-none text-xs font-bold rounded-full">
-            Depot Active
-          </Badge>
-        </CardContent>
-      </Card>
+      <DashboardHeader 
+        title="Achimota Certified Depot #1"
+        subtitle="Ghana Bottling & Sanitization Station"
+        icon={Building2}
+        badgeText="Depot Active"
+      />
 
       {/* Depot Metrics Grid */}
       <div className="grid grid-cols-4 gap-2 text-center text-xs">
-        <Card className="rounded-2xl border-sky-100 shadow-sm">
-          <CardContent className="p-2.5">
-            <span className="text-[9px] text-slate-400 block">Clean Inventory</span>
-            <span className="text-sm font-black text-slate-900 block mt-0.5">480 Shells</span>
-          </CardContent>
-        </Card>
-
-        <Card className="rounded-2xl border-sky-100 shadow-sm">
-          <CardContent className="p-2.5">
-            <span className="text-[9px] text-slate-400 block">Sanitizing Queue</span>
-            <span className="text-sm font-black text-amber-600 block mt-0.5">34 Shells</span>
-          </CardContent>
-        </Card>
-
-        <Card className="rounded-2xl border-sky-100 shadow-sm">
-          <CardContent className="p-2.5">
-            <span className="text-[9px] text-slate-400 block">Refilling Station</span>
-            <span className="text-sm font-black text-sky-600 block mt-0.5">85 Shells</span>
-          </CardContent>
-        </Card>
-
-        <Card className="rounded-2xl border-sky-100 shadow-sm">
-          <CardContent className="p-2.5">
-            <span className="text-[9px] text-slate-400 block">Dispatched Today</span>
-            <span className="text-sm font-black text-emerald-600 block mt-0.5">210 Units</span>
-          </CardContent>
-        </Card>
+        <MetricCard 
+          title="Clean Inventory"
+          value="480 Shells"
+        />
+        <MetricCard 
+          title="Sanitizing Queue"
+          value="34 Shells"
+          valueClassName="text-amber-600"
+        />
+        <MetricCard 
+          title="Refilling Station"
+          value="85 Shells"
+          valueClassName="text-sky-600"
+        />
+        <MetricCard 
+          title="Dispatched Today"
+          value="210 Units"
+          valueClassName="text-emerald-600"
+        />
       </div>
 
       {/* Depot Stage Tabs */}

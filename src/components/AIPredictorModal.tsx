@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, Sparkles, Droplet, Calendar, ShieldCheck, ArrowRight, Loader2, RefreshCw } from 'lucide-react';
+import { X, Sparkles, Droplet, Calendar, ShieldCheck, ArrowRight, Loader2, RefreshCw, Lightbulb } from 'lucide-react';
 import { AIPredictionResult } from '../types';
 
 interface AIPredictorModalProps {
@@ -45,7 +45,7 @@ export const AIPredictorModal: React.FC<AIPredictorModalProps> = ({ isOpen, onCl
     <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4 overflow-y-auto">
       <div className="bg-white rounded-3xl max-w-lg w-full shadow-2xl overflow-hidden border border-sky-100 animate-in fade-in zoom-in-95 duration-200">
         {/* Modal Header */}
-        <div className="bg-gradient-to-r from-[#0288D1] to-[#4FC3F7] p-5 text-white flex items-center justify-between">
+        <div className="bg-gradient-to-r from-primary to-primary/80 p-5 text-white flex items-center justify-between">
           <div className="flex items-center gap-2.5">
             <div className="p-2 bg-white/20 rounded-xl backdrop-blur-xs">
               <Sparkles className="w-5 h-5 text-blue-100" />
@@ -125,7 +125,7 @@ export const AIPredictorModal: React.FC<AIPredictorModalProps> = ({ isOpen, onCl
             <button
               onClick={handlePredict}
               disabled={loading}
-              className="w-full py-3 bg-[#0288D1] hover:bg-[#0277BD] text-white font-bold rounded-2xl text-xs flex items-center justify-center gap-2 shadow-md shadow-blue-200 transition-all disabled:opacity-70"
+              className="w-full sm:w-auto py-3 bg-primary hover:bg-primary/90 text-white font-bold rounded-2xl text-xs flex items-center justify-center gap-2 shadow-md shadow-primary/10 transition-all disabled:opacity-70"
             >
               {loading ? (
                 <>
@@ -192,7 +192,7 @@ export const AIPredictorModal: React.FC<AIPredictorModalProps> = ({ isOpen, onCl
                 {/* Smart Tip */}
                 {result.smartTip && (
                   <div className="p-2.5 bg-sky-100/70 text-sky-900 text-xs rounded-xl font-medium">
-                    💡 <strong>Smart Tip:</strong> {result.smartTip}
+                    <Lightbulb className="w-3.5 h-3.5 inline mr-1 text-amber-500" /> <strong>Smart Tip:</strong> {result.smartTip}
                   </div>
                 )}
               </div>

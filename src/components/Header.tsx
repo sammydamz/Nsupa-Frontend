@@ -43,12 +43,11 @@ export const Header: React.FC<HeaderProps> = ({
           onClick={() => onNavigate(role === 'customer' ? 'home' : `${role}_dashboard` as ScreenId)}
           className="flex items-center gap-3 group text-left shrink-0 focus:outline-none"
         >
-          <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center text-primary-foreground shadow-sm group-hover:scale-105 transition-transform">
-            <div className="relative">
-              <Droplet className="w-5 h-5 fill-current" />
-              <RefreshCw className="w-3 h-3 text-white absolute -bottom-1 -right-1 stroke-[3]" />
-            </div>
-          </div>
+          <img 
+            src="/nsupa-raw.svg" 
+            alt="Nsupa Logo" 
+            className="w-10 h-10 object-contain group-hover:scale-105 transition-transform drop-shadow-sm" 
+          />
           <div>
             <div className="flex items-center gap-1.5">
               <span className="font-extrabold text-xl tracking-tight leading-none text-foreground">Nsupa</span>

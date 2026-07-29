@@ -130,7 +130,7 @@ export const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ onComplete }
 
         <Button
           onClick={handleNext}
-          className="w-full h-12 bg-gradient-to-r from-sky-600 to-sky-500 hover:from-sky-500 hover:to-sky-600 text-white font-bold rounded-2xl text-xs flex items-center justify-center gap-2 shadow-md"
+          className="w-full sm:w-auto h-12 bg-gradient-to-r from-sky-600 to-sky-500 hover:from-sky-500 hover:to-sky-600 text-white font-bold rounded-2xl text-xs flex items-center justify-center gap-2 shadow-md"
         >
           <span>{currentStep === steps.length - 1 ? 'Get Started with Nsupa' : 'Continue'}</span>
           <ArrowRight className="w-4 h-4" />

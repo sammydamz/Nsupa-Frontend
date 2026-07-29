@@ -125,7 +125,7 @@ export const SubscriptionScreen: React.FC<SubscriptionScreenProps> = ({
             <Button
               variant="secondary"
               onClick={toggleStatus}
-              className="w-full h-10 bg-white text-sky-800 hover:text-sky-800 font-bold rounded-xl text-xs flex items-center justify-center gap-1.5 shadow-sm hover:bg-sky-50 transition-colors"
+              className="w-full sm:w-auto h-10 bg-white text-sky-800 hover:text-sky-800 font-bold rounded-xl text-xs flex items-center justify-center gap-1.5 shadow-sm hover:bg-sky-50 transition-colors"
             >
               {subState.status === 'active' ? (
                 <>

@@ -78,7 +78,7 @@ export const OrderWaterScreen: React.FC<OrderWaterScreenProps> = ({ onOrderPlace
       <Card className="rounded-3xl border-blue-50 shadow-sm">
         <CardContent className="p-5 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-blue-50 text-[#0288D1] rounded-2xl flex items-center justify-center font-bold">
+            <div className="w-10 h-10 bg-blue-50 text-primary rounded-2xl flex items-center justify-center font-bold">
               <ShoppingBag className="w-5 h-5" />
             </div>
             <div>
@@ -86,7 +86,7 @@ export const OrderWaterScreen: React.FC<OrderWaterScreenProps> = ({ onOrderPlace
               <p className="text-xs text-slate-500">Ghana 1:1 Shell Swap Exchange Model</p>
             </div>
           </div>
-          <Badge className="bg-blue-100 text-[#0288D1] hover:bg-blue-100 font-bold uppercase rounded-full">
+          <Badge className="bg-blue-100 text-primary hover:bg-blue-100 font-bold uppercase rounded-full">
             1:1 Swap Model
           </Badge>
         </CardContent>
@@ -104,7 +104,7 @@ export const OrderWaterScreen: React.FC<OrderWaterScreenProps> = ({ onOrderPlace
                 variant="outline"
                 onClick={() => setAccountCategory('individual')}
                 className={`h-auto flex-col items-center justify-center p-3 rounded-2xl transition-all ${
-                  accountCategory === 'individual' ? 'border-[#0288D1] bg-[#F3FAFF] ring-2 ring-blue-200' : 'border-slate-200 bg-white hover:bg-slate-50'
+                  accountCategory === 'individual' ? 'border-primary bg-[#F3FAFF] ring-2 ring-blue-200' : 'border-slate-200 bg-white hover:bg-slate-50'
                 }`}
               >
                 <span className="text-xs font-bold text-slate-900 block">Individual</span>
@@ -116,7 +116,7 @@ export const OrderWaterScreen: React.FC<OrderWaterScreenProps> = ({ onOrderPlace
                 variant="outline"
                 onClick={() => setAccountCategory('office')}
                 className={`h-auto flex-col items-center justify-center p-3 rounded-2xl transition-all ${
-                  accountCategory === 'office' ? 'border-[#0288D1] bg-[#F3FAFF] ring-2 ring-blue-200' : 'border-slate-200 bg-white hover:bg-slate-50'
+                  accountCategory === 'office' ? 'border-primary bg-[#F3FAFF] ring-2 ring-blue-200' : 'border-slate-200 bg-white hover:bg-slate-50'
                 }`}
               >
                 <span className="text-xs font-bold text-slate-900 block">Office</span>
@@ -128,7 +128,7 @@ export const OrderWaterScreen: React.FC<OrderWaterScreenProps> = ({ onOrderPlace
                 variant="outline"
                 onClick={() => setAccountCategory('school')}
                 className={`h-auto flex-col items-center justify-center p-3 rounded-2xl transition-all ${
-                  accountCategory === 'school' ? 'border-[#0288D1] bg-[#F3FAFF] ring-2 ring-blue-200' : 'border-slate-200 bg-white hover:bg-slate-50'
+                  accountCategory === 'school' ? 'border-primary bg-[#F3FAFF] ring-2 ring-blue-200' : 'border-slate-200 bg-white hover:bg-slate-50'
                 }`}
               >
                 <span className="text-xs font-bold text-slate-900 block">School</span>
@@ -146,16 +146,16 @@ export const OrderWaterScreen: React.FC<OrderWaterScreenProps> = ({ onOrderPlace
                 onClick={() => setSelectedType('15L Shell')}
                 className={`h-auto flex-col items-start p-4 rounded-3xl transition-all relative w-full ${
                   selectedType === '15L Shell'
-                    ? 'border-[#0288D1] bg-[#F3FAFF] ring-2 ring-blue-200'
+                    ? 'border-primary bg-[#F3FAFF] ring-2 ring-blue-200'
                     : 'border-slate-200 bg-white hover:border-blue-200'
                 }`}
               >
                 <div className="flex items-center justify-between mb-1 w-full">
                   <span className="text-xs font-extrabold text-slate-900">15L Dispenser Bottle</span>
-                  {selectedType === '15L Shell' && <CheckCircle2 className="w-4 h-4 text-[#0288D1]" />}
+                  {selectedType === '15L Shell' && <CheckCircle2 className="w-4 h-4 text-primary" />}
                 </div>
                 <p className="text-[11px] text-slate-500 font-normal leading-tight mb-2 whitespace-normal text-left">Factory-sealed reusable 15L bottle.</p>
-                <span className="text-xs font-extrabold text-[#0288D1]">GH₵ 15.00 / water content</span>
+                <span className="text-xs font-extrabold text-primary">GH₵ 15.00 / water content</span>
               </Button>
 
               <Button
@@ -163,16 +163,16 @@ export const OrderWaterScreen: React.FC<OrderWaterScreenProps> = ({ onOrderPlace
                 onClick={() => setSelectedType('5L Pouch')}
                 className={`h-auto flex-col items-start p-4 rounded-3xl transition-all relative w-full ${
                   selectedType === '5L Pouch'
-                    ? 'border-[#0288D1] bg-[#F3FAFF] ring-2 ring-blue-200'
+                    ? 'border-primary bg-[#F3FAFF] ring-2 ring-blue-200'
                     : 'border-slate-200 bg-white hover:border-blue-200'
                 }`}
               >
                 <div className="flex items-center justify-between mb-1 w-full">
                   <span className="text-xs font-extrabold text-slate-900">5L Reusable Pouch</span>
-                  {selectedType === '5L Pouch' && <CheckCircle2 className="w-4 h-4 text-[#0288D1]" />}
+                  {selectedType === '5L Pouch' && <CheckCircle2 className="w-4 h-4 text-primary" />}
                 </div>
                 <p className="text-[11px] text-slate-500 font-normal leading-tight mb-2 whitespace-normal text-left">Portable spout pouch for small households.</p>
-                <span className="text-xs font-extrabold text-[#0288D1]">GH₵ 8.00 / water content</span>
+                <span className="text-xs font-extrabold text-primary">GH₵ 8.00 / water content</span>
               </Button>
             </div>
           </div>
@@ -198,7 +198,7 @@ export const OrderWaterScreen: React.FC<OrderWaterScreenProps> = ({ onOrderPlace
                 <Button
                   size="icon"
                   onClick={() => setQuantity(quantity + 1)}
-                  className="w-8 h-8 rounded-xl bg-[#0288D1] text-white shadow-xs font-bold hover:bg-[#0277BD]"
+                  className="w-8 h-8 rounded-xl bg-primary text-white shadow-xs font-bold hover:bg-primary/90"
                 >
                   <Plus className="w-4 h-4" />
                 </Button>
@@ -282,7 +282,7 @@ export const OrderWaterScreen: React.FC<OrderWaterScreenProps> = ({ onOrderPlace
             {/* Informational Callout Box */}
             <Card className="bg-[#F3FAFF] border-blue-100 mt-3 rounded-2xl shadow-none">
               <CardContent className="p-3.5 flex items-start gap-3">
-                <Info className="w-5 h-5 text-[#0288D1] shrink-0 mt-0.5" />
+                <Info className="w-5 h-5 text-primary shrink-0 mt-0.5" />
                 <div className="space-y-1 text-[11px]">
                   <p className="font-bold text-slate-800">
                     Driver scans empty out, scans full in — simple 1:1 exchange
@@ -304,7 +304,7 @@ export const OrderWaterScreen: React.FC<OrderWaterScreenProps> = ({ onOrderPlace
                 onClick={() => setPurchaseType('subscription')}
                 className={`h-auto flex-col items-start p-3.5 rounded-2xl transition-all w-full ${
                   purchaseType === 'subscription'
-                    ? 'border-[#0288D1] bg-[#F3FAFF] ring-2 ring-blue-200'
+                    ? 'border-primary bg-[#F3FAFF] ring-2 ring-blue-200'
                     : 'border-slate-200 bg-white hover:bg-slate-50'
                 }`}
               >
@@ -320,7 +320,7 @@ export const OrderWaterScreen: React.FC<OrderWaterScreenProps> = ({ onOrderPlace
                 onClick={() => setPurchaseType('one_time')}
                 className={`h-auto flex-col items-start p-3.5 rounded-2xl transition-all w-full ${
                   purchaseType === 'one_time'
-                    ? 'border-[#0288D1] bg-[#F3FAFF] ring-2 ring-blue-200'
+                    ? 'border-primary bg-[#F3FAFF] ring-2 ring-blue-200'
                     : 'border-slate-200 bg-white hover:bg-slate-50'
                 }`}
               >
@@ -341,7 +341,7 @@ export const OrderWaterScreen: React.FC<OrderWaterScreenProps> = ({ onOrderPlace
                     type="text"
                     value={deliveryAddress}
                     onChange={(e) => setDeliveryAddress(e.target.value)}
-                    className="pl-10 h-10 rounded-2xl bg-slate-50 border-slate-200 text-xs font-medium focus-visible:ring-[#0288D1]"
+                    className="pl-10 h-10 rounded-2xl bg-slate-50 border-slate-200 text-xs font-medium focus-visible:ring-primary"
                   />
                 </div>
               </div>
@@ -353,14 +353,14 @@ export const OrderWaterScreen: React.FC<OrderWaterScreenProps> = ({ onOrderPlace
                     type="date"
                     value={scheduledDate}
                     onChange={(e) => setScheduledDate(e.target.value)}
-                    className="h-10 rounded-2xl bg-slate-50 border-slate-200 font-medium focus-visible:ring-[#0288D1]"
+                    className="h-10 rounded-2xl bg-slate-50 border-slate-200 font-medium focus-visible:ring-primary"
                   />
                 </div>
 
                 <div>
                   <label className="block font-bold text-slate-700 mb-1">Time Window</label>
                   <Select value={timeSlot} onValueChange={setTimeSlot}>
-                    <SelectTrigger className="h-10 rounded-2xl bg-slate-50 border-slate-200 font-medium focus:ring-[#0288D1]">
+                    <SelectTrigger className="h-10 rounded-2xl bg-slate-50 border-slate-200 font-medium focus:ring-primary">
                       <SelectValue placeholder="Select time slot" />
                     </SelectTrigger>
                     <SelectContent>
@@ -404,11 +404,11 @@ export const OrderWaterScreen: React.FC<OrderWaterScreenProps> = ({ onOrderPlace
                 variant="outline"
                 onClick={() => setPaymentMethod('wallet')}
                 className={`h-auto flex-col items-center justify-center p-3 rounded-2xl transition-all w-full ${
-                  paymentMethod === 'wallet' ? 'border-[#0288D1] bg-blue-50 ring-2 ring-blue-200' : 'border-slate-200 bg-white hover:bg-slate-50'
+                  paymentMethod === 'wallet' ? 'border-primary bg-blue-50 ring-2 ring-blue-200' : 'border-slate-200 bg-white hover:bg-slate-50'
                 }`}
               >
                 <span className="text-[11px] font-bold text-slate-900 block">Nsupa Wallet</span>
-                <span className="text-[9px] font-normal text-[#0288D1] font-semibold">Instant Pay</span>
+                <span className="text-[9px] font-normal text-primary font-semibold">Instant Pay</span>
               </Button>
             </div>
           </div>
@@ -416,7 +416,7 @@ export const OrderWaterScreen: React.FC<OrderWaterScreenProps> = ({ onOrderPlace
 
         {/* Right Column: Order Summary Card (lg:col-span-1 lg:sticky lg:top-24) */}
         <div className="lg:col-span-1 lg:sticky lg:top-24 space-y-4">
-          <Card className="bg-slate-900 text-white rounded-3xl border-none shadow-xl">
+          <Card className="bg-slate-900 text-white rounded-3xl border-none shadow-lg">
             <CardContent className="p-6 space-y-5">
               <div className="flex items-center justify-between border-b border-slate-800 pb-3">
                 <span className="text-xs font-bold uppercase text-[#4FC3F7] tracking-wider">Restock Order Summary</span>
@@ -461,7 +461,7 @@ export const OrderWaterScreen: React.FC<OrderWaterScreenProps> = ({ onOrderPlace
               <Button
                 onClick={handlePlaceOrder}
                 disabled={loading}
-                className="w-full h-14 bg-[#0288D1] hover:bg-[#0277BD] text-white font-extrabold rounded-2xl text-xs shadow-lg shadow-blue-900/50 transition-all active:scale-95"
+                className="w-full sm:w-auto h-14 bg-primary hover:bg-primary/90 text-white font-extrabold rounded-2xl text-xs shadow-lg shadow-primary/20 transition-all active:scale-95"
               >
                 {loading ? (
                   <span>Initiating MoMo Payment Prompt...</span>

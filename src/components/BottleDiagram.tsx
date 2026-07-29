@@ -26,8 +26,8 @@ export const BottleDiagram: React.FC<BottleDiagramProps> = ({
       {/* Header Tabs */}
       <div className="flex items-center justify-between border-b border-blue-50 pb-3">
         <div className="flex items-center gap-2.5">
-          <div className="p-2.5 bg-blue-50 text-[#0288D1] rounded-2xl">
-            <Droplet className="w-5 h-5 fill-[#0288D1] text-[#0288D1]" />
+          <div className="p-2.5 bg-blue-50 text-primary rounded-2xl">
+            <Droplet className="w-5 h-5 fill-[#0288D1] text-primary" />
           </div>
           <div>
             <h3 className="text-base font-extrabold text-slate-800 leading-tight">15L Reusable Dispenser Bottle</h3>
@@ -41,7 +41,7 @@ export const BottleDiagram: React.FC<BottleDiagramProps> = ({
               onClick={() => setActiveTab('mechanism')}
               className={`px-3 py-1 rounded-lg transition-all ${
                 activeTab === 'mechanism'
-                  ? 'bg-white text-[#0288D1] shadow-xs font-bold'
+                  ? 'bg-white text-primary shadow-xs font-bold'
                   : 'text-slate-600 hover:text-slate-900'
               }`}
             >
@@ -51,7 +51,7 @@ export const BottleDiagram: React.FC<BottleDiagramProps> = ({
               onClick={() => setActiveTab('stages')}
               className={`px-3 py-1 rounded-lg transition-all ${
                 activeTab === 'stages'
-                  ? 'bg-white text-[#0288D1] shadow-xs font-bold'
+                  ? 'bg-white text-primary shadow-xs font-bold'
                   : 'text-slate-600 hover:text-slate-900'
               }`}
             >
@@ -66,7 +66,7 @@ export const BottleDiagram: React.FC<BottleDiagramProps> = ({
           {/* Main Visual Representation of the Bottle */}
           <div className="relative bg-gradient-to-b from-[#F3FAFF] via-white to-[#F3FAFF] rounded-3xl p-5 border border-blue-100 flex flex-col items-center">
             {/* Top Badge */}
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-[#0288D1] text-white text-xs font-bold rounded-full shadow-xs mb-3">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-primary text-white text-xs font-bold rounded-full shadow-xs mb-3">
               <ShieldCheck className="w-3.5 h-3.5" />
               100% Certified Depot Refilled
             </div>
@@ -129,12 +129,12 @@ export const BottleDiagram: React.FC<BottleDiagramProps> = ({
 
               {/* Callout Badges */}
               <div className="absolute right-0 top-6 bg-white/95 backdrop-blur-xs border border-blue-200 px-2.5 py-1 rounded-xl text-[10px] shadow-xs text-slate-700">
-                <span className="font-bold text-[#0288D1]">1. Durable Container</span>
+                <span className="font-bold text-primary">1. Durable Container</span>
                 <p className="text-[9px] text-slate-500 leading-tight">Your container to keep</p>
               </div>
 
               <div className="absolute right-0 top-24 bg-white/95 backdrop-blur-xs border border-blue-200 px-2.5 py-1 rounded-xl text-[10px] shadow-xs text-slate-700">
-                <span className="font-bold text-[#0288D1]">2. Tracking QR</span>
+                <span className="font-bold text-primary">2. Tracking QR</span>
                 <p className="text-[9px] text-slate-500 leading-tight">Scanned at every swap</p>
               </div>
 
@@ -147,7 +147,7 @@ export const BottleDiagram: React.FC<BottleDiagramProps> = ({
             {/* Explanatory Bullet Points */}
             <div className="w-full grid grid-cols-1 sm:grid-cols-2 gap-2 mt-2 pt-3 border-t border-blue-100 text-xs">
               <div className="flex items-start gap-2 bg-white p-3 rounded-2xl border border-blue-50">
-                <ShieldCheck className="w-4 h-4 text-[#0288D1] shrink-0 mt-0.5" />
+                <ShieldCheck className="w-4 h-4 text-primary shrink-0 mt-0.5" />
                 <div>
                   <span className="font-bold text-slate-800">100% Certified Clean</span>
                   <p className="text-[11px] text-slate-500">Professionally washed and refilled at certified depots.</p>
@@ -176,13 +176,13 @@ export const BottleDiagram: React.FC<BottleDiagramProps> = ({
               onClick={() => handleStateSelect('freshly_filled')}
               className={`p-3 rounded-2xl border text-left transition-all ${
                 activeState === 'freshly_filled'
-                  ? 'border-[#0288D1] bg-[#F3FAFF] ring-2 ring-blue-100'
+                  ? 'border-primary bg-[#F3FAFF] ring-2 ring-blue-100'
                   : 'border-slate-200 bg-white hover:border-blue-200'
               }`}
             >
               <div className="flex items-center justify-between mb-1">
                 <span className="text-[11px] font-extrabold text-blue-900">1. Fresh Full</span>
-                {activeState === 'freshly_filled' && <CheckCircle2 className="w-3.5 h-3.5 text-[#0288D1]" />}
+                {activeState === 'freshly_filled' && <CheckCircle2 className="w-3.5 h-3.5 text-primary" />}
               </div>
               <p className="text-[10px] text-slate-500 leading-tight">Freshly refilled & sealed water container.</p>
             </button>
@@ -191,13 +191,13 @@ export const BottleDiagram: React.FC<BottleDiagramProps> = ({
               onClick={() => handleStateSelect('partially_used')}
               className={`p-3 rounded-2xl border text-left transition-all ${
                 activeState === 'partially_used'
-                  ? 'border-[#0288D1] bg-[#F3FAFF] ring-2 ring-blue-100'
+                  ? 'border-primary bg-[#F3FAFF] ring-2 ring-blue-100'
                   : 'border-slate-200 bg-white hover:border-blue-200'
               }`}
             >
               <div className="flex items-center justify-between mb-1">
                 <span className="text-[11px] font-extrabold text-blue-900">2. In Active Use</span>
-                {activeState === 'partially_used' && <CheckCircle2 className="w-3.5 h-3.5 text-[#0288D1]" />}
+                {activeState === 'partially_used' && <CheckCircle2 className="w-3.5 h-3.5 text-primary" />}
               </div>
               <p className="text-[10px] text-slate-500 leading-tight">Dispensing pure water at home or office.</p>
             </button>
@@ -219,7 +219,7 @@ export const BottleDiagram: React.FC<BottleDiagramProps> = ({
           </div>
 
           <div className="bg-[#F3FAFF] border border-blue-100 p-3.5 rounded-2xl flex items-start gap-2.5 text-xs text-slate-800">
-            <Info className="w-4 h-4 text-[#0288D1] shrink-0 mt-0.5" />
+            <Info className="w-4 h-4 text-primary shrink-0 mt-0.5" />
             <p className="text-[11px] leading-relaxed">
               When empty, hand container to driver or kiosk. Pay only the lower water refill price (e.g. GH₵ 15.00) and get a fresh full container.
             </p>

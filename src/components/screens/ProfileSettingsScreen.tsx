@@ -28,7 +28,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
       <Card className="rounded-3xl border-blue-50 shadow-sm">
         <CardContent className="p-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-blue-50 text-[#0288D1] rounded-2xl flex items-center justify-center font-bold">
+            <div className="w-10 h-10 bg-blue-50 text-primary rounded-2xl flex items-center justify-center font-bold">
               <User className="w-5 h-5" />
             </div>
             <div>
@@ -43,13 +43,13 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
       <Card className="rounded-3xl border-blue-50 shadow-sm">
         <CardContent className="p-5 space-y-4">
           <div className="flex items-center gap-3.5">
-            <div className="w-14 h-14 rounded-2xl bg-[#0288D1] text-white flex items-center justify-center font-extrabold text-xl shadow-sm">
+            <div className="w-14 h-14 rounded-2xl bg-primary text-white flex items-center justify-center font-extrabold text-xl shadow-sm">
               {userName.charAt(0)}
             </div>
             <div>
               <h2 className="text-base font-extrabold text-slate-900">{userName}</h2>
               <p className="text-xs text-slate-500">{userPhone}</p>
-              <Badge className="text-[10px] text-[#0288D1] bg-blue-50 hover:bg-blue-50 font-bold px-2.5 py-0.5 rounded-full border border-blue-100 mt-1">
+              <Badge className="text-[10px] text-primary bg-blue-50 hover:bg-blue-50 font-bold px-2.5 py-0.5 rounded-full border border-blue-100 mt-1">
                 Verified Swap Account
               </Badge>
             </div>
@@ -57,7 +57,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
 
           <div className="pt-3 border-t border-slate-100 space-y-2 text-xs">
             <div className="flex items-center gap-2 text-slate-700">
-              <MapPin className="w-4 h-4 text-[#0288D1] shrink-0" />
+              <MapPin className="w-4 h-4 text-primary shrink-0" />
               <span className="font-medium">{userAddress}</span>
             </div>
           </div>
@@ -73,7 +73,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
             className="w-full h-auto p-3 hover:bg-blue-50 rounded-2xl flex items-center justify-between text-left transition-colors font-bold text-slate-800"
           >
             <div className="flex items-center gap-3">
-              <Award className="w-4 h-4 text-[#0288D1]" />
+              <Award className="w-4 h-4 text-primary" />
               <span>Containers & Milestone Rewards</span>
             </div>
             <Badge className="text-[10px] bg-amber-100 hover:bg-amber-100 text-amber-800 font-bold px-2 py-0.5 rounded-full border-none">
@@ -87,7 +87,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
             className="w-full h-auto p-3 hover:bg-blue-50 rounded-2xl flex items-center justify-between text-left transition-colors font-bold text-slate-800"
           >
             <div className="flex items-center gap-3">
-              <Bell className="w-4 h-4 text-[#0288D1]" />
+              <Bell className="w-4 h-4 text-primary" />
               <span>Notifications & Alerts</span>
             </div>
           </Button>
@@ -98,7 +98,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
       <Card className="rounded-3xl border-blue-50 shadow-sm">
         <CardContent className="p-4 space-y-3">
           <div className="flex items-center gap-2">
-            <Globe className="w-4 h-4 text-[#0288D1]" />
+            <Globe className="w-4 h-4 text-primary" />
             <h3 className="text-xs font-bold uppercase text-slate-800 tracking-wider">App Language</h3>
           </div>
 
@@ -109,7 +109,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
                 variant={language === lang ? "default" : "outline"}
                 onClick={() => setLanguage(lang)}
                 className={`h-10 rounded-2xl transition-all ${
-                  language === lang ? 'bg-[#0288D1] hover:bg-[#0277BD] text-white border-[#0288D1]' : 'bg-slate-50 text-slate-800 border-slate-200'
+                  language === lang ? 'bg-primary hover:bg-primary/90 text-white border-primary' : 'bg-slate-50 text-slate-800 border-slate-200'
                 }`}
               >
                 {lang}
@@ -127,7 +127,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
           className="w-full h-auto p-4 bg-white rounded-3xl border-blue-50 text-left text-xs font-bold text-slate-800 flex items-center justify-between hover:bg-blue-50 shadow-sm"
         >
           <div className="flex items-center gap-3">
-            <HelpCircle className="w-4 h-4 text-[#0288D1]" />
+            <HelpCircle className="w-4 h-4 text-primary" />
             <span>Nsupa Ghana Support & WhatsApp Line</span>
           </div>
         </Button>

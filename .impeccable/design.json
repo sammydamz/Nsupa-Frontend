@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-07-29T23:18:00Z",
+  "title": "Design System: Nsupa",
+  "extensions": {
+    "colorMeta": {
+      "primary": { "role": "primary", "displayName": "Nsupa Cyan", "canonical": "oklch(0.488 0.243 264.376)", "tonalRamp": ["oklch(0.2 0.1 264)", "oklch(0.3 0.15 264)", "oklch(0.4 0.2 264)", "oklch(0.488 0.243 264.376)", "oklch(0.6 0.2 264)", "oklch(0.7 0.15 264)", "oklch(0.8 0.1 264)", "oklch(0.9 0.05 264)"] }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Hero greetings and large eco-metric numbers." },
+      "body": { "displayName": "Body", "purpose": "All instructional text, form fields, and secondary data." }
+    },
+    "shadows": [
+      { "name": "ambient-lift", "value": "0 10px 25px -5px rgba(2, 136, 209, 0.15)", "purpose": "Soft ambient layering to make containers float gently." }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "640px" },
+      { "name": "md", "value": "768px" },
+      { "name": "lg", "value": "1024px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Used for main calls to action.",
+      "html": "<button class=\"ds-btn-primary\">ORDER WATER</button>",
+      "css": ".ds-btn-primary { background: oklch(0.488 0.243 264.376); color: oklch(0.97 0.014 254.604); padding: 0.75rem 1.5rem; border-radius: 999px; font-weight: 700; border: none; font-family: 'DM Sans Variable', sans-serif; cursor: pointer; transition: all 0.2s ease; box-shadow: 0 4px 14px 0 rgba(2, 136, 209, 0.39); } .ds-btn-primary:hover { background: oklch(0.45 0.22 264); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(2, 136, 209, 0.5); }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Blue Circular Loop",
+    "overview": "Friendly, approachable, and educational—focused on the community impact of recycling. The Nsupa UI uses soft geometric forms, ambient layering, and a striking cyan palette to evoke fresh water and environmental consciousness. The interface is optimized to guide users smoothly through the 1:1 container swap system without feeling overly clinical or corporate.",
+    "keyCharacteristics": [
+      "Friendly and educational tone.",
+      "Soft, pill-shaped, and tactile UI elements.",
+      "Ambient, lightweight shadowing for depth.",
+      "Striking and confident primary blue."
+    ],
+    "rules": [
+      { "name": "The Freshness Rule", "body": "Never use murky or desaturated dark backgrounds unless explicitly in dark mode. The UI must always feel as clean and transparent as the water it delivers.", "section": "colors" },
+      { "name": "The Legibility First Rule", "body": "All essential logistics data (order numbers, delivery times) must use high-contrast text weights. Never sacrifice readability for aesthetic lightness.", "section": "typography" },
+      { "name": "The Ambient Lift Rule", "body": "Shadows are used to create a sense of lightweight floating, not heavy, structural mass. Shadows should be diffuse and soft, allowing cards to gently lift off the background.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do use large, legible numbers for environmental impact metrics.",
+      "Do maintain high contrast between text and the Nsupa Cyan backgrounds.",
+      "Do use soft corner radii to maintain the friendly, tactile feel."
+    ],
+    "donts": [
+      "Don't use aggressive, sharp-cornered UI elements.",
+      "Don't rely on heavy, dark structural shadows.",
+      "Don't clutter the UI with unnecessary borders when ambient shadows can define hierarchy."
+    ]
+  }
+}

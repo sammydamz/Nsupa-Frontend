@@ -1,5 +1,5 @@
 import React from 'react';
-import { Leaf, Award, Share2, ShieldCheck, Sparkles, RefreshCw, CheckCircle2 } from 'lucide-react';
+import { Leaf, Award, Share2, ShieldCheck, Sparkles, RefreshCw, CheckCircle2, TreePine } from 'lucide-react';
 import { EnvironmentalStats } from '../../types';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -63,7 +63,7 @@ export const EnvironmentalImpactScreen: React.FC<EnvironmentalImpactScreenProps>
 
             <div className="bg-emerald-950/40 p-3 rounded-2xl border border-emerald-600/40">
               <span className="text-[10px] text-emerald-200 block">Tree Equivalency</span>
-              <span className="font-extrabold text-white text-base">🌳 {stats.treesEquivalent} Trees Planted</span>
+              <span className="font-extrabold text-white text-base flex items-center gap-1.5"><TreePine className="w-4 h-4" /> {stats.treesEquivalent} Trees Planted</span>
             </div>
 
             <div className="bg-emerald-950/40 p-3 rounded-2xl border border-emerald-600/40">
