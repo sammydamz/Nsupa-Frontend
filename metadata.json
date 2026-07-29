@@ -1,0 +1,6 @@
+{
+  "name": "Nsupa",
+  "description": "Circular water distribution platform replacing single-use sachets with reusable 15L dispenser bottles and eco-pouches across Ghana.",
+  "requestFramePermissions": ["camera"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
