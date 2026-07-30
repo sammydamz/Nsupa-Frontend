@@ -22,7 +22,8 @@ export const QRScannerScreen: React.FC<QRScannerScreenProps> = ({
   onBottleScanned,
 }) => {
   const [isScanning, setIsScanning] = useState<boolean>(true);
-  const [scannedBottle, setScannedBottle] = useState<Bottle | null>(localBottles[0] || null);
+  const [scanHistory, setScanHistory] = useState<Bottle[]>([]);
+  const [scannedBottle, setScannedBottle] = useState<Bottle | null>(null);
 
   const handleRealScan = (scanInput: string) => {
     try {
@@ -35,10 +36,11 @@ export const QRScannerScreen: React.FC<QRScannerScreenProps> = ({
       if (b) {
         setIsScanning(false);
         setScannedBottle(b);
+        setScanHistory((prev) => [b, ...prev]);
         if (onBottleScanned) onBottleScanned(b);
       } else {
         setIsScanning(false);
-        setScannedBottle({
+        const fallback: Bottle = {
           id: input,
           qrCode: input,
           sizeLitres: 0,
@@ -51,7 +53,9 @@ export const QRScannerScreen: React.FC<QRScannerScreenProps> = ({
           lastRefilledAt: new Date().toLocaleString(),
           depotLocation: 'External QR Code — Not in Nsupa System',
           batchNumber: 'N/A',
-        } as Bottle);
+        };
+        setScannedBottle(fallback);
+        setScanHistory((prev) => [fallback, ...prev]);
       }
     } catch (e) {
       console.error('Scan error', e);
@@ -252,6 +256,45 @@ export const QRScannerScreen: React.FC<QRScannerScreenProps> = ({
               <QrCode className="w-4 h-4" />
               <span>Scan Another Container QR Code</span>
             </Button>
+
+            {/* Scan History — newest first */}
+            {scanHistory.length > 0 && (
+              <Card className="rounded-3xl border-blue-50 shadow-sm">
+                <CardContent className="p-5 space-y-3">
+                  <h3 className="text-sm font-bold uppercase text-slate-800 tracking-wider flex items-center gap-2">
+                    <History className="w-4 h-4 text-primary" />
+                    Recent Scans ({scanHistory.length})
+                  </h3>
+                  <div className="space-y-2">
+                    {scanHistory.map((item, idx) => (
+                      <button
+                        key={item.id + idx}
+                        onClick={() => setScannedBottle(item)}
+                        className={`w-full text-left p-3 rounded-2xl border transition-colors flex items-center justify-between gap-2 ${
+                          scannedBottle?.id === item.id && scannedBottle?.qrCode === item.qrCode
+                            ? 'bg-primary/5 border-primary/30'
+                            : 'bg-slate-50 border-slate-200 hover:border-blue-200'
+                        }`}
+                      >
+                        <div className="min-w-0 flex-1">
+                          <span className="font-bold text-slate-900 text-sm block truncate">{item.qrCode}</span>
+                          <span className="text-xs text-slate-500 block truncate">
+                            {item.depotLocation.includes('External') ? 'Unverified QR' : `${item.depotLocation} • ${item.refillCount} cycles`}
+                          </span>
+                        </div>
+                        <Badge variant="outline" className={`text-xs font-bold rounded-full shrink-0 ${
+                          item.depotLocation.includes('External')
+                            ? 'bg-amber-50 text-amber-700 border-amber-200'
+                            : 'bg-blue-50 text-primary border-blue-200'
+                        }`}>
+                          {idx === 0 ? 'Latest' : `#${idx + 1}`}
+                        </Badge>
+                      </button>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            )}
           </div>
         )
       )}
