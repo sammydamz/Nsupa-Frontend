@@ -1,16 +1,20 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Html5Qrcode } from 'html5-qrcode';
-import { QrCode, ShieldCheck, CheckCircle2, Truck, Factory, History } from 'lucide-react';
+import { QrCode, ShieldCheck, CheckCircle2, Truck, Factory, History, ArrowLeft } from 'lucide-react';
 import { Bottle, CustomerScreenId } from '../../types';
+import { initialBottles } from '../../data/mockData';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 
 interface QRScannerScreenProps {
-  bottles: Bottle[];
+  bottles?: Bottle[];
   onNavigate: (screen: CustomerScreenId) => void;
   onBottleScanned?: (bottle: Bottle) => void;
 }
+
+// Local bottle list — never overwritten by API
+const localBottles: Bottle[] = initialBottles;
 
 export const QRScannerScreen: React.FC<QRScannerScreenProps> = ({
   bottles,
@@ -18,14 +22,14 @@ export const QRScannerScreen: React.FC<QRScannerScreenProps> = ({
   onBottleScanned,
 }) => {
   const [isScanning, setIsScanning] = useState<boolean>(true);
-  const [scannedBottle, setScannedBottle] = useState<Bottle | null>(bottles[0] || null);
+  const [scannedBottle, setScannedBottle] = useState<Bottle | null>(localBottles[0] || null);
 
   const handleRealScan = (scanInput: string) => {
     try {
       const input = scanInput.trim();
       if (!input) return;
 
-      const b = (bottles || []).find(
+      const b = localBottles.find(
         (b: any) => b && (b.id === input || b.qrCode === input || (b.qrCode && b.qrCode.endsWith(input)))
       );
       if (b) {
@@ -53,7 +57,7 @@ export const QRScannerScreen: React.FC<QRScannerScreenProps> = ({
       console.error('Scan error', e);
       // Still show what was scanned even on error
       setIsScanning(false);
-      setScannedBottle(bottles && bottles[0] ? bottles[0] : null);
+      setScannedBottle(localBottles[0] || null);
     }
   };
 
@@ -118,7 +122,7 @@ export const QRScannerScreen: React.FC<QRScannerScreenProps> = ({
               <p className="text-sm text-slate-600 font-medium text-center">Or select a container below:</p>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                {bottles.map((b) => (
+                {localBottles.map((b) => (
                   <Button
                     key={b.id}
                     variant="outline"
