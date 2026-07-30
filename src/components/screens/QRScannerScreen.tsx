@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Html5Qrcode } from 'html5-qrcode';
-import { QrCode, ShieldCheck, CheckCircle2, Truck, Factory, History, StopCircle } from 'lucide-react';
+import { QrCode, ShieldCheck, CheckCircle2, Truck, Factory, History } from 'lucide-react';
 import { Bottle, CustomerScreenId } from '../../types';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -52,8 +52,6 @@ export const QRScannerScreen: React.FC<QRScannerScreenProps> = ({
   const handleSimulateScan = (bottle: Bottle) => {
     handleRealScan(bottle.id);
   };
-
-  const handleStopScanning = () => setIsScanning(false);
 
   // Separate camera component that fully mounts/unmounts — key forces clean lifecycle
   const CameraView: React.FC<{ onScan: (text: string) => void }> = ({ onScan }) => {
@@ -109,14 +107,6 @@ export const QRScannerScreen: React.FC<QRScannerScreenProps> = ({
             </div>
 
             <div className="space-y-3">
-              <Button
-                onClick={handleStopScanning}
-                className="h-12 px-6 bg-red-600 hover:bg-red-700 text-white font-bold rounded-2xl text-sm flex items-center justify-center gap-2 shadow-sm transition-all mx-auto"
-              >
-                <StopCircle className="w-5 h-5" />
-                <span>Stop Scanning</span>
-              </Button>
-
               <p className="text-sm text-slate-600 font-medium text-center">Or select a container below:</p>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
