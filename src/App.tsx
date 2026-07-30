@@ -76,16 +76,18 @@ export default function App() {
       
       if (bottlesRes.ok && bottlesRes.headers.get('content-type')?.includes('json')) {
         const data = await bottlesRes.json();
-        setBottles(data.map((b: any) => ({
-          id: b.id,
-          type: b.type,
-          sizeLitres: b.size_litres,
-          refillCount: b.refill_count,
-          status: b.liner_state === 'empty_ready_return' ? 'empty_at_home' : 'with_customer',
-          linerState: b.liner_state,
-          purchaseDate: b.last_scanned_at || new Date().toISOString(),
-          depositAmountGHS: 25.00
-        })));
+        if (data && data.length > 0 && data[0].id) {
+          setBottles(data.map((b: any) => ({
+            id: b.id,
+            type: b.type,
+            sizeLitres: b.size_litres,
+            refillCount: b.refill_count,
+            status: b.liner_state === 'empty_ready_return' ? 'empty_at_home' : 'with_customer',
+            linerState: b.liner_state,
+            purchaseDate: b.last_scanned_at || new Date().toISOString(),
+            depositAmountGHS: 25.00
+          })));
+        }
       }
     } catch (err) {
       console.error("Failed to fetch data:", err);
