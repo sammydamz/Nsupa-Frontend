@@ -3,14 +3,32 @@ import path from "path";
 import { createServer as createViteServer } from "vite";
 import { GoogleGenAI } from "@google/genai";
 import dotenv from "dotenv";
-import { db } from "./src/db/index.js";
 
 dotenv.config();
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
+
+// Lazily initialize DB — return null if not configured
+let db: any = null;
+(async () => {
+  try {
+    const { createClient } = await import("@libsql/client");
+    if (process.env.TURSO_DATABASE_URL) {
+      db = createClient({
+        url: process.env.TURSO_DATABASE_URL,
+        authToken: process.env.TURSO_AUTH_TOKEN,
+      });
+      console.log("Turso DB connected");
+    } else {
+      console.log("TURSO_DATABASE_URL not set — running without DB (mock data only)");
+    }
+  } catch (e) {
+    console.log("DB not available — running without database (mock data only)");
+  }
+})();
 
 // Lazy-initialized Gemini AI client
 function getGeminiClient() {
@@ -110,11 +128,19 @@ Respond strictly in valid JSON format with no markdown wrappers or backticks.`;
 
 // --- TURSO DB BACKEND APIs ---
 
+// Middleware: return 503 if DB is not connected
+const requireDb: express.RequestHandler = (req, res, next) => {
+  if (!db) {
+    return res.status(503).json({ error: "Database not connected — the app works in demo mode with mock data" });
+  }
+  next();
+};
+
 // Default User ID (since we don't have auth)
 const USER_ID = 'USR-9921';
 
 // 1. Get current user & wallet
-app.get("/api/me", async (req, res) => {
+app.get("/api/me", requireDb, async (req, res) => {
   try {
     const userRes = await db.execute({
       sql: "SELECT * FROM users WHERE id = ?",
@@ -139,7 +165,7 @@ app.get("/api/me", async (req, res) => {
 });
 
 // 2. Get user's bottles
-app.get("/api/bottles", async (req, res) => {
+app.get("/api/bottles", requireDb, async (req, res) => {
   try {
     const bottlesRes = await db.execute({
       sql: "SELECT * FROM bottles WHERE owner_id = ?",
@@ -152,7 +178,7 @@ app.get("/api/bottles", async (req, res) => {
 });
 
 // 3. Process a QR scan
-app.post("/api/scan", async (req, res) => {
+app.post("/api/scan", requireDb, async (req, res) => {
   try {
     const { bottleId } = req.body;
     if (!bottleId) return res.status(400).json({ error: "bottleId is required" });
@@ -181,7 +207,7 @@ app.post("/api/scan", async (req, res) => {
 });
 
 // 4. Place Order & Deduct Wallet
-app.post("/api/order", async (req, res) => {
+app.post("/api/order", requireDb, async (req, res) => {
   try {
     const { totalAmountGHS } = req.body;
     
@@ -224,7 +250,7 @@ app.post("/api/order", async (req, res) => {
 });
 
 // 5. Wallet Topup
-app.post("/api/wallet/topup", async (req, res) => {
+app.post("/api/wallet/topup", requireDb, async (req, res) => {
   try {
     const { amountGHS, channel } = req.body;
     
