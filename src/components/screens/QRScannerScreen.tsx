@@ -20,10 +20,13 @@ export const QRScannerScreen: React.FC<QRScannerScreenProps> = ({
   const [isScanning, setIsScanning] = useState<boolean>(true);
   const [scannedBottle, setScannedBottle] = useState<Bottle | null>(bottles[0] || null);
   const scannerRef = useRef<Html5QrcodeScanner | null>(null);
+  const initializedRef = useRef(false);
 
   useEffect(() => {
-    if (isScanning) {
-      // Clear any leftover DOM from previous renders
+    if (isScanning && !initializedRef.current) {
+      initializedRef.current = true;
+
+      // Nuke any leftover DOM
       const readerEl = document.getElementById('reader');
       if (readerEl) readerEl.innerHTML = '';
 
@@ -44,6 +47,7 @@ export const QRScannerScreen: React.FC<QRScannerScreenProps> = ({
       return () => {
         scanner.clear().catch(e => console.error(e));
         scannerRef.current = null;
+        initializedRef.current = false;
       };
     }
   }, [isScanning]);
