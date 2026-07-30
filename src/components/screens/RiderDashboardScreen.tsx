@@ -49,6 +49,7 @@ export const RiderDashboardScreen: React.FC<RiderDashboardScreenProps> = ({ orde
 
   const [scannedEmptyQR, setScannedEmptyQR] = useState<string | null>(null);
   const [scannedFullQR, setScannedFullQR] = useState<string | null>(null);
+  const [scanError, setScanError] = useState<string | null>(null);
 
   const [deliveryConfirmed, setDeliveryConfirmed] = useState<boolean>(false);
   const [completedToday, setCompletedToday] = useState<number>(14);
@@ -67,10 +68,42 @@ export const RiderDashboardScreen: React.FC<RiderDashboardScreenProps> = ({ orde
     setScanStep('scan_empty_out');
     setScannedEmptyQR(null);
     setScannedFullQR(null);
+    setScanError(null);
     setScannerOpen(true);
   };
 
+  const handleEmptyScan = (text: string) => {
+    const b = bottles.find((b) => b.id === text || b.qrCode === text || (b.qrCode && b.qrCode.endsWith(text)));
+    if (b) {
+      if (b.linerState !== 'empty_ready_return') {
+        setScanError(`Invalid Scan: Container is marked as '${b.linerState}', not empty.`);
+      } else {
+        setScanError(null);
+        setScannedEmptyQR(b.qrCode);
+        setTimeout(handleNextStep, 800);
+      }
+    } else {
+      setScanError(`Unrecognized QR Code`);
+    }
+  };
+
+  const handleFullScan = (text: string) => {
+    const b = bottles.find((b) => b.id === text || b.qrCode === text || (b.qrCode && b.qrCode.endsWith(text)));
+    if (b) {
+      if (b.linerState !== 'freshly_filled') {
+        setScanError(`Invalid Scan: Container is marked as '${b.linerState}', not fresh.`);
+      } else {
+        setScanError(null);
+        setScannedFullQR(b.qrCode);
+        setTimeout(handleNextStep, 800);
+      }
+    } else {
+      setScanError(`Unrecognized QR Code`);
+    }
+  };
+
   const handleNextStep = () => {
+    setScanError(null);
     if (scanStep === 'scan_empty_out') {
       setScanStep('scan_full_in');
     } else if (scanStep === 'scan_full_in') {
@@ -93,6 +126,7 @@ export const RiderDashboardScreen: React.FC<RiderDashboardScreenProps> = ({ orde
   const handleCloseScanner = () => {
     setScannerOpen(false);
     setScanStep('scan_empty_out');
+    setScanError(null);
   };
 
   const activeDelivery = !deliveryConfirmed && selectedOrder;
@@ -272,7 +306,13 @@ export const RiderDashboardScreen: React.FC<RiderDashboardScreenProps> = ({ orde
                 {!scannedEmptyQR ? (
                   <div className="rounded-2xl overflow-hidden border-2 border-primary/20 bg-black max-w-[250px] mx-auto w-full aspect-square relative">
                     <div id="reader-empty" className="w-full h-full object-cover"></div>
-                    <CameraView elementId="reader-empty" onScan={(text) => { setScannedEmptyQR(text); setTimeout(handleNextStep, 800); }} />
+                    <CameraView elementId="reader-empty" onScan={handleEmptyScan} />
+                    {scanError && (
+                      <div className="absolute inset-x-2 bottom-2 bg-red-500 text-white text-xs font-bold p-2 rounded-xl text-center">
+                        {scanError}
+                        <button onClick={() => setScanError(null)} className="block w-full mt-1 underline">Retry</button>
+                      </div>
+                    )}
                   </div>
                 ) : (
                   <div className="space-y-3">
@@ -297,7 +337,13 @@ export const RiderDashboardScreen: React.FC<RiderDashboardScreenProps> = ({ orde
                 {!scannedFullQR ? (
                   <div className="rounded-2xl overflow-hidden border-2 border-primary/20 bg-black max-w-[250px] mx-auto w-full aspect-square relative">
                     <div id="reader-full" className="w-full h-full object-cover"></div>
-                    <CameraView elementId="reader-full" onScan={(text) => { setScannedFullQR(text); setTimeout(handleNextStep, 800); }} />
+                    <CameraView elementId="reader-full" onScan={handleFullScan} />
+                    {scanError && (
+                      <div className="absolute inset-x-2 bottom-2 bg-red-500 text-white text-xs font-bold p-2 rounded-xl text-center">
+                        {scanError}
+                        <button onClick={() => setScanError(null)} className="block w-full mt-1 underline">Retry</button>
+                      </div>
+                    )}
                   </div>
                 ) : (
                   <div className="space-y-3">
