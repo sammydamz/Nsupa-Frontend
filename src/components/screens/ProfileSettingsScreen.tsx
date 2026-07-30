@@ -4,6 +4,7 @@ import { CustomerScreenId } from '../../types';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 interface ProfileSettingsScreenProps {
   userName: string;
@@ -70,7 +71,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
           <Button
             variant="ghost"
             onClick={() => onNavigate('deposits')}
-            className="w-full h-auto p-3 hover:bg-blue-50 rounded-2xl flex items-center justify-between text-left transition-colors font-bold text-slate-800"
+            className="w-full sm:w-auto h-auto p-3 hover:bg-blue-50 rounded-2xl flex items-center justify-between text-left transition-colors font-bold text-slate-800"
           >
             <div className="flex items-center gap-3">
               <Award className="w-4 h-4 text-primary" />
@@ -84,7 +85,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
           <Button
             variant="ghost"
             onClick={() => onNavigate('notifications')}
-            className="w-full h-auto p-3 hover:bg-blue-50 rounded-2xl flex items-center justify-between text-left transition-colors font-bold text-slate-800"
+            className="w-full sm:w-auto h-auto p-3 hover:bg-blue-50 rounded-2xl flex items-center justify-between text-left transition-colors font-bold text-slate-800"
           >
             <div className="flex items-center gap-3">
               <Bell className="w-4 h-4 text-primary" />
@@ -96,51 +97,43 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
 
       {/* Language Selector */}
       <Card className="rounded-3xl border-blue-50 shadow-sm">
-        <CardContent className="p-4 space-y-3">
+        <CardContent className="p-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Globe className="w-4 h-4 text-primary" />
             <h3 className="text-xs font-bold uppercase text-slate-800 tracking-wider">App Language</h3>
           </div>
 
-          <div className="grid grid-cols-3 gap-2 text-xs">
-            {(['English', 'Twi', 'Ga'] as const).map((lang) => (
-              <Button
-                key={lang}
-                variant={language === lang ? "default" : "outline"}
-                onClick={() => setLanguage(lang)}
-                className={`h-10 rounded-2xl transition-all ${
-                  language === lang ? 'bg-primary hover:bg-primary/90 text-white border-primary' : 'bg-slate-50 text-slate-800 border-slate-200'
-                }`}
-              >
-                {lang}
-              </Button>
-            ))}
-          </div>
+          <Select value={language} onValueChange={(val: 'English' | 'Twi' | 'Ga') => setLanguage(val)}>
+            <SelectTrigger className="w-[120px] h-9 rounded-xl bg-white border-slate-200 text-xs font-bold shadow-sm focus:ring-primary focus:ring-offset-0">
+              <SelectValue placeholder="Language" />
+            </SelectTrigger>
+            <SelectContent className="rounded-xl border-slate-200 shadow-lg">
+              <SelectItem value="English" className="text-xs font-bold rounded-lg cursor-pointer">English</SelectItem>
+              <SelectItem value="Twi" className="text-xs font-bold rounded-lg cursor-pointer">Twi</SelectItem>
+              <SelectItem value="Ga" className="text-xs font-bold rounded-lg cursor-pointer">Ga</SelectItem>
+            </SelectContent>
+          </Select>
         </CardContent>
       </Card>
 
       {/* Support & Logout */}
-      <div className="space-y-2">
+      <div className="flex flex-col sm:flex-row items-center gap-3 pt-4 border-t border-slate-100">
         <Button
           variant="outline"
           onClick={() => alert("Nsupa Ghana Customer Support Line: +233 30 200 9988\nWhatsApp Support: +233 24 000 1122")}
-          className="w-full h-auto p-4 bg-white rounded-3xl border-blue-50 text-left text-xs font-bold text-slate-800 flex items-center justify-between hover:bg-blue-50 shadow-sm"
+          className="w-full sm:w-auto h-12 px-6 bg-white rounded-2xl border-slate-200 text-xs font-bold text-slate-800 flex items-center justify-center gap-2 hover:bg-slate-50 shadow-sm"
         >
-          <div className="flex items-center gap-3">
-            <HelpCircle className="w-4 h-4 text-primary" />
-            <span>Nsupa Ghana Support & WhatsApp Line</span>
-          </div>
+          <HelpCircle className="w-4 h-4 text-primary" />
+          <span>Support & Help</span>
         </Button>
 
         <Button
           variant="outline"
           onClick={onLogout}
-          className="w-full h-auto p-4 bg-red-50 hover:bg-red-100 text-red-700 rounded-3xl border-red-200 text-left text-xs font-bold flex items-center justify-between transition-colors shadow-none"
+          className="w-full sm:w-auto h-12 px-6 bg-red-50 hover:bg-red-100 text-red-700 rounded-2xl border-red-200 text-xs font-bold flex items-center justify-center gap-2 transition-colors shadow-none"
         >
-          <div className="flex items-center gap-3">
-            <LogOut className="w-4 h-4 text-red-600" />
-            <span>Logout Account</span>
-          </div>
+          <LogOut className="w-4 h-4 text-red-600" />
+          <span>Logout Account</span>
         </Button>
       </div>
     </div>

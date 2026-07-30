@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { UserRole, ScreenId, CustomerScreenId, Bottle, Order, Subscription, WalletTransaction, EnvironmentalStats, NotificationItem } from './types';
 import { initialBottles, initialOrders, initialSubscriptions, initialTransactions, initialNotifications, initialEnvironmentalStats } from './data/mockData';
 import { Header } from './components/Header';
@@ -51,6 +51,51 @@ export default function App() {
 
   const unreadNotifCount = notifications.filter((n) => !n.read).length;
 
+  // --- Backend Data Fetching ---
+  const fetchData = async () => {
+    try {
+      const [meRes, bottlesRes] = await Promise.all([
+        fetch('/api/me'),
+        fetch('/api/bottles')
+      ]);
+      
+      if (meRes.ok) {
+        const { user, transactions: txs } = await meRes.json();
+        setWalletBalanceGHS(user.wallet_balance_ghs);
+        setTransactions(txs.map((tx: any) => ({
+          id: tx.id,
+          type: tx.type,
+          amountGHS: tx.amount_ghs,
+          description: tx.reference,
+          date: new Date(tx.date).toLocaleString(),
+          status: 'completed',
+          reference: tx.id,
+          paymentChannel: tx.type === 'top_up' ? 'Top-Up' : 'Nsupa Wallet'
+        })));
+      }
+      
+      if (bottlesRes.ok) {
+        const data = await bottlesRes.json();
+        setBottles(data.map((b: any) => ({
+          id: b.id,
+          type: b.type,
+          sizeLitres: b.size_litres,
+          refillCount: b.refill_count,
+          status: b.liner_state === 'empty_ready_return' ? 'empty_at_home' : 'with_customer',
+          linerState: b.liner_state,
+          purchaseDate: b.last_scanned_at || new Date().toISOString(),
+          depositAmountGHS: 25.00
+        })));
+      }
+    } catch (err) {
+      console.error("Failed to fetch data:", err);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, [isAuthenticated]);
+
   const handleLogin = (newRole: UserRole) => {
     setRole(newRole);
     if (newRole === 'customer') {
@@ -66,46 +111,46 @@ export default function App() {
     setScreen('login');
   };
 
-  const handleOrderPlaced = (newOrder: Order) => {
-    setOrders([newOrder, ...orders]);
-    setWalletBalanceGHS((prev) => Math.max(0, prev - newOrder.totalPriceGHS));
-
-    // Add transaction
-    const newTx: WalletTransaction = {
-      id: `TXN-${Math.floor(100 + Math.random() * 900)}`,
-      type: 'water_purchase',
-      amountGHS: newOrder.totalPriceGHS,
-      description: `Payment for ${newOrder.items[0]?.quantity || 2}x 15L Refills (Order #${newOrder.orderNumber})`,
-      date: new Date().toLocaleString(),
-      status: 'completed',
-      reference: `MOMO-PAY-${Math.floor(100000 + Math.random() * 900000)}`,
-      paymentChannel: newOrder.paymentMethod === 'mtn_momo' ? 'MTN MoMo' : 'Nsupa Wallet',
-    };
-    setTransactions([newTx, ...transactions]);
-
-    // Update environmental stats
-    const sachetsAdded = (newOrder.items[0]?.quantity || 2) * 30;
-    setEnvironmentalStats((prev) => ({
-      ...prev,
-      sachetsSaved: prev.sachetsSaved + sachetsAdded,
-      litresDelivered: prev.litresDelivered + (newOrder.items[0]?.quantity || 2) * 15,
-      reusableCyclesCompleted: prev.reusableCyclesCompleted + 1,
-    }));
+  const handleOrderPlaced = async (newOrder: Order) => {
+    try {
+      const res = await fetch('/api/order', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ totalAmountGHS: newOrder.totalPriceGHS })
+      });
+      if (res.ok) {
+        setOrders([newOrder, ...orders]);
+        await fetchData(); // Refresh wallet & txs
+        
+        // Update environmental stats
+        const sachetsAdded = (newOrder.items[0]?.quantity || 2) * 30;
+        setEnvironmentalStats((prev) => ({
+          ...prev,
+          sachetsSaved: prev.sachetsSaved + sachetsAdded,
+          litresDelivered: prev.litresDelivered + (newOrder.items[0]?.quantity || 2) * 15,
+          reusableCyclesCompleted: prev.reusableCyclesCompleted + 1,
+        }));
+      } else {
+        alert("Failed to place order. Insufficient balance?");
+      }
+    } catch (err) {
+      console.error("Order error", err);
+    }
   };
 
-  const handleTopUpWallet = (amount: number, channel: string) => {
-    setWalletBalanceGHS((prev) => prev + amount);
-    const newTx: WalletTransaction = {
-      id: `TXN-${Math.floor(100 + Math.random() * 900)}`,
-      type: 'top_up',
-      amountGHS: amount,
-      description: `Nsupa Wallet Top-Up via ${channel}`,
-      date: new Date().toLocaleString(),
-      status: 'completed',
-      reference: `TOPUP-${Math.floor(100000 + Math.random() * 900000)}`,
-      paymentChannel: channel,
-    };
-    setTransactions([newTx, ...transactions]);
+  const handleTopUpWallet = async (amount: number, channel: string) => {
+    try {
+      const res = await fetch('/api/wallet/topup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ amountGHS: amount, channel })
+      });
+      if (res.ok) {
+        await fetchData(); // Refresh wallet & txs
+      }
+    } catch (err) {
+      console.error("Topup error", err);
+    }
   };
 
   const handleCompleteDriverDelivery = (orderId: string) => {

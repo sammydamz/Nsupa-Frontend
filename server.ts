@@ -3,6 +3,7 @@ import path from "path";
 import { createServer as createViteServer } from "vite";
 import { GoogleGenAI } from "@google/genai";
 import dotenv from "dotenv";
+import { db } from "./src/db/index.js";
 
 dotenv.config();
 
@@ -104,6 +105,143 @@ Respond strictly in valid JSON format with no markdown wrappers or backticks.`;
       ],
       smartTip: "Schedule your refill now to secure Friday morning delivery slot."
     });
+  }
+});
+
+// --- TURSO DB BACKEND APIs ---
+
+// Default User ID (since we don't have auth)
+const USER_ID = 'USR-9921';
+
+// 1. Get current user & wallet
+app.get("/api/me", async (req, res) => {
+  try {
+    const userRes = await db.execute({
+      sql: "SELECT * FROM users WHERE id = ?",
+      args: [USER_ID]
+    });
+    if (userRes.rows.length === 0) return res.status(404).json({ error: "User not found" });
+    
+    // Fetch recent wallet transactions
+    const txRes = await db.execute({
+      sql: "SELECT * FROM wallet_transactions WHERE user_id = ? ORDER BY date DESC LIMIT 5",
+      args: [USER_ID]
+    });
+
+    res.json({
+      user: userRes.rows[0],
+      transactions: txRes.rows
+    });
+  } catch (error) {
+    console.error("DB Error:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+// 2. Get user's bottles
+app.get("/api/bottles", async (req, res) => {
+  try {
+    const bottlesRes = await db.execute({
+      sql: "SELECT * FROM bottles WHERE owner_id = ?",
+      args: [USER_ID]
+    });
+    res.json(bottlesRes.rows);
+  } catch (error) {
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+// 3. Process a QR scan
+app.post("/api/scan", async (req, res) => {
+  try {
+    const { bottleId } = req.body;
+    if (!bottleId) return res.status(400).json({ error: "bottleId is required" });
+
+    // Ensure bottle exists and belongs to user
+    const bottleRes = await db.execute({
+      sql: "SELECT * FROM bottles WHERE id = ? AND owner_id = ?",
+      args: [bottleId, USER_ID]
+    });
+
+    if (bottleRes.rows.length === 0) {
+      return res.status(404).json({ error: "Container not found or unauthorized" });
+    }
+
+    // Update state to depot scan (or simulate refill)
+    await db.execute({
+      sql: "UPDATE bottles SET refill_count = refill_count + 1, liner_state = 'factory_sealed', last_scanned_at = CURRENT_TIMESTAMP WHERE id = ?",
+      args: [bottleId]
+    });
+
+    res.json({ success: true, message: "Container verified & refilled", bottleId });
+  } catch (error) {
+    console.error("Scan Error:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+// 4. Place Order & Deduct Wallet
+app.post("/api/order", async (req, res) => {
+  try {
+    const { totalAmountGHS } = req.body;
+    
+    // Check wallet balance
+    const userRes = await db.execute({
+      sql: "SELECT wallet_balance_ghs FROM users WHERE id = ?",
+      args: [USER_ID]
+    });
+    
+    const balance = userRes.rows[0].wallet_balance_ghs as number;
+    if (balance < totalAmountGHS) {
+      return res.status(400).json({ error: "Insufficient wallet balance" });
+    }
+
+    const orderId = `ORD-${Math.floor(1000 + Math.random() * 9000)}`;
+
+    // Deduct balance
+    await db.execute({
+      sql: "UPDATE users SET wallet_balance_ghs = wallet_balance_ghs - ? WHERE id = ?",
+      args: [totalAmountGHS, USER_ID]
+    });
+
+    // Record wallet tx
+    await db.execute({
+      sql: "INSERT INTO wallet_transactions (id, user_id, type, amount_ghs, reference) VALUES (?, ?, ?, ?, ?)",
+      args: [`TX-${Date.now()}`, USER_ID, 'water_refill', totalAmountGHS, `Payment for order ${orderId}`]
+    });
+
+    // Record Order
+    await db.execute({
+      sql: "INSERT INTO orders (id, user_id, status, total_amount_ghs, driver_name, driver_phone) VALUES (?, ?, ?, ?, ?, ?)",
+      args: [orderId, USER_ID, 'active', totalAmountGHS, 'Kwame Osei (Live)', '+233 20 882 1109']
+    });
+
+    res.json({ success: true, orderId });
+  } catch (error) {
+    console.error("Order Error:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+// 5. Wallet Topup
+app.post("/api/wallet/topup", async (req, res) => {
+  try {
+    const { amountGHS, channel } = req.body;
+    
+    await db.execute({
+      sql: "UPDATE users SET wallet_balance_ghs = wallet_balance_ghs + ? WHERE id = ?",
+      args: [amountGHS, USER_ID]
+    });
+
+    await db.execute({
+      sql: "INSERT INTO wallet_transactions (id, user_id, type, amount_ghs, reference) VALUES (?, ?, ?, ?, ?)",
+      args: [`TX-${Date.now()}`, USER_ID, 'top_up', amountGHS, `Top-up via ${channel}`]
+    });
+
+    res.json({ success: true, message: `Successfully topped up GH₵ ${amountGHS}` });
+  } catch (error) {
+    console.error("Topup Error:", error);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 });
 

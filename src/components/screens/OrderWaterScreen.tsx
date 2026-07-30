@@ -7,6 +7,9 @@ import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Separator } from '@/components/ui/separator';
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { Label } from '@/components/ui/label';
 
 interface OrderWaterScreenProps {
   onOrderPlaced: (order: Order) => void;
@@ -23,7 +26,7 @@ export const OrderWaterScreen: React.FC<OrderWaterScreenProps> = ({ onOrderPlace
   const [deliveryAddress, setDeliveryAddress] = useState<string>('House 14, Boundary Road, East Legon, Accra');
   const [scheduledDate, setScheduledDate] = useState<string>('2026-07-23');
   const [timeSlot, setTimeSlot] = useState<string>('10:00 AM - 12:00 PM');
-  const [paymentMethod, setPaymentMethod] = useState<'mtn_momo' | 'telecel_cash' | 'at_money' | 'card' | 'wallet'>('mtn_momo');
+  const [paymentMethod, setPaymentMethod] = useState<'paystack' | 'moolre'>('paystack');
   const [loading, setLoading] = useState<boolean>(false);
 
   // Diagram Pricing Logic:
@@ -82,12 +85,12 @@ export const OrderWaterScreen: React.FC<OrderWaterScreenProps> = ({ onOrderPlace
               <ShoppingBag className="w-5 h-5" />
             </div>
             <div>
-              <h1 className="text-lg font-extrabold text-slate-900 leading-tight">Order Water Refills</h1>
-              <p className="text-xs text-slate-500">Ghana 1:1 Shell Swap Exchange Model</p>
+              <h1 className="text-xl font-extrabold text-slate-900 leading-tight">Order Water Refills</h1>
+              <p className="text-sm text-slate-500">1:1 Shell Swap Exchange</p>
             </div>
           </div>
-          <Badge className="bg-blue-100 text-primary hover:bg-blue-100 font-bold uppercase rounded-full">
-            1:1 Swap Model
+          <Badge className="bg-blue-100 text-primary hover:bg-blue-100 font-bold uppercase rounded-full px-3 py-1 text-xs">
+            1:1 Swap
           </Badge>
         </CardContent>
       </Card>
@@ -96,271 +99,221 @@ export const OrderWaterScreen: React.FC<OrderWaterScreenProps> = ({ onOrderPlace
         {/* Left Column: Selection Form Steps (lg:col-span-2) */}
         <div className="lg:col-span-2 space-y-5">
           {/* Select Account Category / Use Case */}
-          <div className="space-y-2">
-            <label className="block text-xs font-bold text-slate-800 uppercase tracking-wider">1. Select Target Account Type</label>
-            <div className="grid grid-cols-3 gap-2">
-              <Button
-                type="button"
-                variant="outline"
-                onClick={() => setAccountCategory('individual')}
-                className={`h-auto flex-col items-center justify-center p-3 rounded-2xl transition-all ${
-                  accountCategory === 'individual' ? 'border-primary bg-[#F3FAFF] ring-2 ring-blue-200' : 'border-slate-200 bg-white hover:bg-slate-50'
-                }`}
-              >
-                <span className="text-xs font-bold text-slate-900 block">Individual</span>
-                <span className="text-[10px] text-slate-500 font-normal">Household & Personal</span>
-              </Button>
-
-              <Button
-                type="button"
-                variant="outline"
-                onClick={() => setAccountCategory('office')}
-                className={`h-auto flex-col items-center justify-center p-3 rounded-2xl transition-all ${
-                  accountCategory === 'office' ? 'border-primary bg-[#F3FAFF] ring-2 ring-blue-200' : 'border-slate-200 bg-white hover:bg-slate-50'
-                }`}
-              >
-                <span className="text-xs font-bold text-slate-900 block">Office</span>
-                <span className="text-[10px] text-slate-500 font-normal">Corporate Dispenser</span>
-              </Button>
-
-              <Button
-                type="button"
-                variant="outline"
-                onClick={() => setAccountCategory('school')}
-                className={`h-auto flex-col items-center justify-center p-3 rounded-2xl transition-all ${
-                  accountCategory === 'school' ? 'border-primary bg-[#F3FAFF] ring-2 ring-blue-200' : 'border-slate-200 bg-white hover:bg-slate-50'
-                }`}
-              >
-                <span className="text-xs font-bold text-slate-900 block">School</span>
-                <span className="text-[10px] text-slate-500 font-normal">Bulk & Canteen</span>
-              </Button>
-            </div>
+          <div className="space-y-3">
+            <label className="block text-sm font-bold text-slate-800 uppercase tracking-wider">1. Select Target Account Type</label>
+            <Tabs 
+              value={accountCategory} 
+              onValueChange={(val) => setAccountCategory(val as 'individual' | 'office' | 'school')}
+              className="w-full"
+            >
+              <TabsList className="grid w-full grid-cols-3 bg-slate-100/70 p-1.5 rounded-2xl !h-auto gap-1 border border-slate-200/60">
+                <TabsTrigger value="individual" className="flex flex-col items-center p-3 rounded-xl data-[state=active]:bg-white data-[state=active]:shadow-sm data-[state=active]:text-primary transition-all">
+                  <span className="text-sm font-bold block">Individual</span>
+                  <span className="text-xs text-muted-foreground font-medium">Household</span>
+                </TabsTrigger>
+                <TabsTrigger value="office" className="flex flex-col items-center p-3 rounded-xl data-[state=active]:bg-white data-[state=active]:shadow-sm data-[state=active]:text-primary transition-all">
+                  <span className="text-sm font-bold block">Office</span>
+                  <span className="text-xs text-muted-foreground font-medium">Dispenser</span>
+                </TabsTrigger>
+                <TabsTrigger value="school" className="flex flex-col items-center p-3 rounded-xl data-[state=active]:bg-white data-[state=active]:shadow-sm data-[state=active]:text-primary transition-all">
+                  <span className="text-sm font-bold block">School</span>
+                  <span className="text-xs text-muted-foreground font-medium">Canteen</span>
+                </TabsTrigger>
+              </TabsList>
+            </Tabs>
           </div>
 
           {/* Select Water Container Format */}
-          <div className="space-y-2">
-            <label className="block text-xs font-bold text-slate-800 uppercase tracking-wider">2. Select Water Format</label>
-            <div className="grid grid-cols-2 gap-3">
-              <Button
-                variant="outline"
-                onClick={() => setSelectedType('15L Shell')}
-                className={`h-auto flex-col items-start p-4 rounded-3xl transition-all relative w-full ${
-                  selectedType === '15L Shell'
-                    ? 'border-primary bg-[#F3FAFF] ring-2 ring-blue-200'
-                    : 'border-slate-200 bg-white hover:border-blue-200'
-                }`}
-              >
-                <div className="flex items-center justify-between mb-1 w-full">
-                  <span className="text-xs font-extrabold text-slate-900">15L Dispenser Bottle</span>
-                  {selectedType === '15L Shell' && <CheckCircle2 className="w-4 h-4 text-primary" />}
-                </div>
-                <p className="text-[11px] text-slate-500 font-normal leading-tight mb-2 whitespace-normal text-left">Factory-sealed reusable 15L bottle.</p>
-                <span className="text-xs font-extrabold text-primary">GH₵ 15.00 / water content</span>
-              </Button>
+          <div className="space-y-3">
+            <label className="block text-sm font-bold text-slate-800 uppercase tracking-wider">2. Select Water Format</label>
+            <RadioGroup 
+              value={selectedType} 
+              onValueChange={(val) => setSelectedType(val as '15L Shell' | '5L Pouch')}
+              className="grid grid-cols-1 sm:grid-cols-2 gap-3"
+            >
+              <div>
+                <RadioGroupItem value="15L Shell" id="15l-shell" className="peer sr-only" />
+                <Label
+                  htmlFor="15l-shell"
+                  className="flex flex-col items-start p-4 rounded-3xl border-2 border-slate-200 bg-white hover:border-blue-200 peer-data-[state=checked]:border-primary peer-data-[state=checked]:bg-blue-50/50 peer-data-[state=checked]:ring-2 peer-data-[state=checked]:ring-blue-200 cursor-pointer transition-all h-full"
+                >
+                  <div className="flex items-center justify-between mb-1 w-full">
+                    <span className="text-sm font-extrabold text-slate-900">15L Dispenser Bottle</span>
+                    {selectedType === '15L Shell' && <CheckCircle2 className="w-5 h-5 text-primary" />}
+                  </div>
+                  <p className="text-xs text-slate-500 font-medium leading-tight mb-3 text-left">Reusable 15L bottle</p>
+                  <span className="text-sm font-extrabold text-primary mt-auto">GH₵ 15.00</span>
+                </Label>
+              </div>
 
-              <Button
-                variant="outline"
-                onClick={() => setSelectedType('5L Pouch')}
-                className={`h-auto flex-col items-start p-4 rounded-3xl transition-all relative w-full ${
-                  selectedType === '5L Pouch'
-                    ? 'border-primary bg-[#F3FAFF] ring-2 ring-blue-200'
-                    : 'border-slate-200 bg-white hover:border-blue-200'
-                }`}
-              >
-                <div className="flex items-center justify-between mb-1 w-full">
-                  <span className="text-xs font-extrabold text-slate-900">5L Reusable Pouch</span>
-                  {selectedType === '5L Pouch' && <CheckCircle2 className="w-4 h-4 text-primary" />}
-                </div>
-                <p className="text-[11px] text-slate-500 font-normal leading-tight mb-2 whitespace-normal text-left">Portable spout pouch for small households.</p>
-                <span className="text-xs font-extrabold text-primary">GH₵ 8.00 / water content</span>
-              </Button>
-            </div>
+              <div>
+                <RadioGroupItem value="5L Pouch" id="5l-pouch" className="peer sr-only" />
+                <Label
+                  htmlFor="5l-pouch"
+                  className="flex flex-col items-start p-4 rounded-3xl border-2 border-slate-200 bg-white hover:border-blue-200 peer-data-[state=checked]:border-primary peer-data-[state=checked]:bg-blue-50/50 peer-data-[state=checked]:ring-2 peer-data-[state=checked]:ring-blue-200 cursor-pointer transition-all h-full"
+                >
+                  <div className="flex items-center justify-between mb-1 w-full">
+                    <span className="text-sm font-extrabold text-slate-900">5L Reusable Pouch</span>
+                    {selectedType === '5L Pouch' && <CheckCircle2 className="w-5 h-5 text-primary" />}
+                  </div>
+                  <p className="text-xs text-slate-500 font-medium leading-tight mb-3 text-left">Portable spout pouch</p>
+                  <span className="text-sm font-extrabold text-primary mt-auto">GH₵ 8.00</span>
+                </Label>
+              </div>
+            </RadioGroup>
           </div>
 
           {/* Select Quantity */}
           <Card className="rounded-3xl border-blue-50 shadow-sm">
-            <CardContent className="p-4 flex items-center justify-between">
+            <CardContent className="p-5 flex items-center justify-between">
               <div>
-                <span className="text-xs font-bold text-slate-800 block">Number of Refills</span>
-                <span className="text-[11px] text-slate-500 block">Total Volume: {quantity * (selectedType === '15L Shell' ? 15 : 5)} Litres</span>
+                <span className="text-sm font-bold text-slate-800 block">Number of Refills</span>
+                <span className="text-xs text-slate-500 font-medium block mt-1">Total Volume: {quantity * (selectedType === '15L Shell' ? 15 : 5)} Litres</span>
               </div>
 
-              <div className="flex items-center gap-3 bg-slate-50 p-1.5 rounded-2xl border border-slate-200">
+              <div className="flex items-center gap-3 bg-slate-50 p-2 rounded-2xl border border-slate-200">
                 <Button
                   variant="ghost"
                   size="icon"
                   onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                  className="w-8 h-8 rounded-xl bg-white shadow-xs font-bold text-slate-700 hover:bg-slate-100"
+                  className="w-10 h-10 rounded-xl bg-white shadow-xs font-bold text-slate-700 hover:bg-slate-100"
                 >
-                  <Minus className="w-4 h-4" />
+                  <Minus className="w-5 h-5" />
                 </Button>
-                <span className="font-extrabold text-slate-900 text-sm w-6 text-center">{quantity}</span>
+                <span className="font-extrabold text-slate-900 text-lg w-8 text-center">{quantity}</span>
                 <Button
                   size="icon"
                   onClick={() => setQuantity(quantity + 1)}
-                  className="w-8 h-8 rounded-xl bg-primary text-white shadow-xs font-bold hover:bg-primary/90"
+                  className="w-10 h-10 rounded-xl bg-primary text-white shadow-xs font-bold hover:bg-primary/90"
                 >
-                  <Plus className="w-4 h-4" />
+                  <Plus className="w-5 h-5" />
                 </Button>
               </div>
             </CardContent>
           </Card>
 
           {/* Point of Restock Swap Logic Options */}
-          <div className="space-y-2">
+          <div className="space-y-3">
             <div className="flex items-center justify-between">
-              <label className="block text-xs font-bold text-slate-800 uppercase tracking-wider">
+              <label className="block text-sm font-bold text-slate-800 uppercase tracking-wider">
                 3. Point of Restock Shell Trade
               </label>
-              <span className="text-[10px] text-slate-500 font-medium">Hawker • Office • Home</span>
+              <span className="text-xs text-slate-500 font-medium bg-slate-100 px-3 py-1 rounded-full hidden sm:inline-block">Hawker • Office • Home</span>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <RadioGroup
+              value={hasEmptyToSwap ? 'yes' : 'no'}
+              onValueChange={(val) => setHasEmptyToSwap(val === 'yes')}
+              className="grid grid-cols-1 sm:grid-cols-2 gap-3"
+            >
               {/* Branch 1: Brings back empty shell */}
-              <Button
-                variant="outline"
-                onClick={() => setHasEmptyToSwap(true)}
-                className={`h-auto flex-col items-stretch p-4 rounded-3xl transition-all relative space-y-2 w-full ${
-                  hasEmptyToSwap
-                    ? 'border-emerald-500 bg-emerald-50/90 ring-2 ring-emerald-300'
-                    : 'border-slate-200 bg-white hover:border-emerald-200'
-                }`}
-              >
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <div className={`p-1.5 rounded-xl ${hasEmptyToSwap ? 'bg-emerald-600 text-white' : 'bg-slate-100 text-slate-600'}`}>
-                      <RotateCcw className="w-4 h-4" />
+              <div>
+                <RadioGroupItem value="yes" id="trade-yes" className="peer sr-only" />
+                <Label
+                  htmlFor="trade-yes"
+                  className="flex flex-col items-stretch p-5 rounded-3xl border-2 border-slate-200 bg-white hover:border-emerald-200 peer-data-[state=checked]:border-emerald-500 peer-data-[state=checked]:bg-emerald-50/90 peer-data-[state=checked]:ring-2 peer-data-[state=checked]:ring-emerald-300 cursor-pointer transition-all h-full space-y-3"
+                >
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className={`p-2 rounded-xl ${hasEmptyToSwap ? 'bg-emerald-600 text-white' : 'bg-slate-100 text-slate-600'}`}>
+                        <RotateCcw className="w-5 h-5" />
+                      </div>
+                      <span className="text-sm font-bold text-emerald-950">Exchange empty container</span>
                     </div>
-                    <span className="text-xs font-bold text-emerald-950">Brings back empty shell</span>
+                    {hasEmptyToSwap && <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0" />}
                   </div>
-                  {hasEmptyToSwap && <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />}
-                </div>
 
-                <p className="text-[11px] font-normal text-emerald-900 leading-snug whitespace-normal text-left">
-                  Pays water content price only with 1:1 container exchange.
-                </p>
-
-                <div className="pt-2 mt-2 border-t border-emerald-200/60 flex items-baseline justify-between">
-                  <span className="text-[10px] uppercase font-bold text-emerald-800">Price per unit:</span>
-                  <span className="text-sm font-black text-emerald-700">GH₵ {contentPricePerUnitGHS.toFixed(2)}</span>
-                </div>
-              </Button>
+                  <div className="pt-3 mt-auto border-t border-emerald-200/60 flex items-baseline justify-between">
+                    <span className="text-xs uppercase font-bold text-emerald-800">Unit Cost:</span>
+                    <span className="text-lg font-black text-emerald-700">GH₵ {contentPricePerUnitGHS.toFixed(2)}</span>
+                  </div>
+                </Label>
+              </div>
 
               {/* Branch 2: No empty shell to trade */}
-              <Button
-                variant="outline"
-                onClick={() => setHasEmptyToSwap(false)}
-                className={`h-auto flex-col items-stretch p-4 rounded-3xl transition-all relative space-y-2 w-full ${
-                  !hasEmptyToSwap
-                    ? 'border-amber-500 bg-amber-50/90 ring-2 ring-amber-300'
-                    : 'border-slate-200 bg-white hover:border-amber-200'
-                }`}
-              >
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <div className={`p-1.5 rounded-xl ${!hasEmptyToSwap ? 'bg-amber-600 text-white' : 'bg-slate-100 text-slate-600'}`}>
-                      <Layers className="w-4 h-4" />
+              <div>
+                <RadioGroupItem value="no" id="trade-no" className="peer sr-only" />
+                <Label
+                  htmlFor="trade-no"
+                  className="flex flex-col items-stretch p-5 rounded-3xl border-2 border-slate-200 bg-white hover:border-amber-200 peer-data-[state=checked]:border-amber-500 peer-data-[state=checked]:bg-amber-50/90 peer-data-[state=checked]:ring-2 peer-data-[state=checked]:ring-amber-300 cursor-pointer transition-all h-full space-y-3"
+                >
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className={`p-2 rounded-xl ${!hasEmptyToSwap ? 'bg-amber-600 text-white' : 'bg-slate-100 text-slate-600'}`}>
+                        <Layers className="w-5 h-5" />
+                      </div>
+                      <span className="text-sm font-bold text-amber-950">No empty container</span>
                     </div>
-                    <span className="text-xs font-bold text-amber-950">No empty shell to trade</span>
+                    {!hasEmptyToSwap && <CheckCircle2 className="w-5 h-5 text-amber-600 shrink-0" />}
                   </div>
-                  {!hasEmptyToSwap && <CheckCircle2 className="w-4 h-4 text-amber-600 shrink-0" />}
-                </div>
 
-                <p className="text-[11px] font-normal text-amber-900 leading-snug whitespace-normal text-left">
-                  Pays content + shell surcharge (e.g., GH₵15 + GH₵10).
-                </p>
-
-                <div className="pt-2 mt-2 border-t border-amber-200/60 flex items-baseline justify-between">
-                  <span className="text-[10px] uppercase font-bold text-amber-800">Price per unit:</span>
-                  <span className="text-sm font-black text-amber-800">
-                    GH₵ {(contentPricePerUnitGHS + surchargePerUnitGHS).toFixed(2)}
-                  </span>
-                </div>
-              </Button>
-            </div>
-
-            {/* Informational Callout Box */}
-            <Card className="bg-[#F3FAFF] border-blue-100 mt-3 rounded-2xl shadow-none">
-              <CardContent className="p-3.5 flex items-start gap-3">
-                <Info className="w-5 h-5 text-primary shrink-0 mt-0.5" />
-                <div className="space-y-1 text-[11px]">
-                  <p className="font-bold text-slate-800">
-                    Driver scans empty out, scans full in — simple 1:1 exchange
-                  </p>
-                  <p className="text-slate-600 leading-relaxed">
-                    Returning an empty container ensures you pay only the lower water content price every time, making refills easy and affordable.
-                  </p>
-                </div>
-              </CardContent>
-            </Card>
+                  <div className="pt-3 mt-auto border-t border-amber-200/60 flex items-baseline justify-between">
+                    <span className="text-xs uppercase font-bold text-amber-800">Unit Cost:</span>
+                    <span className="text-lg font-black text-amber-800">
+                      GH₵ {(contentPricePerUnitGHS + surchargePerUnitGHS).toFixed(2)}
+                    </span>
+                  </div>
+                </Label>
+              </div>
+            </RadioGroup>
           </div>
 
           {/* Delivery Schedule Type */}
-          <div className="space-y-2">
-            <label className="block text-xs font-bold text-slate-800 uppercase tracking-wider">4. Schedule & Frequency</label>
-            <div className="grid grid-cols-2 gap-2">
-              <Button
-                variant="outline"
-                onClick={() => setPurchaseType('subscription')}
-                className={`h-auto flex-col items-start p-3.5 rounded-2xl transition-all w-full ${
-                  purchaseType === 'subscription'
-                    ? 'border-primary bg-[#F3FAFF] ring-2 ring-blue-200'
-                    : 'border-slate-200 bg-white hover:bg-slate-50'
-                }`}
-              >
-                <div className="flex items-center justify-between mb-1 w-full">
-                  <span className="text-xs font-bold text-slate-900">Auto Refill Plan</span>
-                  <Badge variant="outline" className="text-[10px] bg-green-100 text-green-800 border-none px-1.5 py-0.5 font-bold rounded-full">10% OFF</Badge>
-                </div>
-                <p className="text-[10px] font-normal text-slate-500 text-left whitespace-normal">Delivered on your custom schedule automatically.</p>
-              </Button>
+          <div className="space-y-3">
+            <label className="block text-sm font-bold text-slate-800 uppercase tracking-wider">4. Schedule & Frequency</label>
+            <Tabs 
+              value={purchaseType} 
+              onValueChange={(val) => setPurchaseType(val as 'one_time' | 'subscription')}
+              className="w-full"
+            >
+              <TabsList className="grid w-full grid-cols-2 bg-slate-100/70 p-1.5 rounded-2xl !h-auto gap-1 border border-slate-200/60">
+                <TabsTrigger value="subscription" className="flex flex-col items-center justify-center p-3 rounded-xl data-[state=active]:bg-white data-[state=active]:shadow-sm data-[state=active]:text-primary transition-all">
+                  <div className="flex items-center gap-1.5 mb-1">
+                    <span className="text-sm font-bold">Auto Refill Plan</span>
+                    <Badge variant="outline" className="text-[10px] bg-green-100 text-green-800 border-none px-2 py-0.5 font-bold rounded-full h-5">10% OFF</Badge>
+                  </div>
+                  <span className="text-xs font-medium text-muted-foreground">Custom schedule</span>
+                </TabsTrigger>
 
-              <Button
-                variant="outline"
-                onClick={() => setPurchaseType('one_time')}
-                className={`h-auto flex-col items-start p-3.5 rounded-2xl transition-all w-full ${
-                  purchaseType === 'one_time'
-                    ? 'border-primary bg-[#F3FAFF] ring-2 ring-blue-200'
-                    : 'border-slate-200 bg-white hover:bg-slate-50'
-                }`}
-              >
-                <span className="text-xs font-bold text-slate-900 block mb-1">One-Time Order</span>
-                <p className="text-[10px] font-normal text-slate-500 text-left whitespace-normal">Single delivery order as needed.</p>
-              </Button>
-            </div>
+                <TabsTrigger value="one_time" className="flex flex-col items-center justify-center p-3 rounded-xl data-[state=active]:bg-white data-[state=active]:shadow-sm data-[state=active]:text-primary transition-all">
+                  <span className="text-sm font-bold block mb-1">One-Time Order</span>
+                  <span className="text-xs font-medium text-muted-foreground">Single delivery</span>
+                </TabsTrigger>
+              </TabsList>
+            </Tabs>
           </div>
 
           {/* Address & Date Selection */}
           <Card className="rounded-3xl border-blue-50 shadow-sm">
-            <CardContent className="p-4 space-y-3">
+            <CardContent className="p-5 space-y-4">
               <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1">Delivery Address (Accra / Kumasi)</label>
+                <label className="block text-sm font-bold text-slate-700 mb-2">Delivery Address</label>
                 <div className="relative">
-                  <MapPin className="w-4 h-4 text-slate-400 absolute left-3.5 top-3" />
+                  <MapPin className="w-5 h-5 text-slate-400 absolute left-3 top-3.5" />
                   <Input
                     type="text"
                     value={deliveryAddress}
                     onChange={(e) => setDeliveryAddress(e.target.value)}
-                    className="pl-10 h-10 rounded-2xl bg-slate-50 border-slate-200 text-xs font-medium focus-visible:ring-primary"
+                    className="pl-10 h-12 rounded-2xl bg-slate-50 border-slate-200 text-sm font-medium focus-visible:ring-primary"
                   />
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-2 text-xs">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block font-bold text-slate-700 mb-1">Delivery Date</label>
+                  <label className="block text-sm font-bold text-slate-700 mb-2">Date</label>
                   <Input
                     type="date"
                     value={scheduledDate}
                     onChange={(e) => setScheduledDate(e.target.value)}
-                    className="h-10 rounded-2xl bg-slate-50 border-slate-200 font-medium focus-visible:ring-primary"
+                    className="h-12 rounded-2xl bg-slate-50 border-slate-200 text-sm font-medium focus-visible:ring-primary"
                   />
                 </div>
 
                 <div>
-                  <label className="block font-bold text-slate-700 mb-1">Time Window</label>
+                  <label className="block text-sm font-bold text-slate-700 mb-2">Time Window</label>
                   <Select value={timeSlot} onValueChange={setTimeSlot}>
-                    <SelectTrigger className="h-10 rounded-2xl bg-slate-50 border-slate-200 font-medium focus:ring-primary">
+                    <SelectTrigger className="h-12 rounded-2xl bg-slate-50 border-slate-200 text-sm font-medium focus:ring-primary">
                       <SelectValue placeholder="Select time slot" />
                     </SelectTrigger>
                     <SelectContent>
@@ -375,100 +328,95 @@ export const OrderWaterScreen: React.FC<OrderWaterScreenProps> = ({ onOrderPlace
           </Card>
 
           {/* Payment Selection */}
-          <div className="space-y-2">
-            <label className="block text-xs font-bold text-slate-800 uppercase tracking-wider">5. Select Ghana Payment Method</label>
-            <div className="grid grid-cols-3 gap-2">
-              <Button
-                variant="outline"
-                onClick={() => setPaymentMethod('mtn_momo')}
-                className={`h-auto flex-col items-center justify-center p-3 rounded-2xl transition-all w-full ${
-                  paymentMethod === 'mtn_momo' ? 'border-amber-500 bg-amber-50 ring-2 ring-amber-200' : 'border-slate-200 bg-white hover:bg-slate-50'
-                }`}
-              >
-                <span className="text-[11px] font-bold text-slate-900 block">MTN MoMo</span>
-                <span className="text-[9px] font-normal text-amber-700 font-semibold">*170# Prompt</span>
-              </Button>
+          <div className="space-y-3">
+            <label className="block text-sm font-bold text-slate-800 uppercase tracking-wider">5. Select Payment Gateway</label>
+            <RadioGroup
+              value={paymentMethod}
+              onValueChange={(val) => setPaymentMethod(val as any)}
+              className="grid grid-cols-2 gap-3"
+            >
+              <div>
+                <RadioGroupItem value="paystack" id="paystack" className="peer sr-only" />
+                <Label
+                  htmlFor="paystack"
+                  className="flex flex-col items-center justify-center p-4 rounded-2xl border-2 border-slate-200 bg-white hover:border-sky-200 peer-data-[state=checked]:border-sky-500 peer-data-[state=checked]:bg-sky-50 peer-data-[state=checked]:ring-2 peer-data-[state=checked]:ring-sky-200 cursor-pointer transition-all text-center h-full group"
+                >
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/0/0b/Paystack_Logo.png" alt="Paystack" className="h-6 object-contain transition-transform group-hover:scale-105" />
+                </Label>
+              </div>
 
-              <Button
-                variant="outline"
-                onClick={() => setPaymentMethod('telecel_cash')}
-                className={`h-auto flex-col items-center justify-center p-3 rounded-2xl transition-all w-full ${
-                  paymentMethod === 'telecel_cash' ? 'border-red-500 bg-red-50 ring-2 ring-red-200' : 'border-slate-200 bg-white hover:bg-slate-50'
-                }`}
-              >
-                <span className="text-[11px] font-bold text-slate-900 block">Telecel Cash</span>
-                <span className="text-[9px] font-normal text-red-700 font-semibold">*110# Prompt</span>
-              </Button>
-
-              <Button
-                variant="outline"
-                onClick={() => setPaymentMethod('wallet')}
-                className={`h-auto flex-col items-center justify-center p-3 rounded-2xl transition-all w-full ${
-                  paymentMethod === 'wallet' ? 'border-primary bg-blue-50 ring-2 ring-blue-200' : 'border-slate-200 bg-white hover:bg-slate-50'
-                }`}
-              >
-                <span className="text-[11px] font-bold text-slate-900 block">Nsupa Wallet</span>
-                <span className="text-[9px] font-normal text-primary font-semibold">Instant Pay</span>
-              </Button>
-            </div>
+              <div>
+                <RadioGroupItem value="moolre" id="moolre" className="peer sr-only" />
+                <Label
+                  htmlFor="moolre"
+                  className="flex flex-col items-center justify-center p-4 rounded-2xl border-2 border-slate-200 bg-white hover:border-indigo-200 peer-data-[state=checked]:border-indigo-500 peer-data-[state=checked]:bg-indigo-50 peer-data-[state=checked]:ring-2 peer-data-[state=checked]:ring-indigo-200 cursor-pointer transition-all text-center h-full group"
+                >
+                  <img 
+                    src="https://cdn.brandfetch.io/idta8X0gYt/w/820/h/226/theme/dark/logo.png?c=1bxid64Mup7aczewSAYMX&t=1741146048947" 
+                    alt="Moolre" 
+                    className="h-6 object-contain transition-transform group-hover:scale-105" 
+                  />
+                </Label>
+              </div>
+            </RadioGroup>
           </div>
         </div>
 
         {/* Right Column: Order Summary Card (lg:col-span-1 lg:sticky lg:top-24) */}
         <div className="lg:col-span-1 lg:sticky lg:top-24 space-y-4">
-          <Card className="bg-slate-900 text-white rounded-3xl border-none shadow-lg">
+          <Card className="bg-white rounded-3xl border-2 border-blue-50 shadow-xl shadow-blue-900/5">
             <CardContent className="p-6 space-y-5">
-              <div className="flex items-center justify-between border-b border-slate-800 pb-3">
-                <span className="text-xs font-bold uppercase text-[#4FC3F7] tracking-wider">Restock Order Summary</span>
-                <span className="text-[10px] text-slate-400 font-mono">1:1 Exchange</span>
+              <div className="flex items-center justify-between border-b border-slate-100 pb-4">
+                <span className="text-sm font-bold uppercase text-primary tracking-wider">Restock Order Summary</span>
+                <span className="text-xs text-slate-500 font-mono bg-slate-50 px-3 py-1 rounded-md hidden sm:inline-block">1:1 Exchange</span>
               </div>
 
-              <div className="space-y-3 text-xs text-slate-300">
+              <div className="space-y-4 text-sm text-slate-600">
                 <div className="flex justify-between">
                   <span>Water Content ({quantity}x {selectedType}):</span>
-                  <span className="font-semibold text-white">GH₵ {subtotalWaterGHS.toFixed(2)}</span>
+                  <span className="font-bold text-slate-900">GH₵ {subtotalWaterGHS.toFixed(2)}</span>
                 </div>
 
                 <div className="flex justify-between">
                   <span>Shell Trade Status:</span>
-                  <span className="font-bold text-emerald-400">
-                    {hasEmptyToSwap ? `1:1 Shell Swap (${quantity} empty returned)` : `Shell Surcharge (+GH₵ ${subtotalSurchargeGHS.toFixed(2)})`}
+                  <span className="font-bold text-emerald-600 bg-emerald-50 px-2 py-1 rounded-md">
+                    {hasEmptyToSwap ? `1:1 Swap (${quantity} returned)` : `Surcharge (+GH₵ ${subtotalSurchargeGHS.toFixed(2)})`}
                   </span>
                 </div>
 
                 {!hasEmptyToSwap && (
-                  <div className="flex justify-between text-amber-300">
+                  <div className="flex justify-between text-amber-700">
                     <span>Shell Surcharge ({quantity}x GH₵ {surchargePerUnitGHS}):</span>
-                    <span className="font-semibold">+ GH₵ {subtotalSurchargeGHS.toFixed(2)}</span>
+                    <span className="font-bold">+ GH₵ {subtotalSurchargeGHS.toFixed(2)}</span>
                   </div>
                 )}
 
                 {discountGHS > 0 && (
-                  <div className="flex justify-between text-green-400">
-                    <span>Subscription Member Discount:</span>
-                    <span className="font-semibold">- GH₵ {discountGHS.toFixed(2)}</span>
+                  <div className="flex justify-between text-green-600">
+                    <span>Auto-Refill Discount:</span>
+                    <span className="font-bold">- GH₵ {discountGHS.toFixed(2)}</span>
                   </div>
                 )}
 
-                <Separator className="bg-slate-800 my-2" />
+                <Separator className="bg-slate-100 my-4" />
 
-                <div className="flex justify-between text-sm font-black text-white pt-1">
+                <div className="flex justify-between items-end text-base font-black text-slate-900 pt-1">
                   <span>Total Payable:</span>
-                  <span className="text-[#4FC3F7] text-lg">GH₵ {totalAmountGHS.toFixed(2)}</span>
+                  <span className="text-primary text-2xl">GH₵ {totalAmountGHS.toFixed(2)}</span>
                 </div>
               </div>
 
               <Button
                 onClick={handlePlaceOrder}
                 disabled={loading}
-                className="w-full sm:w-auto h-14 bg-primary hover:bg-primary/90 text-white font-extrabold rounded-2xl text-xs shadow-lg shadow-primary/20 transition-all active:scale-95"
+                className="w-full sm:w-auto h-14 bg-primary hover:bg-primary/90 text-white font-extrabold rounded-2xl text-sm shadow-lg shadow-primary/20 transition-all active:scale-95"
               >
                 {loading ? (
-                  <span>Initiating MoMo Payment Prompt...</span>
+                  <span>Processing...</span>
                 ) : (
                   <div className="flex items-center justify-center gap-2">
-                    <span>Pay GH₵ {totalAmountGHS.toFixed(2)} & Confirm Swap</span>
-                    <ArrowRight className="w-4 h-4" />
+                    <span>Pay GH₵ {totalAmountGHS.toFixed(2)}</span>
+                    <ArrowRight className="w-5 h-5" />
                   </div>
                 )}
               </Button>

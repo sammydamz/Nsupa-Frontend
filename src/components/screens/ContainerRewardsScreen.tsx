@@ -30,18 +30,15 @@ export const ContainerRewardsScreen: React.FC<ContainerRewardsScreenProps> = ({
       {/* Top Header */}
       <Card className="rounded-3xl border-blue-50 shadow-sm">
         <CardContent className="p-4 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-blue-50 text-primary rounded-2xl flex items-center justify-center font-bold">
-              <Award className="w-5 h-5" />
+          <div className="flex items-center gap-4">
+            <div className="w-12 h-12 bg-blue-50 text-primary rounded-2xl flex items-center justify-center font-bold">
+              <Award className="w-6 h-6" />
             </div>
             <div>
-              <h1 className="text-base font-extrabold text-slate-900 leading-tight">Containers & Swap Rewards</h1>
-              <p className="text-xs text-slate-500">Track containers & earn every 10th swap free</p>
+              <h1 className="text-lg font-extrabold text-slate-900 leading-tight">Swap Rewards</h1>
+              <p className="text-base text-slate-500 mt-1">11th Refill is FREE</p>
             </div>
           </div>
-          <Badge className="bg-blue-100 text-primary hover:bg-blue-100 font-extrabold px-2.5 py-1 rounded-full uppercase">
-            No Deposits
-          </Badge>
         </CardContent>
       </Card>
 
@@ -53,24 +50,24 @@ export const ContainerRewardsScreen: React.FC<ContainerRewardsScreenProps> = ({
             <Gift className="w-48 h-48 text-white" />
           </div>
 
-          <div className="relative z-10 flex items-start justify-between gap-3">
-            <div className="space-y-1">
-              <span className="text-[11px] uppercase font-bold text-blue-200 tracking-wider flex items-center gap-1.5">
-                <Sparkles className="w-3.5 h-3.5 text-amber-300" />
-                Nsupa Milestone Swap Reward
+          <div className="relative z-10 flex items-start justify-between gap-4">
+            <div className="space-y-3">
+              <span className="text-sm uppercase font-bold text-blue-200 tracking-wider flex items-center gap-2">
+                <Sparkles className="w-5 h-5 text-amber-300" />
+                Milestone Reward
               </span>
-              <h2 className="text-2xl font-black text-white">
-                {currentSwaps} / {totalSwapsForReward} Completed Swaps
+              <h2 className="text-xl font-black text-white">
+                {currentSwaps} / {totalSwapsForReward} Swaps
               </h2>
-              <p className="text-xs text-blue-100">
-                Only <strong className="text-amber-300 font-extrabold">{swapsNeeded} more swap{swapsNeeded > 1 ? 's' : ''}</strong> to unlock your 11th Refill FREE!
+              <p className="text-base text-blue-100">
+                <strong className="text-amber-300 font-extrabold">{swapsNeeded} more</strong> to unlock FREE Refill
               </p>
             </div>
 
-            <div className="bg-white/15 backdrop-blur-md p-3 rounded-2xl border border-white/20 text-center shrink-0">
-              <Gift className="w-6 h-6 text-amber-300 mx-auto" />
-              <span className="text-[10px] text-blue-100 font-bold block mt-1">Free Rewards</span>
-              <span className="text-xs font-black text-white">{rewardsUnlockedCount} Earned</span>
+            <div className="bg-white/15 backdrop-blur-md p-4 rounded-3xl border border-white/20 text-center shrink-0">
+              <Gift className="w-8 h-8 text-amber-300 mx-auto" />
+              <span className="text-sm text-blue-100 font-bold block mt-2">Earned</span>
+              <span className="text-lg font-black text-white">{rewardsUnlockedCount}</span>
             </div>
           </div>
 
@@ -88,7 +85,7 @@ export const ContainerRewardsScreen: React.FC<ContainerRewardsScreenProps> = ({
                 return (
                   <div
                     key={idx}
-                    className={`flex flex-col items-center justify-center h-6 rounded-xl text-center text-[10px] font-bold ${
+                    className={`flex flex-col items-center justify-center h-10 rounded-2xl text-center text-sm font-bold ${
                       isDone
                         ? 'bg-amber-300 text-slate-900'
                         : isReward
@@ -97,9 +94,9 @@ export const ContainerRewardsScreen: React.FC<ContainerRewardsScreenProps> = ({
                     }`}
                   >
                     {isDone ? (
-                      <Check className="w-3 h-3 stroke-[3]" />
+                      <Check className="w-5 h-5 stroke-[3]" />
                     ) : isReward ? (
-                      <Gift className="w-3 h-3 text-slate-900" />
+                      <Gift className="w-5 h-5 text-slate-900" />
                     ) : (
                       <span>{swapNum}</span>
                     )}
@@ -109,13 +106,12 @@ export const ContainerRewardsScreen: React.FC<ContainerRewardsScreenProps> = ({
             </div>
           </div>
 
-          <div className="relative z-10 pt-2 border-t border-white/15 flex items-center justify-between text-xs text-blue-100">
-            <span>Every 10 completed container swaps earns a free pouch or refill.</span>
+          <div className="relative z-10 pt-5 border-t border-white/15 flex items-center justify-end text-sm text-blue-100">
             <Button
               variant="secondary"
-              size="sm"
+              size="lg"
               onClick={() => onNavigate('order')}
-              className="bg-white text-primary hover:text-primary font-extrabold rounded-xl text-xs hover:bg-blue-50 transition-colors shrink-0 shadow-sm"
+              className="bg-white text-primary hover:text-primary font-extrabold rounded-2xl text-base h-12 px-6 hover:bg-blue-50 transition-colors shadow-sm"
             >
               Swap Water Now
             </Button>
@@ -123,72 +119,58 @@ export const ContainerRewardsScreen: React.FC<ContainerRewardsScreenProps> = ({
         </CardContent>
       </Card>
 
-      {/* Model Rule Banner */}
-      <Card className="bg-[#F3FAFF] border-blue-100 rounded-3xl shadow-none">
-        <CardContent className="p-4 space-y-1 text-slate-700">
-          <div className="flex items-center gap-2">
-            <Shield className="w-4 h-4 text-primary" />
-            <span className="text-xs font-extrabold text-slate-900">How Container Swapping Works</span>
-          </div>
-          <p className="text-[11px] text-slate-600 leading-relaxed">
-            The container is <strong>yours to keep</strong> — there is no deposit or return obligation. Whenever your container is empty, hand it to a driver or kiosk to swap for a full one and pay only the lower refill price (e.g., GH₵ 15.00 instead of GH₵ 35.00 for a new unit)!
-          </p>
-        </CardContent>
-      </Card>
-
       {/* Reusable Containers Currently Held */}
-      <div className="space-y-3">
+      <div className="space-y-5">
         <div className="flex items-center justify-between">
-          <h2 className="text-xs font-bold uppercase text-slate-800 tracking-wider">Containers Currently Held ({bottles.length})</h2>
-          <span className="text-[11px] text-primary font-bold">100% Owned by You</span>
+          <h2 className="text-base font-bold uppercase text-slate-800 tracking-wider">Containers Held ({bottles.length})</h2>
         </div>
 
-        <div className="space-y-3">
+        <div className="space-y-4">
           {bottles.map((bottle) => (
             <Card key={bottle.id} className="rounded-3xl border-blue-50 shadow-sm">
-              <CardContent className="p-4 space-y-3">
+              <CardContent className="p-6 space-y-5">
                 <div className="flex items-center justify-between">
                   <div>
-                    <span className="text-xs font-extrabold text-slate-900 block">{bottle.id}</span>
-                    <span className="text-[11px] text-slate-500 block">{bottle.type} ({bottle.sizeLitres}L)</span>
+                    <span className="text-lg font-extrabold text-slate-900 block">{bottle.id}</span>
+                    <span className="text-sm text-slate-500 block mt-1">{bottle.type} ({bottle.sizeLitres}L)</span>
                   </div>
 
-                  <Badge variant="outline" className={`border-none px-2.5 py-1 rounded-full text-[10px] font-bold uppercase ${
+                  <Badge variant="outline" className={`border-none px-4 py-2 rounded-full text-sm font-bold uppercase ${
                     bottle.linerState === 'empty_ready_return'
                       ? 'bg-amber-100 text-amber-800'
                       : 'bg-emerald-100 text-emerald-800'
                   }`}>
-                    {bottle.linerState === 'empty_ready_return' ? 'Empty (Ready to Swap)' : 'In Active Use'}
+                    {bottle.linerState === 'empty_ready_return' ? 'Empty' : 'Active'}
                   </Badge>
                 </div>
 
-                <div className="grid grid-cols-2 gap-2 text-xs bg-slate-50 p-3 rounded-2xl border border-slate-100">
+                <div className="grid grid-cols-2 gap-4 text-base bg-slate-50 p-4 rounded-3xl border border-slate-100">
                   <div>
-                    <span className="text-[10px] text-slate-400 block">Total Refill Swaps</span>
-                    <span className="font-bold text-slate-800">{bottle.refillCount} Cycles Done</span>
+                    <span className="text-sm text-slate-500 block mb-1">Total Swaps</span>
+                    <span className="font-bold text-slate-900">{bottle.refillCount} Cycles</span>
                   </div>
 
                   <div>
-                    <span className="text-[10px] text-slate-400 block">Refill Price</span>
+                    <span className="text-sm text-slate-500 block mb-1">Refill Price</span>
                     <span className="font-extrabold text-emerald-700">GH₵ {bottle.sizeLitres === 15 ? '15.00' : '8.00'}</span>
                   </div>
                 </div>
 
-                <div className="flex items-center gap-2 pt-1">
+                <div className="flex items-center gap-3 pt-2">
                   <Button
                     variant="outline"
                     onClick={() => onNavigate('qr_scanner')}
-                    className="flex-1 h-10 bg-blue-50 text-primary font-bold rounded-2xl text-xs flex items-center justify-center gap-1.5 hover:bg-blue-100 hover:text-primary border border-blue-100"
+                    className="flex-1 h-12 bg-blue-50 text-primary font-bold rounded-2xl text-sm flex items-center justify-center gap-2 hover:bg-blue-100 hover:text-primary border border-blue-100"
                   >
-                    <QrCode className="w-4 h-4" />
+                    <QrCode className="w-5 h-5" />
                     <span>Scan QR Code</span>
                   </Button>
 
                   <Button
                     onClick={() => onNavigate('order')}
-                    className="flex-1 h-10 bg-primary hover:bg-primary/90 text-white font-bold rounded-2xl text-xs flex items-center justify-center gap-1.5 shadow-sm"
+                    className="flex-1 h-12 bg-primary hover:bg-primary/90 text-white font-bold rounded-2xl text-sm flex items-center justify-center gap-2 shadow-sm"
                   >
-                    <RefreshCw className="w-4 h-4" />
+                    <RefreshCw className="w-5 h-5" />
                     <span>Order Refill Swap</span>
                   </Button>
                 </div>
@@ -201,43 +183,43 @@ export const ContainerRewardsScreen: React.FC<ContainerRewardsScreenProps> = ({
       {/* Swap History Log */}
       <Card className="rounded-3xl border-blue-50 shadow-sm">
         <CardContent className="p-5 space-y-4">
-          <div className="flex items-center justify-between border-b border-slate-100 pb-2">
-            <h3 className="text-xs font-bold uppercase text-slate-800 tracking-wider">Recent Swap History</h3>
-            <span className="text-[11px] text-slate-400">Scan verified</span>
+          <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+            <h3 className="text-sm font-bold uppercase text-slate-800 tracking-wider">Recent Swap History</h3>
+            <span className="text-xs text-slate-400">Scan verified</span>
           </div>
 
-          <div className="space-y-3">
-            <div className="flex items-start justify-between text-xs pb-3 border-b border-slate-100">
-              <div className="flex gap-2.5">
-                <div className="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold shrink-0 mt-0.5">
-                  <RefreshCw className="w-4 h-4" />
+          <div className="space-y-4">
+            <div className="flex items-start justify-between text-sm pb-4 border-b border-slate-100">
+              <div className="flex gap-3">
+                <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold shrink-0">
+                  <RefreshCw className="w-5 h-5" />
                 </div>
                 <div>
-                  <span className="font-bold text-slate-900 block">1:1 Container Swap (2x 15L Shells)</span>
-                  <span className="text-[11px] text-slate-400 block">Jul 20, 2026 • Driver Kwame Osei</span>
-                  <span className="text-[10px] text-emerald-700 font-bold block mt-0.5">+2 Milestone Swaps Credited</span>
+                  <span className="font-bold text-slate-900 block text-sm">1:1 Container Swap (2x 15L Shells)</span>
+                  <span className="text-xs text-slate-500 block mt-0.5">Jul 20, 2026 • Driver Kwame Osei</span>
+                  <span className="text-xs text-emerald-700 font-bold block mt-1">+2 Milestone Swaps Credited</span>
                 </div>
               </div>
               <div className="text-right">
-                <span className="font-extrabold text-slate-900 block">GH₵ 30.00</span>
-                <span className="text-[10px] bg-emerald-100 text-emerald-800 px-1.5 py-0.5 rounded font-bold">Saved GH₵ 40</span>
+                <span className="font-extrabold text-slate-900 block text-sm">GH₵ 30.00</span>
+                <span className="text-xs bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-md font-bold mt-1 inline-block">Saved GH₵ 40</span>
               </div>
             </div>
 
-            <div className="flex items-start justify-between text-xs">
-              <div className="flex gap-2.5">
-                <div className="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold shrink-0 mt-0.5">
-                  <RefreshCw className="w-4 h-4" />
+            <div className="flex items-start justify-between text-sm">
+              <div className="flex gap-3">
+                <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold shrink-0">
+                  <RefreshCw className="w-5 h-5" />
                 </div>
                 <div>
-                  <span className="font-bold text-slate-900 block">1:1 Container Swap (2x 15L Shells)</span>
-                  <span className="text-[11px] text-slate-400 block">Jul 15, 2026 • Driver Kwame Osei</span>
-                  <span className="text-[10px] text-emerald-700 font-bold block mt-0.5">+2 Milestone Swaps Credited</span>
+                  <span className="font-bold text-slate-900 block text-sm">1:1 Container Swap (2x 15L Shells)</span>
+                  <span className="text-xs text-slate-500 block mt-0.5">Jul 15, 2026 • Driver Kwame Osei</span>
+                  <span className="text-xs text-emerald-700 font-bold block mt-1">+2 Milestone Swaps Credited</span>
                 </div>
               </div>
               <div className="text-right">
-                <span className="font-extrabold text-slate-900 block">GH₵ 30.00</span>
-                <span className="text-[10px] bg-emerald-100 text-emerald-800 px-1.5 py-0.5 rounded font-bold">Saved GH₵ 40</span>
+                <span className="font-extrabold text-slate-900 block text-sm">GH₵ 30.00</span>
+                <span className="text-xs bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-md font-bold mt-1 inline-block">Saved GH₵ 40</span>
               </div>
             </div>
           </div>

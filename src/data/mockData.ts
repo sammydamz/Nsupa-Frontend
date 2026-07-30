@@ -155,13 +155,13 @@ export const initialSubscriptions: Subscription[] = [
 export const initialTransactions: WalletTransaction[] = [
   {
     id: 'TXN-901',
-    type: 'shell_exchange',
+    type: 'deposit_refund',
     amountGHS: 30.00,
-    description: '1:1 Shell Swap Refill (2x 15L Water @ GH₵15.00 each)',
+    description: 'Container Deposit Refund (2x Empty 15L Returned)',
     date: '2026-07-20 03:45 PM',
     status: 'completed',
-    reference: 'REF-MOMO-881920',
-    paymentChannel: 'MTN MoMo (+233 24 *** 3456)',
+    reference: 'REF-DEP-881920',
+    paymentChannel: 'Wallet Deposit',
   },
   {
     id: 'TXN-902',
@@ -170,18 +170,18 @@ export const initialTransactions: WalletTransaction[] = [
     description: 'Payment for 2x 15L Water Refill (Order #NS-94821)',
     date: '2026-07-22 07:30 AM',
     status: 'completed',
-    reference: 'MOMO-PAY-991204',
-    paymentChannel: 'MTN MoMo',
+    reference: 'PAY-PS-991204',
+    paymentChannel: 'Mobile Wallet (via Paystack)',
   },
   {
     id: 'TXN-903',
     type: 'top_up',
     amountGHS: 100.00,
-    description: 'Nsupa Wallet Top-Up via Telecel Cash',
+    description: 'Nsupa Wallet Top-Up via Moolre',
     date: '2026-07-12 11:20 AM',
     status: 'completed',
-    reference: 'TOPUP-TEL-00381',
-    paymentChannel: 'Telecel Cash',
+    reference: 'TOPUP-ML-00381',
+    paymentChannel: 'Bank Account (via Moolre)',
   }
 ];
 

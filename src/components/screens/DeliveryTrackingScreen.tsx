@@ -5,6 +5,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 
 interface DeliveryTrackingScreenProps {
   order: Order;
@@ -71,49 +72,49 @@ export const DeliveryTrackingScreen: React.FC<DeliveryTrackingScreenProps> = ({ 
       </Card>
 
       {/* Simulated Live GPS Map Container */}
-      <div className="relative bg-slate-900 rounded-3xl h-64 overflow-hidden shadow-md border-2 border-sky-200">
+      <div className="relative bg-blue-50 rounded-3xl h-64 overflow-hidden shadow-md border-2 border-sky-100">
         {/* SVG Simulated Map Visual */}
         <svg viewBox="0 0 400 240" className="w-full h-full object-cover">
           {/* Map background roads */}
-          <rect width="400" height="240" fill="#0F172A" />
+          <rect width="400" height="240" className="fill-blue-50" />
           
           {/* Roads */}
-          <path d="M 0 120 L 400 120" stroke="#334155" strokeWidth="16" />
-          <path d="M 180 0 L 180 240" stroke="#334155" strokeWidth="12" />
-          <path d="M 60 40 Q 200 180, 340 60" stroke="#1E293B" strokeWidth="24" fill="none" />
+          <path d="M 0 120 L 400 120" className="stroke-white" strokeWidth="16" />
+          <path d="M 180 0 L 180 240" className="stroke-white" strokeWidth="12" />
+          <path d="M 60 40 Q 200 180, 340 60" className="stroke-blue-100" strokeWidth="24" fill="none" />
           
           {/* Active Route Path */}
-          <path d="M 80 180 Q 180 120, 280 80" stroke="#38BDF8" strokeWidth="5" strokeDasharray="8,4" fill="none" className="animate-pulse" />
+          <path d="M 80 180 Q 180 120, 280 80" className="stroke-sky-400 animate-pulse" strokeWidth="5" strokeDasharray="8,4" fill="none" />
 
           {/* Depot Location Pin */}
-          <circle cx="80" cy="180" r="10" fill="#0284C7" />
-          <text x="80" y="205" textAnchor="middle" fill="#94A3B8" fontSize="10" fontWeight="bold">Achimota Depot</text>
+          <circle cx="80" cy="180" r="10" className="fill-sky-600" />
+          <text x="80" y="205" textAnchor="middle" className="fill-slate-600" fontSize="10" fontWeight="bold">Achimota Depot</text>
 
           {/* Customer House Location Pin */}
-          <circle cx="280" cy="80" r="12" fill="#10B981" />
-          <circle cx="280" cy="80" r="18" fill="#10B981" opacity="0.3" className="animate-ping" />
-          <text x="280" y="60" textAnchor="middle" fill="#34D399" fontSize="10" fontWeight="bold">East Legon House</text>
+          <circle cx="280" cy="80" r="12" className="fill-emerald-500" />
+          <circle cx="280" cy="80" r="18" className="fill-emerald-500 animate-ping opacity-30" />
+          <text x="280" y="60" textAnchor="middle" className="fill-emerald-600" fontSize="10" fontWeight="bold">East Legon House</text>
 
           {/* Moving Driver Icon */}
           <g transform="translate(180, 120)">
-            <circle cx="0" cy="0" r="14" fill="#38BDF8" />
-            <circle cx="0" cy="0" r="20" fill="#38BDF8" opacity="0.3" className="animate-ping" />
-            <text x="0" y="4" textAnchor="middle" fill="#0F172A" fontSize="11" fontWeight="bold">R</text>
+            <circle cx="0" cy="0" r="14" className="fill-sky-400 border-2 border-white" />
+            <circle cx="0" cy="0" r="20" className="fill-sky-400 animate-ping opacity-30" />
+            <text x="0" y="4" textAnchor="middle" className="fill-white" fontSize="11" fontWeight="bold">R</text>
           </g>
         </svg>
 
         {/* Floating ETA Badge */}
-        <div className="absolute top-3 left-3 bg-slate-900/90 backdrop-blur-sm border border-sky-400/30 px-3.5 py-2 rounded-2xl text-white shadow-lg flex items-center gap-2">
-          <Clock className="w-4 h-4 text-sky-400 animate-spin-slow" />
+        <div className="absolute top-3 left-3 bg-white/90 backdrop-blur-sm border border-sky-100 px-3.5 py-2 rounded-2xl shadow-lg flex items-center gap-2">
+          <Clock className="w-4 h-4 text-sky-600 animate-spin-slow" />
           <div>
-            <span className="text-[10px] text-sky-200 block">Estimated Arrival</span>
-            <span className="text-sm font-black text-white">{etaMins} Mins</span>
+            <span className="text-[10px] text-slate-500 block">Estimated Arrival</span>
+            <span className="text-sm font-black text-slate-900">{etaMins} Mins</span>
           </div>
         </div>
 
         {/* Map Legend Badge */}
-        <div className="absolute bottom-3 right-3 bg-slate-900/90 backdrop-blur-sm px-3 py-1 rounded-xl text-[10px] text-slate-300 font-semibold border border-slate-700">
-          <span className="flex items-center gap-1"><MapPin className="w-3 h-3" /> Accra Delivery Network</span>
+        <div className="absolute bottom-3 right-3 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-xl text-[10px] text-slate-600 font-semibold border border-slate-200 shadow-sm">
+          <span className="flex items-center gap-1"><MapPin className="w-3 h-3 text-sky-500" /> Accra Delivery Network</span>
         </div>
       </div>
 
@@ -227,33 +228,34 @@ export const DeliveryTrackingScreen: React.FC<DeliveryTrackingScreenProps> = ({ 
       </Card>
 
       {/* Call Modal */}
-      {showCallModal && (
-        <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
-          <Card className="bg-white rounded-3xl p-6 max-w-xs w-full text-center space-y-4 shadow-2xl border-sky-100">
-            <div className="w-16 h-16 rounded-full bg-emerald-100 text-emerald-700 mx-auto flex items-center justify-center animate-bounce">
-              <Phone className="w-8 h-8" />
-            </div>
+      <Dialog open={showCallModal} onOpenChange={setShowCallModal}>
+        <DialogContent className="bg-white rounded-3xl p-6 max-w-xs w-full text-center space-y-4 shadow-2xl border-sky-100 sm:rounded-[2rem]">
+          <DialogHeader className="hidden">
+            <DialogTitle>Call Rider</DialogTitle>
+          </DialogHeader>
+          <div className="w-16 h-16 rounded-full bg-emerald-100 text-emerald-700 mx-auto flex items-center justify-center animate-bounce mt-4">
+            <Phone className="w-8 h-8" />
+          </div>
 
-            <div>
-              <h3 className="font-bold text-slate-900 text-base">Calling Kwame Osei</h3>
-              <p className="text-xs text-slate-500 mt-1">{order.driverPhone || '+233 20 882 1109'}</p>
-            </div>
+          <div>
+            <h3 className="font-bold text-slate-900 text-base">Calling {order.driverName || 'Kwame Osei'}</h3>
+            <p className="text-xs text-slate-500 mt-1">{order.driverPhone || '+233 20 882 1109'}</p>
+          </div>
 
-            <div className="p-3 bg-slate-50 rounded-2xl text-xs text-slate-600">
-              In-app encrypted call route via Nsupa Ghana Dispatch
-            </div>
+          <div className="p-3 bg-slate-50 rounded-2xl text-xs text-slate-600">
+            In-app encrypted call route via Nsupa Ghana Dispatch
+          </div>
 
-            <Button
-              variant="destructive"
-              onClick={() => setShowCallModal(false)}
-              className="w-full sm:w-auto h-12 bg-red-600 hover:bg-red-700 text-white font-bold rounded-2xl text-xs flex items-center justify-center gap-1"
-            >
-              <X className="w-4 h-4" />
-              <span>End Call</span>
-            </Button>
-          </Card>
-        </div>
-      )}
+          <Button
+            variant="destructive"
+            onClick={() => setShowCallModal(false)}
+            className="w-full h-12 bg-red-600 hover:bg-red-700 text-white font-bold rounded-2xl text-xs flex items-center justify-center gap-1"
+          >
+            <X className="w-4 h-4" />
+            <span>End Call</span>
+          </Button>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };

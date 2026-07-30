@@ -87,7 +87,7 @@ export interface Subscription {
 
 export interface WalletTransaction {
   id: string;
-  type: 'water_purchase' | 'top_up' | 'shell_surcharge' | 'shell_exchange';
+  type: 'water_purchase' | 'top_up' | 'shell_surcharge' | 'shell_exchange' | 'deposit_refund';
   amountGHS: number;
   description: string;
   date: string;

@@ -46,8 +46,8 @@ export const DepositReturnScreen: React.FC<DepositReturnScreenProps> = ({
         <CardContent className="p-5 space-y-4">
           <div className="flex items-center justify-between border-b border-slate-700 pb-2">
             <div className="flex items-center gap-2">
-              <RefreshCw className="w-4 h-4 text-[#4FC3F7]" />
-              <span className="text-xs font-bold uppercase tracking-wider text-[#4FC3F7]">
+              <RefreshCw className="w-4 h-4 text-primary" />
+              <span className="text-xs font-bold uppercase tracking-wider text-primary">
                 Zero Cash Deposit Holding Logic
               </span>
             </div>

@@ -13,7 +13,7 @@ export const EnvironmentalImpactScreen: React.FC<EnvironmentalImpactScreenProps>
   return (
     <div className="space-y-5 pb-24">
       {/* Title */}
-      <Card className="rounded-2xl border-sky-100 shadow-sm">
+      <Card className="rounded-2xl border-blue-50 shadow-sm">
         <CardContent className="p-4 flex items-center justify-between">
           <div className="flex items-center gap-2.5">
             <div className="p-2.5 bg-emerald-100 text-emerald-700 rounded-xl">
@@ -80,7 +80,7 @@ export const EnvironmentalImpactScreen: React.FC<EnvironmentalImpactScreenProps>
       </Card>
 
       {/* Sustainable Circular Economy Model */}
-      <Card className="rounded-2xl border-sky-100 shadow-sm">
+      <Card className="rounded-2xl border-blue-50 shadow-sm">
         <CardContent className="p-4 space-y-3">
           <h3 className="text-xs font-bold uppercase text-slate-800 tracking-wider">Why Reusable 15L Dispenser Shells Matter</h3>
 

@@ -5,6 +5,8 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Switch } from '@/components/ui/switch';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { Label } from '@/components/ui/label';
 
 interface SubscriptionScreenProps {
   subscription?: Subscription;
@@ -15,6 +17,7 @@ export const SubscriptionScreen: React.FC<SubscriptionScreenProps> = ({
   subscription,
   onUpdateSubscription,
 }) => {
+  const [selectedPlan, setSelectedPlan] = useState<string>('bi_weekly');
   const [subState, setSubState] = useState<Subscription>(
     subscription || {
       id: 'SUB-881',
@@ -47,15 +50,15 @@ export const SubscriptionScreen: React.FC<SubscriptionScreenProps> = ({
   return (
     <div className="space-y-5 pb-24">
       {/* Header */}
-      <Card className="rounded-2xl border-sky-100 shadow-sm">
+      <Card className="rounded-2xl border-blue-50 shadow-sm">
         <CardContent className="p-4 flex items-center justify-between">
           <div className="flex items-center gap-2.5">
-            <div className="p-2.5 bg-sky-100 text-sky-700 rounded-xl">
+            <div className="p-2.5 bg-blue-50 text-primary rounded-xl">
               <Calendar className="w-5 h-5" />
             </div>
             <div>
-              <h1 className="text-base font-extrabold text-slate-900 leading-tight">Water Subscriptions</h1>
-              <p className="text-xs text-slate-500">Automated Doorstep Refills in Ghana</p>
+              <h1 className="text-lg font-extrabold text-slate-900 leading-tight">Water Subscriptions</h1>
+              <p className="text-sm text-slate-500">Automated Doorstep Refills in Ghana</p>
             </div>
           </div>
           <Badge
@@ -70,47 +73,47 @@ export const SubscriptionScreen: React.FC<SubscriptionScreenProps> = ({
       </Card>
 
       {/* Main Plan Card */}
-      <Card className="bg-gradient-to-br from-sky-600 to-sky-700 rounded-3xl text-white shadow-md border-none">
+      <Card className="bg-gradient-to-br from-primary via-primary/90 to-primary/70 rounded-3xl text-white shadow-md border-none">
         <CardContent className="p-5 space-y-4">
-          <div className="flex items-center justify-between border-b border-sky-400/40 pb-3">
+          <div className="flex items-center justify-between border-b border-sky-400/40 pb-4">
             <div>
-              <span className="text-[10px] text-sky-200 font-bold uppercase tracking-wider">Active Plan</span>
-              <h2 className="text-lg font-black">{subState.planName}</h2>
+              <span className="text-xs text-blue-100 font-bold uppercase tracking-wider">Active Plan</span>
+              <h2 className="text-xl font-black mt-1">{subState.planName}</h2>
             </div>
-            <Badge variant="outline" className="border-none bg-white/20 backdrop-blur-sm text-white text-xs font-extrabold rounded-full px-2.5 py-1 hover:bg-white/20">
+            <Badge variant="outline" className="border-none bg-white/20 backdrop-blur-sm text-white text-sm font-extrabold rounded-full px-3 py-1.5 hover:bg-white/20">
               {subState.discountPercent}% Member Discount
             </Badge>
           </div>
 
-          <div className="grid grid-cols-2 gap-3 text-xs">
-            <div className="bg-sky-800/50 p-2.5 rounded-2xl border border-sky-400/30">
-              <span className="text-[10px] text-sky-200 block">Frequency</span>
+          <div className="grid grid-cols-2 gap-3 text-sm">
+            <div className="bg-white/10 p-3 rounded-2xl border border-white/20">
+              <span className="text-xs text-blue-100 block mb-1">Frequency</span>
               <span className="font-extrabold capitalize text-white">{subState.frequency.replace('_', ' ')}</span>
             </div>
 
-            <div className="bg-sky-800/50 p-2.5 rounded-2xl border border-sky-400/30">
-              <span className="text-[10px] text-sky-200 block">Volume per Delivery</span>
+            <div className="bg-white/10 p-3 rounded-2xl border border-white/20">
+              <span className="text-xs text-blue-100 block mb-1">Volume per Delivery</span>
               <span className="font-extrabold text-white">{subState.bottleQuantity}x 15L Shells (30L)</span>
             </div>
 
-            <div className="bg-sky-800/50 p-2.5 rounded-2xl border border-sky-400/30">
-              <span className="text-[10px] text-sky-200 block">Next Scheduled Arrival</span>
+            <div className="bg-white/10 p-3 rounded-2xl border border-white/20">
+              <span className="text-xs text-blue-100 block mb-1">Next Scheduled Arrival</span>
               <span className="font-extrabold text-white">{subState.nextDeliveryDate}</span>
             </div>
 
-            <div className="bg-sky-800/50 p-2.5 rounded-2xl border border-sky-400/30">
-              <span className="text-[10px] text-sky-200 block">Payment Method</span>
-              <span className="font-extrabold text-white text-[11px] truncate block">{subState.paymentMethod}</span>
+            <div className="bg-white/10 p-3 rounded-2xl border border-white/20">
+              <span className="text-xs text-blue-100 block mb-1">Payment Method</span>
+              <span className="font-extrabold text-white text-xs truncate block">{subState.paymentMethod}</span>
             </div>
           </div>
 
           {/* AI Smart Auto-Dispatch Toggle */}
-          <div className="bg-white/10 backdrop-blur-sm p-3 rounded-2xl border border-white/20 flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <Sparkles className="w-4 h-4 text-sky-200 shrink-0" />
+          <div className="bg-white/10 backdrop-blur-sm p-4 rounded-2xl border border-white/20 flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <Sparkles className="w-5 h-5 text-blue-100 shrink-0" />
               <div>
-                <span className="text-xs font-bold block text-white">AI Consumption Auto-Refill</span>
-                <span className="text-[10px] text-sky-200 block">Adjusts dispatch if water runs out early</span>
+                <span className="text-sm font-bold block text-white mb-0.5">AI Consumption Auto-Refill</span>
+                <span className="text-xs text-blue-100 block">Adjusts dispatch if water runs out early</span>
               </div>
             </div>
             <Switch
@@ -121,20 +124,20 @@ export const SubscriptionScreen: React.FC<SubscriptionScreenProps> = ({
           </div>
 
           {/* Controls */}
-          <div className="flex gap-2 pt-1">
+          <div className="flex gap-3 pt-2">
             <Button
               variant="secondary"
               onClick={toggleStatus}
-              className="w-full sm:w-auto h-10 bg-white text-sky-800 hover:text-sky-800 font-bold rounded-xl text-xs flex items-center justify-center gap-1.5 shadow-sm hover:bg-sky-50 transition-colors"
+              className="w-full sm:w-auto h-12 bg-white text-primary hover:text-primary font-bold rounded-xl text-sm flex items-center justify-center gap-2 shadow-sm hover:bg-blue-50 transition-colors"
             >
               {subState.status === 'active' ? (
                 <>
-                  <PauseCircle className="w-4 h-4 text-amber-600" />
+                  <PauseCircle className="w-5 h-5 text-amber-600" />
                   <span>Pause Subscription</span>
                 </>
               ) : (
                 <>
-                  <PlayCircle className="w-4 h-4 text-emerald-600" />
+                  <PlayCircle className="w-5 h-5 text-emerald-600" />
                   <span>Resume Subscription</span>
                 </>
               )}
@@ -144,43 +147,59 @@ export const SubscriptionScreen: React.FC<SubscriptionScreenProps> = ({
       </Card>
 
       {/* Subscription Plans Selection */}
-      <div className="space-y-3">
-        <h3 className="text-xs font-bold uppercase text-slate-800 tracking-wider">Available Subscription Options</h3>
+      <div className="space-y-4">
+        <h3 className="text-sm font-bold uppercase text-slate-800 tracking-wider">Available Subscription Options</h3>
 
-        <div className="space-y-2">
-          <Card className="rounded-2xl border-sky-200 shadow-sm">
-            <CardContent className="p-3.5 flex items-center justify-between">
+        <RadioGroup
+          value={selectedPlan}
+          onValueChange={setSelectedPlan}
+          className="space-y-3"
+        >
+          <div>
+            <RadioGroupItem value="weekly" id="plan-weekly" className="peer sr-only" />
+            <Label
+              htmlFor="plan-weekly"
+              className="flex items-center justify-between p-4 rounded-2xl border-2 border-slate-200 bg-white hover:border-sky-200 peer-data-[state=checked]:border-sky-500 peer-data-[state=checked]:bg-sky-50 peer-data-[state=checked]:ring-2 peer-data-[state=checked]:ring-sky-200 cursor-pointer transition-all"
+            >
               <div>
-                <span className="text-xs font-extrabold text-slate-900 block">Weekly 1-Bottle (15L)</span>
-                <span className="text-[11px] text-slate-500">Best for small offices & individuals</span>
+                <span className="text-sm font-extrabold text-slate-900 block mb-1">Weekly 1-Bottle (15L)</span>
+                <span className="text-xs text-slate-500 font-normal">Best for small offices & individuals</span>
               </div>
-              <span className="text-xs font-extrabold text-sky-700">GHS 20.00 / week</span>
-            </CardContent>
-          </Card>
+              <span className="text-sm font-extrabold text-sky-700">GHS 20.00 / week</span>
+            </Label>
+          </div>
 
-          <Card className="rounded-2xl border-2 border-sky-500 shadow-sm bg-sky-50">
-            <CardContent className="p-3.5 flex items-center justify-between">
+          <div>
+            <RadioGroupItem value="bi_weekly" id="plan-biweekly" className="peer sr-only" />
+            <Label
+              htmlFor="plan-biweekly"
+              className="flex items-center justify-between p-4 rounded-2xl border-2 border-slate-200 bg-white hover:border-sky-200 peer-data-[state=checked]:border-sky-500 peer-data-[state=checked]:bg-sky-50 peer-data-[state=checked]:ring-2 peer-data-[state=checked]:ring-sky-200 cursor-pointer transition-all"
+            >
               <div>
-                <span className="text-xs font-extrabold text-sky-900 block flex items-center gap-1.5">
+                <span className="text-sm font-extrabold text-slate-900 flex items-center gap-2 mb-1">
                   Bi-Weekly Family Pack (2x 15L)
-                  <Badge className="bg-sky-600 hover:bg-sky-600 text-white text-[9px] px-1.5 py-0 rounded-full font-bold">POPULAR</Badge>
+                  <Badge className="bg-sky-600 hover:bg-sky-600 text-white text-[10px] px-2 py-0.5 rounded-full font-bold">POPULAR</Badge>
                 </span>
-                <span className="text-[11px] text-sky-700">Most popular for Accra households</span>
+                <span className="text-xs text-slate-500 font-normal">Most popular for Accra households</span>
               </div>
-              <span className="text-xs font-extrabold text-sky-800">GHS 39.00 / 2 wks</span>
-            </CardContent>
-          </Card>
+              <span className="text-sm font-extrabold text-sky-700">GHS 39.00 / 2 wks</span>
+            </Label>
+          </div>
 
-          <Card className="rounded-2xl border-sky-200 shadow-sm">
-            <CardContent className="p-3.5 flex items-center justify-between">
+          <div>
+            <RadioGroupItem value="monthly" id="plan-monthly" className="peer sr-only" />
+            <Label
+              htmlFor="plan-monthly"
+              className="flex items-center justify-between p-4 rounded-2xl border-2 border-slate-200 bg-white hover:border-sky-200 peer-data-[state=checked]:border-sky-500 peer-data-[state=checked]:bg-sky-50 peer-data-[state=checked]:ring-2 peer-data-[state=checked]:ring-sky-200 cursor-pointer transition-all"
+            >
               <div>
-                <span className="text-xs font-extrabold text-slate-900 block">Monthly Bulk Office Pack (8x 15L)</span>
-                <span className="text-[11px] text-slate-500">Schools, restaurants & corporate offices</span>
+                <span className="text-sm font-extrabold text-slate-900 block mb-1">Monthly Bulk Office Pack (8x 15L)</span>
+                <span className="text-xs text-slate-500 font-normal">Schools, restaurants & corporate offices</span>
               </div>
-              <span className="text-xs font-extrabold text-sky-700">GHS 150.00 / mo</span>
-            </CardContent>
-          </Card>
-        </div>
+              <span className="text-sm font-extrabold text-sky-700">GHS 150.00 / mo</span>
+            </Label>
+          </div>
+        </RadioGroup>
       </div>
     </div>
   );

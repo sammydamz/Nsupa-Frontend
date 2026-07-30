@@ -17,10 +17,10 @@ export const NotificationsScreen: React.FC<NotificationsScreenProps> = ({
   return (
     <div className="space-y-5 pb-24">
       {/* Title */}
-      <Card className="rounded-2xl border-sky-100 shadow-sm">
+      <Card className="rounded-2xl border-blue-50 shadow-sm">
         <CardContent className="p-4 flex items-center justify-between">
           <div className="flex items-center gap-2.5">
-            <div className="p-2.5 bg-sky-100 text-sky-700 rounded-xl">
+            <div className="p-2.5 bg-blue-50 text-primary rounded-xl">
               <Bell className="w-5 h-5" />
             </div>
             <div>
@@ -40,7 +40,7 @@ export const NotificationsScreen: React.FC<NotificationsScreenProps> = ({
               if (notif.actionScreen) onNavigate(notif.actionScreen);
             }}
             className={`rounded-2xl transition-all cursor-pointer shadow-none ${
-              notif.read ? 'bg-white border-sky-100' : 'bg-sky-50/90 border-sky-300 ring-2 ring-sky-100'
+              notif.read ? 'bg-white border-blue-50' : 'bg-blue-50/90 border-primary/40 ring-2 ring-blue-100'
             }`}
           >
             <CardContent className="p-4 text-left">
@@ -52,7 +52,7 @@ export const NotificationsScreen: React.FC<NotificationsScreenProps> = ({
               <p className="text-xs text-slate-600 leading-relaxed mb-2">{notif.message}</p>
 
               {notif.actionScreen && (
-                <span className="text-[11px] font-bold text-sky-600 inline-flex items-center gap-1 hover:underline">
+                <span className="text-[11px] font-bold text-primary inline-flex items-center gap-1 hover:underline">
                   View Screen <ArrowRight className="w-3 h-3" />
                 </span>
               )}

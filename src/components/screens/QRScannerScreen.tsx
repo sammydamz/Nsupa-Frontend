@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { Html5QrcodeScanner } from 'html5-qrcode';
 import { QrCode, ShieldCheck, CheckCircle2, RefreshCw, Info, MapPin, Truck, Factory, History, Calendar } from 'lucide-react';
 import { Bottle, CustomerScreenId } from '../../types';
 import { Card, CardContent } from '@/components/ui/card';
@@ -19,10 +20,52 @@ export const QRScannerScreen: React.FC<QRScannerScreenProps> = ({
   const [isScanning, setIsScanning] = useState<boolean>(true);
   const [scannedBottle, setScannedBottle] = useState<Bottle | null>(bottles[0] || null);
 
+  useEffect(() => {
+    if (isScanning) {
+      const scanner = new Html5QrcodeScanner(
+        "reader",
+        { fps: 10, qrbox: { width: 250, height: 250 } },
+        /* verbose= */ false
+      );
+
+      scanner.render((decodedText) => {
+        // Stop scanning after success
+        scanner.clear();
+        handleRealScan(decodedText);
+      }, (err) => {
+        // ignore ongoing errors
+      });
+
+      return () => {
+        scanner.clear().catch(e => console.error(e));
+      };
+    }
+  }, [isScanning]);
+
+  const handleRealScan = async (bottleId: string) => {
+    try {
+      const res = await fetch('/api/scan', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ bottleId })
+      });
+      if (res.ok) {
+        const result = await res.json();
+        // For simplicity, just simulate picking that bottle from the list
+        const b = bottles.find(b => b.id === bottleId) || bottles[0];
+        setIsScanning(false);
+        setScannedBottle(b);
+        if (onBottleScanned) onBottleScanned(b);
+      } else {
+        alert("Failed to verify container. Is it in the system?");
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   const handleSimulateScan = (bottle: Bottle) => {
-    setIsScanning(false);
-    setScannedBottle(bottle);
-    if (onBottleScanned) onBottleScanned(bottle);
+    handleRealScan(bottle.id);
   };
 
   return (
@@ -35,8 +78,8 @@ export const QRScannerScreen: React.FC<QRScannerScreenProps> = ({
               <QrCode className="w-5 h-5" />
             </div>
             <div>
-              <h1 className="text-base font-extrabold text-slate-900 leading-tight">Delivery & Refill Tracking Scanner</h1>
-              <p className="text-xs text-slate-500">Scanned to log delivery handoffs & depot refill cycles</p>
+              <h1 className="text-lg font-extrabold text-slate-900 leading-tight">Delivery & Refill Tracking Scanner</h1>
+              <p className="text-sm text-slate-500">Scanned to log delivery handoffs & depot refill cycles</p>
             </div>
           </div>
 
@@ -53,26 +96,14 @@ export const QRScannerScreen: React.FC<QRScannerScreenProps> = ({
 
       {isScanning ? (
         /* Camera Scanner View Simulation */
-        <Card className="bg-slate-900 rounded-3xl text-white text-center shadow-lg border-2 border-blue-400 relative overflow-hidden">
+        <Card className="bg-white rounded-3xl text-slate-900 shadow-lg border-2 border-blue-100 relative overflow-hidden">
           <CardContent className="p-6 space-y-5">
-            <div className="relative mx-auto w-64 h-64 border-2 border-[#4FC3F7] rounded-3xl flex items-center justify-center p-4">
-              {/* Animated Scanning Laser Line */}
-              <div className="absolute left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#4FC3F7] to-transparent shadow-[0_0_15px_#38bdf8] animate-pulse" style={{ top: '45%' }} />
-
-              {/* Corner Bracket Guides */}
-              <div className="absolute top-2 left-2 w-6 h-6 border-t-4 border-l-4 border-[#4FC3F7] rounded-tl-lg" />
-              <div className="absolute top-2 right-2 w-6 h-6 border-t-4 border-r-4 border-[#4FC3F7] rounded-tr-lg" />
-              <div className="absolute bottom-2 left-2 w-6 h-6 border-b-4 border-l-4 border-[#4FC3F7] rounded-bl-lg" />
-              <div className="absolute bottom-2 right-2 w-6 h-6 border-b-4 border-r-4 border-[#4FC3F7] rounded-br-lg" />
-
-              <div className="text-center space-y-2">
-                <QrCode className="w-16 h-16 text-[#4FC3F7] mx-auto animate-pulse" />
-                <p className="text-xs font-semibold text-blue-200">Align Container QR Code within frame</p>
-              </div>
+            <div className="relative mx-auto w-full max-w-sm rounded-3xl overflow-hidden shadow-inner bg-slate-50">
+              <div id="reader" className="w-full h-full min-h-[300px]"></div>
             </div>
 
-            <div className="space-y-2">
-              <p className="text-xs text-slate-300">Select a container below to view depot refill history & delivery status:</p>
+            <div className="space-y-3">
+              <p className="text-xs text-slate-600 font-medium text-center">Select a container below to view depot refill history & delivery status:</p>
 
               <div className="grid grid-cols-2 gap-2">
                 {bottles.map((b) => (
@@ -80,11 +111,11 @@ export const QRScannerScreen: React.FC<QRScannerScreenProps> = ({
                     key={b.id}
                     variant="outline"
                     onClick={() => handleSimulateScan(b)}
-                    className="h-auto p-3 bg-slate-800 hover:bg-slate-700 border-slate-700 rounded-2xl flex flex-col items-start justify-start text-left text-xs transition-colors"
+                    className="h-auto p-3 bg-slate-50 hover:bg-blue-50 border-slate-200 hover:border-blue-200 rounded-2xl flex flex-col items-start justify-start text-left text-xs transition-colors"
                   >
-                    <span className="font-extrabold text-[#4FC3F7] block">{b.id}</span>
-                    <span className="text-[10px] text-slate-400 block truncate w-full text-left font-normal">{b.type}</span>
-                    <span className="text-[10px] font-bold text-emerald-400 block mt-1">
+                    <span className="font-extrabold text-primary block">{b.id}</span>
+                    <span className="text-xs text-slate-500 block truncate w-full text-left font-normal">{b.type}</span>
+                    <span className="text-xs font-bold text-emerald-600 block mt-1">
                       Refill Cycle #{b.refillCount}
                     </span>
                   </Button>
@@ -106,7 +137,7 @@ export const QRScannerScreen: React.FC<QRScannerScreenProps> = ({
                       <ShieldCheck className="w-6 h-6" />
                     </div>
                     <div>
-                      <span className="text-[10px] font-bold uppercase text-primary tracking-wider block">Container QR Asset Verified</span>
+                      <span className="text-xs font-bold uppercase text-primary tracking-wider block">Container QR Asset Verified</span>
                       <h2 className="text-base font-extrabold text-slate-900">{scannedBottle.qrCode}</h2>
                     </div>
                   </div>
@@ -118,12 +149,12 @@ export const QRScannerScreen: React.FC<QRScannerScreenProps> = ({
 
                 <div className="grid grid-cols-2 gap-2 text-xs pt-1">
                   <div className="bg-white p-3 rounded-2xl border border-blue-100">
-                    <span className="text-[10px] text-slate-500 block">Depot Location</span>
+                    <span className="text-xs text-slate-500 block">Depot Location</span>
                     <span className="font-bold text-slate-800 truncate block">{scannedBottle.depotLocation}</span>
                   </div>
 
                   <div className="bg-white p-3 rounded-2xl border border-blue-100">
-                    <span className="text-[10px] text-slate-500 block">Refill Batch</span>
+                    <span className="text-xs text-slate-500 block">Refill Batch</span>
                     <span className="font-bold text-slate-800 truncate block">{scannedBottle.batchNumber}</span>
                   </div>
                 </div>
@@ -136,7 +167,7 @@ export const QRScannerScreen: React.FC<QRScannerScreenProps> = ({
                 <div className="flex items-center justify-between border-b border-slate-100 pb-3">
                   <div className="flex items-center gap-2">
                     <Factory className="w-5 h-5 text-primary" />
-                    <h3 className="text-xs font-bold uppercase text-slate-800 tracking-wider">Depot Refill Cycle Counter</h3>
+                    <h3 className="text-sm font-bold uppercase text-slate-800 tracking-wider">Depot Refill Cycle Counter</h3>
                   </div>
                   <Badge variant="outline" className="text-sm font-black text-primary bg-blue-50 rounded-full border-blue-100">
                     {scannedBottle.refillCount} Cycles
@@ -149,7 +180,7 @@ export const QRScannerScreen: React.FC<QRScannerScreenProps> = ({
 
                 {/* Delivery & Depot History Timeline */}
                 <div className="space-y-3 pt-1">
-                  <h4 className="text-[11px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
+                  <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
                     <History className="w-3.5 h-3.5 text-slate-500" />
                     Container Lifecycle History
                   </h4>
@@ -160,9 +191,9 @@ export const QRScannerScreen: React.FC<QRScannerScreenProps> = ({
                       <div className="flex-1">
                         <div className="flex justify-between font-bold text-slate-900">
                           <span>Out for Delivery Handoff</span>
-                          <span className="text-[10px] text-slate-400 font-normal">Today, 08:30 AM</span>
+                          <span className="text-xs text-slate-400 font-normal">Today, 08:30 AM</span>
                         </div>
-                        <p className="text-[11px] text-slate-500 mt-0.5">Scanned onto delivery truck for East Legon route.</p>
+                        <p className="text-xs text-slate-500 mt-0.5">Scanned onto delivery truck for East Legon route.</p>
                       </div>
                     </div>
 
@@ -171,9 +202,9 @@ export const QRScannerScreen: React.FC<QRScannerScreenProps> = ({
                       <div className="flex-1">
                         <div className="flex justify-between font-bold text-slate-900">
                           <span>Refilled & Factory Sealed</span>
-                          <span className="text-[10px] text-slate-400 font-normal">Yesterday, 04:15 PM</span>
+                          <span className="text-xs text-slate-400 font-normal">Yesterday, 04:15 PM</span>
                         </div>
-                        <p className="text-[11px] text-slate-500 mt-0.5">Quality inspection passed at Achimota Depot #1.</p>
+                        <p className="text-xs text-slate-500 mt-0.5">Quality inspection passed at Achimota Depot #1.</p>
                       </div>
                     </div>
 
@@ -182,9 +213,9 @@ export const QRScannerScreen: React.FC<QRScannerScreenProps> = ({
                       <div className="flex-1">
                         <div className="flex justify-between font-bold text-slate-900">
                           <span>Sanitizing & Washing Cycle</span>
-                          <span className="text-[10px] text-slate-400 font-normal">Yesterday, 02:00 PM</span>
+                          <span className="text-xs text-slate-400 font-normal">Yesterday, 02:00 PM</span>
                         </div>
-                        <p className="text-[11px] text-slate-500 mt-0.5">Multi-stage hygienic wash complete.</p>
+                        <p className="text-xs text-slate-500 mt-0.5">Multi-stage hygienic wash complete.</p>
                       </div>
                     </div>
                   </div>
@@ -195,7 +226,7 @@ export const QRScannerScreen: React.FC<QRScannerScreenProps> = ({
             <Button
               variant="outline"
               onClick={() => setIsScanning(true)}
-              className="w-full sm:w-auto h-12 bg-blue-50 text-primary hover:bg-blue-100 hover:text-primary font-bold rounded-2xl text-xs flex items-center justify-center gap-2 border-blue-100 transition-colors"
+              className="w-full sm:w-auto h-12 bg-blue-50 text-primary hover:bg-blue-100 hover:text-primary font-bold rounded-2xl text-sm flex items-center justify-center gap-2 border-blue-100 transition-colors"
             >
               <QrCode className="w-4 h-4" />
               <span>Scan Another Container QR Code</span>
