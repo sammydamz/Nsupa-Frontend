@@ -49,7 +49,7 @@ export const Header: React.FC<HeaderProps> = ({
               <span className="font-extrabold text-xl tracking-tight leading-none text-foreground">Nsupa</span>
               <Badge variant="secondary" className="px-1.5 py-0 text-[10px] rounded-full h-5 capitalize">{role}</Badge>
             </div>
-            <span className="text-[10px] text-muted-foreground font-medium leading-none block mt-0.5">Circular Water Ghana</span>
+
           </div>
         </button>
 
