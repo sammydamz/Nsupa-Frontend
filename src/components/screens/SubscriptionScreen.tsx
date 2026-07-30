@@ -57,7 +57,7 @@ export const SubscriptionScreen: React.FC<SubscriptionScreenProps> = ({
               <Calendar className="w-5 h-5" />
             </div>
             <div>
-              <h1 className="text-lg font-extrabold text-slate-900 leading-tight">Water Subscriptions</h1>
+              <h1 className="text-xl font-extrabold text-slate-900 leading-tight">Water Subscriptions</h1>
               <p className="text-sm text-slate-500">Automated Doorstep Refills in Ghana</p>
             </div>
           </div>
@@ -77,7 +77,7 @@ export const SubscriptionScreen: React.FC<SubscriptionScreenProps> = ({
         <CardContent className="p-5 space-y-4">
           <div className="flex items-center justify-between border-b border-sky-400/40 pb-4">
             <div>
-              <span className="text-xs text-blue-100 font-bold uppercase tracking-wider">Active Plan</span>
+              <span className="text-sm text-blue-100 font-bold uppercase tracking-wider">Active Plan</span>
               <h2 className="text-xl font-black mt-1">{subState.planName}</h2>
             </div>
             <Badge variant="outline" className="border-none bg-white/20 backdrop-blur-sm text-white text-sm font-extrabold rounded-full px-3 py-1.5 hover:bg-white/20">
@@ -85,25 +85,25 @@ export const SubscriptionScreen: React.FC<SubscriptionScreenProps> = ({
             </Badge>
           </div>
 
-          <div className="grid grid-cols-2 gap-3 text-sm">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
             <div className="bg-white/10 p-3 rounded-2xl border border-white/20">
-              <span className="text-xs text-blue-100 block mb-1">Frequency</span>
+              <span className="text-sm text-blue-100 block mb-1">Frequency</span>
               <span className="font-extrabold capitalize text-white">{subState.frequency.replace('_', ' ')}</span>
             </div>
 
             <div className="bg-white/10 p-3 rounded-2xl border border-white/20">
-              <span className="text-xs text-blue-100 block mb-1">Volume per Delivery</span>
+              <span className="text-sm text-blue-100 block mb-1">Volume per Delivery</span>
               <span className="font-extrabold text-white">{subState.bottleQuantity}x 15L Shells (30L)</span>
             </div>
 
             <div className="bg-white/10 p-3 rounded-2xl border border-white/20">
-              <span className="text-xs text-blue-100 block mb-1">Next Scheduled Arrival</span>
+              <span className="text-sm text-blue-100 block mb-1">Next Scheduled Arrival</span>
               <span className="font-extrabold text-white">{subState.nextDeliveryDate}</span>
             </div>
 
             <div className="bg-white/10 p-3 rounded-2xl border border-white/20">
-              <span className="text-xs text-blue-100 block mb-1">Payment Method</span>
-              <span className="font-extrabold text-white text-xs truncate block">{subState.paymentMethod}</span>
+              <span className="text-sm text-blue-100 block mb-1">Payment Method</span>
+              <span className="font-extrabold text-white text-sm truncate block">{subState.paymentMethod}</span>
             </div>
           </div>
 
@@ -124,7 +124,7 @@ export const SubscriptionScreen: React.FC<SubscriptionScreenProps> = ({
           </div>
 
           {/* Controls */}
-          <div className="flex gap-3 pt-2">
+          <div className="flex flex-col sm:flex-row gap-3 pt-2">
             <Button
               variant="secondary"
               onClick={toggleStatus}
@@ -159,11 +159,11 @@ export const SubscriptionScreen: React.FC<SubscriptionScreenProps> = ({
             <RadioGroupItem value="weekly" id="plan-weekly" className="peer sr-only" />
             <Label
               htmlFor="plan-weekly"
-              className="flex items-center justify-between p-4 rounded-2xl border-2 border-slate-200 bg-white hover:border-sky-200 peer-data-[state=checked]:border-sky-500 peer-data-[state=checked]:bg-sky-50 peer-data-[state=checked]:ring-2 peer-data-[state=checked]:ring-sky-200 cursor-pointer transition-all"
+              className="flex items-center justify-between p-4 rounded-2xl border-2 border-slate-200 bg-white hover:border-sky-200 peer-data-[state=checked]:border-sky-500 peer-data-[state=checked]:bg-sky-50 peer-data-[state=checked]:ring-2 peer-data-[state=checked]:ring-sky-200 cursor-pointer transition-all flex-wrap gap-2"
             >
               <div>
                 <span className="text-sm font-extrabold text-slate-900 block mb-1">Weekly 1-Bottle (15L)</span>
-                <span className="text-xs text-slate-500 font-normal">Best for small offices & individuals</span>
+                <span className="text-sm text-slate-500 font-normal">Best for small offices & individuals</span>
               </div>
               <span className="text-sm font-extrabold text-sky-700">GHS 20.00 / week</span>
             </Label>
@@ -173,14 +173,14 @@ export const SubscriptionScreen: React.FC<SubscriptionScreenProps> = ({
             <RadioGroupItem value="bi_weekly" id="plan-biweekly" className="peer sr-only" />
             <Label
               htmlFor="plan-biweekly"
-              className="flex items-center justify-between p-4 rounded-2xl border-2 border-slate-200 bg-white hover:border-sky-200 peer-data-[state=checked]:border-sky-500 peer-data-[state=checked]:bg-sky-50 peer-data-[state=checked]:ring-2 peer-data-[state=checked]:ring-sky-200 cursor-pointer transition-all"
+              className="flex items-center justify-between p-4 rounded-2xl border-2 border-slate-200 bg-white hover:border-sky-200 peer-data-[state=checked]:border-sky-500 peer-data-[state=checked]:bg-sky-50 peer-data-[state=checked]:ring-2 peer-data-[state=checked]:ring-sky-200 cursor-pointer transition-all flex-wrap gap-2"
             >
               <div>
-                <span className="text-sm font-extrabold text-slate-900 flex items-center gap-2 mb-1">
+                <span className="text-sm font-extrabold text-slate-900 flex items-center gap-2 mb-1 flex-wrap">
                   Bi-Weekly Family Pack (2x 15L)
-                  <Badge className="bg-sky-600 hover:bg-sky-600 text-white text-[10px] px-2 py-0.5 rounded-full font-bold">POPULAR</Badge>
+                  <Badge className="bg-sky-600 hover:bg-sky-600 text-white text-xs px-2 py-0.5 rounded-full font-bold">POPULAR</Badge>
                 </span>
-                <span className="text-xs text-slate-500 font-normal">Most popular for Accra households</span>
+                <span className="text-sm text-slate-500 font-normal">Most popular for Accra households</span>
               </div>
               <span className="text-sm font-extrabold text-sky-700">GHS 39.00 / 2 wks</span>
             </Label>
@@ -190,11 +190,11 @@ export const SubscriptionScreen: React.FC<SubscriptionScreenProps> = ({
             <RadioGroupItem value="monthly" id="plan-monthly" className="peer sr-only" />
             <Label
               htmlFor="plan-monthly"
-              className="flex items-center justify-between p-4 rounded-2xl border-2 border-slate-200 bg-white hover:border-sky-200 peer-data-[state=checked]:border-sky-500 peer-data-[state=checked]:bg-sky-50 peer-data-[state=checked]:ring-2 peer-data-[state=checked]:ring-sky-200 cursor-pointer transition-all"
+              className="flex items-center justify-between p-4 rounded-2xl border-2 border-slate-200 bg-white hover:border-sky-200 peer-data-[state=checked]:border-sky-500 peer-data-[state=checked]:bg-sky-50 peer-data-[state=checked]:ring-2 peer-data-[state=checked]:ring-sky-200 cursor-pointer transition-all flex-wrap gap-2"
             >
               <div>
                 <span className="text-sm font-extrabold text-slate-900 block mb-1">Monthly Bulk Office Pack (8x 15L)</span>
-                <span className="text-xs text-slate-500 font-normal">Schools, restaurants & corporate offices</span>
+                <span className="text-sm text-slate-500 font-normal">Schools, restaurants & corporate offices</span>
               </div>
               <span className="text-sm font-extrabold text-sky-700">GHS 150.00 / mo</span>
             </Label>

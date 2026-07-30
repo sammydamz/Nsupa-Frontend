@@ -165,7 +165,7 @@ export const OrderWaterScreen: React.FC<OrderWaterScreenProps> = ({ onOrderPlace
 
           {/* Select Quantity */}
           <Card className="rounded-3xl border-blue-50 shadow-sm">
-            <CardContent className="p-5 flex items-center justify-between">
+            <CardContent className="p-5 flex flex-col sm:flex-row items-center justify-between gap-3">
               <div>
                 <span className="text-sm font-bold text-slate-800 block">Number of Refills</span>
                 <span className="text-xs text-slate-500 font-medium block mt-1">Total Volume: {quantity * (selectedType === '15L Shell' ? 15 : 5)} Litres</span>
@@ -372,12 +372,12 @@ export const OrderWaterScreen: React.FC<OrderWaterScreenProps> = ({ onOrderPlace
               </div>
 
               <div className="space-y-4 text-sm text-slate-600">
-                <div className="flex justify-between">
+                <div className="flex justify-between flex-wrap gap-1">
                   <span>Water Content ({quantity}x {selectedType}):</span>
                   <span className="font-bold text-slate-900">GH₵ {subtotalWaterGHS.toFixed(2)}</span>
                 </div>
 
-                <div className="flex justify-between">
+                <div className="flex justify-between flex-wrap gap-1">
                   <span>Shell Trade Status:</span>
                   <span className="font-bold text-emerald-600 bg-emerald-50 px-2 py-1 rounded-md">
                     {hasEmptyToSwap ? `1:1 Swap (${quantity} returned)` : `Surcharge (+GH₵ ${subtotalSurchargeGHS.toFixed(2)})`}
@@ -385,14 +385,14 @@ export const OrderWaterScreen: React.FC<OrderWaterScreenProps> = ({ onOrderPlace
                 </div>
 
                 {!hasEmptyToSwap && (
-                  <div className="flex justify-between text-amber-700">
+                  <div className="flex justify-between flex-wrap gap-1 text-amber-700">
                     <span>Shell Surcharge ({quantity}x GH₵ {surchargePerUnitGHS}):</span>
                     <span className="font-bold">+ GH₵ {subtotalSurchargeGHS.toFixed(2)}</span>
                   </div>
                 )}
 
                 {discountGHS > 0 && (
-                  <div className="flex justify-between text-green-600">
+                  <div className="flex justify-between flex-wrap gap-1 text-green-600">
                     <span>Auto-Refill Discount:</span>
                     <span className="font-bold">- GH₵ {discountGHS.toFixed(2)}</span>
                   </div>
@@ -400,7 +400,7 @@ export const OrderWaterScreen: React.FC<OrderWaterScreenProps> = ({ onOrderPlace
 
                 <Separator className="bg-slate-100 my-4" />
 
-                <div className="flex justify-between items-end text-base font-black text-slate-900 pt-1">
+                <div className="flex justify-between flex-wrap gap-1 items-end text-base font-black text-slate-900 pt-1">
                   <span>Total Payable:</span>
                   <span className="text-primary text-2xl">GH₵ {totalAmountGHS.toFixed(2)}</span>
                 </div>

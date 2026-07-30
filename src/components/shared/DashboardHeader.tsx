@@ -29,7 +29,7 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
           </div>
           <div>
             <h1 className="text-sm font-extrabold leading-tight">{title}</h1>
-            <p className="text-[11px] text-primary-foreground/80">{subtitle}</p>
+            <p className="text-xs text-primary-foreground/80">{subtitle}</p>
           </div>
         </div>
 

@@ -67,7 +67,7 @@ export const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ onComplete }
             variant="outline"
             size="icon"
             onClick={handlePrev}
-            className="text-slate-500 hover:text-slate-800 rounded-xl bg-white border-slate-200"
+            className="text-slate-500 hover:text-slate-800 rounded-xl bg-white border-slate-200 min-h-[44px] min-w-[44px]"
           >
             <ArrowLeft className="w-4 h-4" />
           </Button>
@@ -78,7 +78,7 @@ export const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ onComplete }
         <Button
           variant="ghost"
           onClick={onComplete}
-          className="text-xs font-semibold text-slate-500 hover:text-sky-600 px-3 py-1.5 rounded-full bg-slate-100 hover:bg-slate-200 h-auto"
+          className="text-sm font-semibold text-slate-500 hover:text-sky-600 px-3 py-1.5 rounded-full bg-slate-100 hover:bg-slate-200 h-auto min-h-[44px]"
         >
           Skip
         </Button>
@@ -90,22 +90,22 @@ export const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ onComplete }
         <div className="relative mx-auto w-24 h-24 rounded-3xl bg-gradient-to-tr shadow-lg flex items-center justify-center text-white transition-all duration-300 transform scale-105">
           <div className={`absolute inset-0 rounded-3xl bg-gradient-to-tr ${stepData.color} opacity-90`} />
           <Icon className="w-12 h-12 relative z-10 text-white" />
-          <Badge className="absolute -bottom-2 px-2.5 py-0.5 bg-white hover:bg-white text-sky-800 text-[10px] font-extrabold rounded-full border border-sky-200 shadow-sm">
+          <Badge className="absolute -bottom-2 px-2.5 py-0.5 bg-white hover:bg-white text-sky-800 text-xs font-extrabold rounded-full border border-sky-200 shadow-sm">
             {stepData.badge}
           </Badge>
         </div>
 
         <div className="space-y-2 max-w-sm mx-auto">
-          <span className="text-xs font-bold uppercase tracking-wider text-sky-600">{stepData.subtitle}</span>
+          <span className="text-sm font-bold uppercase tracking-wider text-sky-600">{stepData.subtitle}</span>
           <h2 className="text-2xl font-extrabold text-slate-900 leading-tight">{stepData.title}</h2>
-          <p className="text-xs text-slate-600 leading-relaxed">{stepData.description}</p>
+          <p className="text-sm text-slate-600 leading-relaxed">{stepData.description}</p>
         </div>
 
         {/* Highlights List */}
         <Card className="rounded-2xl border-sky-100 max-w-xs mx-auto shadow-sm">
           <CardContent className="p-4 text-left space-y-2">
             {stepData.highlights.map((h, idx) => (
-              <div key={idx} className="flex items-center gap-2 text-xs text-slate-700">
+              <div key={idx} className="flex items-center gap-2 text-sm text-slate-700">
                 <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
                 <span>{h}</span>
               </div>
@@ -130,7 +130,7 @@ export const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ onComplete }
 
         <Button
           onClick={handleNext}
-          className="w-full sm:w-auto h-12 bg-gradient-to-r from-sky-600 to-sky-500 hover:from-sky-500 hover:to-sky-600 text-white font-bold rounded-2xl text-xs flex items-center justify-center gap-2 shadow-md"
+          className="w-full sm:w-auto h-12 bg-gradient-to-r from-sky-600 to-sky-500 hover:from-sky-500 hover:to-sky-600 text-white font-bold rounded-2xl text-sm flex items-center justify-center gap-2 shadow-md"
         >
           <span>{currentStep === steps.length - 1 ? 'Get Started with Nsupa' : 'Continue'}</span>
           <ArrowRight className="w-4 h-4" />

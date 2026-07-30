@@ -25,7 +25,7 @@ export const AuthScreens: React.FC<AuthScreensProps> = ({
           </div>
           <div className="space-y-1">
             <CardTitle className="text-3xl font-black tracking-tight text-white font-display">Nsupa Auth</CardTitle>
-            <CardDescription className="text-blue-100 font-medium text-[11px] uppercase tracking-widest px-2">
+            <CardDescription className="text-blue-100 font-medium text-xs uppercase tracking-widest px-2">
               A reusable alternative to single-use plastics
             </CardDescription>
           </div>
@@ -72,7 +72,7 @@ export const AuthScreens: React.FC<AuthScreensProps> = ({
               onClick={() => onAuthSuccess('admin')}
             >
               <Shield className="w-3.5 h-3.5" />
-              <span className="font-bold text-xs tracking-wider uppercase">Login as Admin</span>
+              <span className="font-bold text-sm tracking-wider uppercase">Login as Admin</span>
             </Button>
           </div>
         </CardContent>

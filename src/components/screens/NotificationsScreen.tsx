@@ -24,8 +24,8 @@ export const NotificationsScreen: React.FC<NotificationsScreenProps> = ({
               <Bell className="w-5 h-5" />
             </div>
             <div>
-              <h1 className="text-base font-extrabold text-slate-900 leading-tight">Notifications & Alerts</h1>
-              <p className="text-xs text-slate-500">Order Updates & AI Reminders</p>
+              <h1 className="text-xl font-extrabold text-slate-900 leading-tight">Notifications & Alerts</h1>
+              <p className="text-sm text-slate-500">Order Updates & AI Reminders</p>
             </div>
           </div>
         </CardContent>
@@ -44,15 +44,15 @@ export const NotificationsScreen: React.FC<NotificationsScreenProps> = ({
             }`}
           >
             <CardContent className="p-4 text-left">
-              <div className="flex items-start justify-between gap-2 mb-1">
-                <h3 className="text-xs font-bold text-slate-900">{notif.title}</h3>
-                <span className="text-[10px] text-slate-400 shrink-0">{notif.timestamp}</span>
+              <div className="flex items-start justify-between gap-2 mb-1 flex-wrap">
+                <h3 className="text-sm font-bold text-slate-900">{notif.title}</h3>
+                <span className="text-xs text-slate-400 shrink-0">{notif.timestamp}</span>
               </div>
 
-              <p className="text-xs text-slate-600 leading-relaxed mb-2">{notif.message}</p>
+              <p className="text-sm text-slate-600 leading-relaxed mb-2">{notif.message}</p>
 
               {notif.actionScreen && (
-                <span className="text-[11px] font-bold text-primary inline-flex items-center gap-1 hover:underline">
+                <span className="text-xs font-bold text-primary inline-flex items-center gap-1 hover:underline">
                   View Screen <ArrowRight className="w-3 h-3" />
                 </span>
               )}

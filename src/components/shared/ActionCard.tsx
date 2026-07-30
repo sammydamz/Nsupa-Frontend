@@ -19,7 +19,7 @@ export const ActionCard: React.FC<ActionCardProps> = ({
   return (
     <button
       onClick={onClick}
-      className={`flex flex-col items-center gap-2 p-4 rounded-3xl transition-colors group text-center w-full ${className}`}
+      className={`flex flex-col items-center justify-center gap-2 p-4 rounded-3xl transition-colors group text-center w-full min-h-[88px] ${className}`}
     >
       <div className="w-10 h-10 bg-white rounded-2xl shadow-sm flex items-center justify-center group-hover:scale-110 transition-transform">
         <Icon className={`w-5 h-5 ${iconClassName}`} />

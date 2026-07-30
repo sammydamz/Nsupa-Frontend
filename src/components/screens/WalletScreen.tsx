@@ -51,7 +51,7 @@ export const WalletScreen: React.FC<WalletScreenProps> = ({
               <Wallet className="w-6 h-6" />
             </div>
             <div>
-              <h1 className="text-lg font-extrabold text-slate-900 leading-tight">Nsupa Ghana Wallet</h1>
+              <h1 className="text-xl font-extrabold text-slate-900 leading-tight">Nsupa Ghana Wallet</h1>
               <p className="text-sm text-slate-500">Secure Payments & Instant Deposit Refunds</p>
             </div>
           </div>
@@ -103,7 +103,7 @@ export const WalletScreen: React.FC<WalletScreenProps> = ({
           <div className="space-y-2.5">
             {transactions.map((tx) => (
               <Card key={tx.id} className="rounded-2xl border-blue-50 shadow-sm">
-                <CardContent className="p-4 flex items-center justify-between">
+                <CardContent className="p-4 flex items-center justify-between flex-wrap gap-2">
                   <div className="flex items-center gap-3">
                     <div className={`p-2.5 rounded-xl ${
                       tx.type === 'deposit_refund' || tx.type === 'top_up'
@@ -121,12 +121,12 @@ export const WalletScreen: React.FC<WalletScreenProps> = ({
 
                     <div>
                       <span className="text-sm font-bold text-slate-900 block">{tx.description}</span>
-                      <span className="text-xs text-slate-400 block">{tx.date} • {tx.paymentChannel}</span>
+                      <span className="text-sm text-slate-400 block">{tx.date} • {tx.paymentChannel}</span>
                     </div>
                   </div>
 
                   <div className="text-right shrink-0">
-                    <span className={`text-xs font-black block ${
+                    <span className={`text-sm font-black block ${
                       tx.type === 'deposit_refund' || tx.type === 'top_up'
                         ? 'text-emerald-600'
                         : 'text-slate-900'
@@ -187,14 +187,14 @@ export const WalletScreen: React.FC<WalletScreenProps> = ({
             <Button
               variant="secondary"
               onClick={() => setShowTopUpModal(false)}
-              className="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl text-xs h-10"
+              className="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl text-sm h-10"
             >
               Cancel
             </Button>
 
             <Button
               onClick={handleConfirmTopUp}
-              className="flex-1 bg-primary hover:bg-primary/90 text-white font-bold rounded-xl text-xs shadow-md h-10"
+              className="flex-1 bg-primary hover:bg-primary/90 text-white font-bold rounded-xl text-sm shadow-md h-10"
             >
               Proceed to Payment
             </Button>
@@ -219,7 +219,7 @@ export const WalletScreen: React.FC<WalletScreenProps> = ({
                 className="w-full h-10 px-3 rounded-xl bg-slate-50 border border-slate-200 font-medium text-slate-800 focus:ring-2 focus:ring-primary focus:outline-none"
               />
               {withdrawAmount && parseFloat(withdrawAmount) < 20 && (
-                <p className="text-xs text-red-500 mt-1.5 font-bold">Minimum withdrawal is GHS 20.</p>
+                <p className="text-sm text-red-500 mt-1.5 font-bold">Minimum withdrawal is GHS 20.</p>
               )}
             </div>
 
@@ -252,7 +252,7 @@ export const WalletScreen: React.FC<WalletScreenProps> = ({
             <Button
               variant="secondary"
               onClick={() => setShowWithdrawModal(false)}
-              className="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl text-xs h-10"
+              className="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl text-sm h-10"
             >
               Cancel
             </Button>
@@ -260,7 +260,7 @@ export const WalletScreen: React.FC<WalletScreenProps> = ({
             <Button
               onClick={handleConfirmWithdraw}
               disabled={!withdrawAmount || parseFloat(withdrawAmount) < 20 || !withdrawAccount}
-              className="flex-1 bg-primary hover:bg-primary/90 text-white font-bold rounded-xl text-xs shadow-md h-10 disabled:opacity-50"
+              className="flex-1 bg-primary hover:bg-primary/90 text-white font-bold rounded-xl text-sm shadow-md h-10 disabled:opacity-50"
             >
               Request Payout
             </Button>

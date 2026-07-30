@@ -34,8 +34,8 @@ export const DepositReturnScreen: React.FC<DepositReturnScreenProps> = ({
               <RotateCcw className="w-5 h-5" />
             </div>
             <div>
-              <h1 className="text-base font-extrabold text-slate-900 leading-tight">1:1 Container Swap & Restock Hub</h1>
-              <p className="text-xs text-slate-500">Ghana Reusable Container Exchange System</p>
+              <h1 className="text-xl font-extrabold text-slate-900 leading-tight">1:1 Container Swap & Restock Hub</h1>
+              <p className="text-sm text-slate-500">Ghana Reusable Container Exchange System</p>
             </div>
           </div>
         </CardContent>
@@ -47,11 +47,11 @@ export const DepositReturnScreen: React.FC<DepositReturnScreenProps> = ({
           <div className="flex items-center justify-between border-b border-slate-700 pb-2">
             <div className="flex items-center gap-2">
               <RefreshCw className="w-4 h-4 text-primary" />
-              <span className="text-xs font-bold uppercase tracking-wider text-primary">
+              <span className="text-sm font-bold uppercase tracking-wider text-primary">
                 Zero Cash Deposit Holding Logic
               </span>
             </div>
-            <Badge variant="outline" className="bg-blue-900/80 text-blue-200 border-blue-500/30 rounded-full font-mono text-[10px]">
+            <Badge variant="outline" className="bg-blue-900/80 text-blue-200 border-blue-500/30 rounded-full font-mono text-xs">
               Ghana Standard
             </Badge>
           </div>
@@ -60,8 +60,8 @@ export const DepositReturnScreen: React.FC<DepositReturnScreenProps> = ({
           <div className="space-y-3 pt-1">
             {/* Top Box */}
             <div className="bg-stone-100 text-stone-900 p-3 rounded-2xl text-center shadow-md max-w-xs mx-auto border border-stone-300">
-              <span className="text-xs font-black block">Point of restock</span>
-              <span className="text-[10px] text-stone-600 font-medium block">hawker, office, or home</span>
+              <span className="text-sm font-black block">Point of restock</span>
+              <span className="text-xs text-stone-600 font-medium block">hawker, office, or home</span>
             </div>
 
             {/* Connectors */}
@@ -71,19 +71,19 @@ export const DepositReturnScreen: React.FC<DepositReturnScreenProps> = ({
             </div>
 
             {/* Two Branches */}
-            <div className="grid grid-cols-2 gap-2 text-xs">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
               {/* Green Branch */}
               <div className="bg-emerald-950/80 border border-emerald-500/50 p-3 rounded-2xl text-emerald-100 space-y-1">
-                <span className="font-extrabold text-emerald-300 block text-xs">Brings back empty shell</span>
-                <p className="text-[10px] text-emerald-200 leading-tight">
+                <span className="font-extrabold text-emerald-300 block text-sm">Brings back empty shell</span>
+                <p className="text-xs text-emerald-200 leading-tight">
                   Pays content price only e.g. <strong className="text-white">GH₵15</strong>, same as today
                 </p>
               </div>
 
               {/* Gold Branch */}
               <div className="bg-amber-950/80 border border-amber-500/50 p-3 rounded-2xl text-amber-100 space-y-1">
-                <span className="font-extrabold text-amber-300 block text-xs">No empty shell to trade</span>
-                <p className="text-[10px] text-amber-200 leading-tight">
+                <span className="font-extrabold text-amber-300 block text-sm">No empty shell to trade</span>
+                <p className="text-xs text-amber-200 leading-tight">
                   Pays content + shell surcharge e.g. <strong className="text-white">GH₵15 + GH₵10</strong>
                 </p>
               </div>
@@ -91,16 +91,16 @@ export const DepositReturnScreen: React.FC<DepositReturnScreenProps> = ({
 
             {/* Bottom Purple Box */}
             <div className="bg-indigo-950/90 border border-indigo-400/50 p-3.5 rounded-2xl text-indigo-100 text-center space-y-1 shadow-md">
-              <span className="text-xs font-extrabold text-indigo-200 block">
+              <span className="text-sm font-extrabold text-indigo-200 block">
                 Driver scans empty out, scans full in — seamless exchange
               </span>
-              <p className="text-[10px] text-indigo-300 leading-snug">
+              <p className="text-xs text-indigo-300 leading-snug">
                 Simple, transparent container swap model designed for households, offices, and schools across Ghana
               </p>
             </div>
 
             {/* Footer Explanation */}
-            <p className="text-[11px] text-slate-300 leading-relaxed italic bg-slate-800/80 p-3 rounded-2xl border border-slate-700/80 text-center">
+            <p className="text-xs text-slate-300 leading-relaxed italic bg-slate-800/80 p-3 rounded-2xl border border-slate-700/80 text-center">
               "No complex deposit holding; returning an empty container guarantees instant water refills at the lowest water content price."
             </p>
           </div>
@@ -110,8 +110,8 @@ export const DepositReturnScreen: React.FC<DepositReturnScreenProps> = ({
       {/* Customer's Reusable Shell Inventory */}
       <div className="space-y-3">
         <div className="flex items-center justify-between">
-          <h2 className="text-xs font-bold uppercase text-slate-800 tracking-wider">Your Reusable Containers</h2>
-          <span className="text-[11px] text-slate-500 font-medium">{bottles.length} Containers at your location</span>
+          <h2 className="text-sm font-bold uppercase text-slate-800 tracking-wider">Your Reusable Containers</h2>
+          <span className="text-xs text-slate-500 font-medium">{bottles.length} Containers at your location</span>
         </div>
 
         <div className="space-y-3">
@@ -120,11 +120,11 @@ export const DepositReturnScreen: React.FC<DepositReturnScreenProps> = ({
               <CardContent className="p-4 space-y-3">
                 <div className="flex items-center justify-between">
                   <div>
-                    <span className="text-xs font-extrabold text-slate-900 block">{bottle.id}</span>
-                    <span className="text-[11px] text-slate-500 block">{bottle.type} ({bottle.sizeLitres}L)</span>
+                    <span className="text-sm font-extrabold text-slate-900 block">{bottle.id}</span>
+                    <span className="text-xs text-slate-500 block">{bottle.type} ({bottle.sizeLitres}L)</span>
                   </div>
 
-                  <Badge variant="outline" className={`border-none px-2.5 py-1 rounded-full text-[10px] font-bold uppercase ${
+                  <Badge variant="outline" className={`border-none px-2.5 py-1 rounded-full text-xs font-bold uppercase ${
                     bottle.linerState === 'empty_ready_return'
                       ? 'bg-emerald-100 text-emerald-800 border-emerald-300'
                       : 'bg-blue-100 text-blue-800'
@@ -133,14 +133,14 @@ export const DepositReturnScreen: React.FC<DepositReturnScreenProps> = ({
                   </Badge>
                 </div>
 
-                <div className="grid grid-cols-2 gap-2 text-xs bg-slate-50 p-3 rounded-2xl border border-slate-100">
+                <div className="grid grid-cols-2 gap-2 text-sm bg-slate-50 p-3 rounded-2xl border border-slate-100">
                   <div>
-                    <span className="text-[10px] text-slate-400 block">Container Status</span>
+                    <span className="text-xs text-slate-400 block">Container Status</span>
                     <span className="font-bold text-slate-800 capitalize">{bottle.linerState.replace(/_/g, ' ')}</span>
                   </div>
 
                   <div>
-                    <span className="text-[10px] text-slate-400 block">Refill Trade Value</span>
+                    <span className="text-xs text-slate-400 block">Refill Trade Value</span>
                     <span className="font-extrabold text-emerald-700">GH₵ 15.00 Content Price</span>
                   </div>
                 </div>
@@ -149,7 +149,7 @@ export const DepositReturnScreen: React.FC<DepositReturnScreenProps> = ({
                   <Button
                     variant="outline"
                     onClick={() => onNavigate('qr_scanner')}
-                    className="flex-1 h-10 bg-blue-50 text-primary font-bold rounded-2xl text-xs flex items-center justify-center gap-1.5 hover:bg-blue-100 hover:text-primary border border-blue-100"
+                    className="flex-1 h-10 bg-blue-50 text-primary font-bold rounded-2xl text-sm flex items-center justify-center gap-1.5 hover:bg-blue-100 hover:text-primary border border-blue-100"
                   >
                     <QrCode className="w-4 h-4" />
                     <span>Scan QR Code</span>
@@ -157,7 +157,7 @@ export const DepositReturnScreen: React.FC<DepositReturnScreenProps> = ({
 
                   <Button
                     onClick={() => onNavigate('order')}
-                    className="flex-1 h-10 bg-primary hover:bg-primary/90 text-white font-bold rounded-2xl text-xs flex items-center justify-center gap-1.5 shadow-sm"
+                    className="flex-1 h-10 bg-primary hover:bg-primary/90 text-white font-bold rounded-2xl text-sm flex items-center justify-center gap-1.5 shadow-sm"
                   >
                     <RefreshCw className="w-4 h-4" />
                     <span>Order Refill & Swap</span>

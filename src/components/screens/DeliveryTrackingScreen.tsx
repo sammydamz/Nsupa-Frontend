@@ -61,11 +61,11 @@ export const DeliveryTrackingScreen: React.FC<DeliveryTrackingScreenProps> = ({ 
               <Truck className="w-5 h-5" />
             </div>
             <div>
-              <h1 className="text-base font-extrabold text-slate-900 leading-tight">Live Delivery Tracking</h1>
-              <p className="text-xs text-slate-500">Order #{order.orderNumber} • East Legon, Accra</p>
+              <h1 className="text-xl font-extrabold text-slate-900 leading-tight">Live Delivery Tracking</h1>
+              <p className="text-sm text-slate-500">Order #{order.orderNumber} • East Legon, Accra</p>
             </div>
           </div>
-          <Badge className="bg-emerald-100 text-emerald-800 hover:bg-emerald-100 text-xs font-bold rounded-full animate-pulse border-none">
+          <Badge className="bg-emerald-100 text-emerald-800 hover:bg-emerald-100 text-sm font-bold rounded-full animate-pulse border-none">
             Rider En Route
           </Badge>
         </CardContent>
@@ -107,13 +107,13 @@ export const DeliveryTrackingScreen: React.FC<DeliveryTrackingScreenProps> = ({ 
         <div className="absolute top-3 left-3 bg-white/90 backdrop-blur-sm border border-sky-100 px-3.5 py-2 rounded-2xl shadow-lg flex items-center gap-2">
           <Clock className="w-4 h-4 text-sky-600 animate-spin-slow" />
           <div>
-            <span className="text-[10px] text-slate-500 block">Estimated Arrival</span>
+            <span className="text-xs text-slate-500 block">Estimated Arrival</span>
             <span className="text-sm font-black text-slate-900">{etaMins} Mins</span>
           </div>
         </div>
 
         {/* Map Legend Badge */}
-        <div className="absolute bottom-3 right-3 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-xl text-[10px] text-slate-600 font-semibold border border-slate-200 shadow-sm">
+        <div className="absolute bottom-3 right-3 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-xl text-xs text-slate-600 font-semibold border border-slate-200 shadow-sm">
           <span className="flex items-center gap-1"><MapPin className="w-3 h-3 text-sky-500" /> Accra Delivery Network</span>
         </div>
       </div>
@@ -121,7 +121,7 @@ export const DeliveryTrackingScreen: React.FC<DeliveryTrackingScreenProps> = ({ 
       {/* Driver Info Card */}
       <Card className="rounded-2xl border-sky-100 shadow-sm">
         <CardContent className="p-4 space-y-3">
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between flex-wrap gap-2">
             <div className="flex items-center gap-3">
               <img
                 src={order.driverPhoto || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=200'}
@@ -130,8 +130,8 @@ export const DeliveryTrackingScreen: React.FC<DeliveryTrackingScreenProps> = ({ 
               />
               <div>
                 <h3 className="text-sm font-extrabold text-slate-900">{order.driverName || 'Kwame Osei'}</h3>
-                <p className="text-xs text-slate-500">Certified Nsupa Delivery Rider #12</p>
-                <span className="text-[10px] text-emerald-600 font-bold">⭐ 4.98 Rating (480 deliveries)</span>
+                <p className="text-sm text-slate-500">Certified Nsupa Delivery Rider #12</p>
+                <span className="text-xs text-emerald-600 font-bold">⭐ 4.98 Rating (480 deliveries)</span>
               </div>
             </div>
 
@@ -150,15 +150,15 @@ export const DeliveryTrackingScreen: React.FC<DeliveryTrackingScreenProps> = ({ 
 
           {/* Live Chat Drawer Box */}
           <div className="bg-slate-50 rounded-2xl p-3 border border-slate-200 space-y-3">
-            <div className="flex items-center justify-between text-xs font-bold text-slate-700 border-b border-slate-200 pb-2">
+            <div className="flex items-center justify-between text-sm font-bold text-slate-700 border-b border-slate-200 pb-2">
               <span className="flex items-center gap-1.5">
                 <MessageSquare className="w-4 h-4 text-sky-600" />
                 Rider In-App Chat
               </span>
-              <Badge variant="outline" className="text-[10px] text-emerald-600 bg-emerald-50 rounded-full border-emerald-200">Online</Badge>
+              <Badge variant="outline" className="text-xs text-emerald-600 bg-emerald-50 rounded-full border-emerald-200">Online</Badge>
             </div>
 
-            <div className="max-h-32 overflow-y-auto space-y-2 pr-1 text-xs">
+            <div className="max-h-32 overflow-y-auto space-y-2 pr-1 text-sm">
               {chatHistory.map((msg, idx) => (
                 <div
                   key={idx}
@@ -173,7 +173,7 @@ export const DeliveryTrackingScreen: React.FC<DeliveryTrackingScreenProps> = ({ 
                   >
                     <p>{msg.text}</p>
                   </div>
-                  <span className="text-[9px] text-slate-400 mt-0.5 px-1">{msg.time}</span>
+                  <span className="text-xs text-slate-400 mt-0.5 px-1">{msg.time}</span>
                 </div>
               ))}
             </div>
@@ -184,11 +184,11 @@ export const DeliveryTrackingScreen: React.FC<DeliveryTrackingScreenProps> = ({ 
                 placeholder="Type message to rider..."
                 value={chatMessage}
                 onChange={(e) => setChatMessage(e.target.value)}
-                className="flex-1 bg-white border-slate-200 rounded-xl text-xs h-9"
+                className="flex-1 bg-white border-slate-200 rounded-xl text-sm h-9"
               />
               <Button
                 type="submit"
-                className="bg-sky-600 text-white font-bold rounded-xl text-xs hover:bg-sky-700 h-9"
+                className="bg-sky-600 text-white font-bold rounded-xl text-sm hover:bg-sky-700 h-9"
               >
                 Send
               </Button>
@@ -200,9 +200,9 @@ export const DeliveryTrackingScreen: React.FC<DeliveryTrackingScreenProps> = ({ 
       {/* Delivery Timeline Steps */}
       <Card className="rounded-2xl border-sky-100 shadow-sm">
         <CardContent className="p-4 space-y-3">
-          <h3 className="text-xs font-bold uppercase text-slate-800 tracking-wider">Delivery Timeline</h3>
+          <h3 className="text-sm font-bold uppercase text-slate-800 tracking-wider">Delivery Timeline</h3>
 
-          <div className="space-y-4 relative pl-4 border-l-2 border-sky-100 ml-2">
+          <div className="space-y-4 relative pl-4 border-l-2 border-sky-100 ml-2 pr-2">
             {steps.map((step, idx) => (
               <div key={idx} className="relative">
                 <div className={`absolute -left-[23px] top-0.5 w-4 h-4 rounded-full border-2 ${
@@ -214,12 +214,12 @@ export const DeliveryTrackingScreen: React.FC<DeliveryTrackingScreenProps> = ({ 
                 }`} />
 
                 <div className="space-y-0.5">
-                  <span className={`text-xs font-bold block ${
+                  <span className={`text-sm font-bold block ${
                     step.status === 'active' ? 'text-sky-700' : 'text-slate-800'
                   }`}>
                     {step.title}
                   </span>
-                  <p className="text-[11px] text-slate-500">{step.subtitle}</p>
+                  <p className="text-xs text-slate-500">{step.subtitle}</p>
                 </div>
               </div>
             ))}
@@ -239,17 +239,17 @@ export const DeliveryTrackingScreen: React.FC<DeliveryTrackingScreenProps> = ({ 
 
           <div>
             <h3 className="font-bold text-slate-900 text-base">Calling {order.driverName || 'Kwame Osei'}</h3>
-            <p className="text-xs text-slate-500 mt-1">{order.driverPhone || '+233 20 882 1109'}</p>
+            <p className="text-sm text-slate-500 mt-1">{order.driverPhone || '+233 20 882 1109'}</p>
           </div>
 
-          <div className="p-3 bg-slate-50 rounded-2xl text-xs text-slate-600">
+          <div className="p-3 bg-slate-50 rounded-2xl text-sm text-slate-600">
             In-app encrypted call route via Nsupa Ghana Dispatch
           </div>
 
           <Button
             variant="destructive"
             onClick={() => setShowCallModal(false)}
-            className="w-full h-12 bg-red-600 hover:bg-red-700 text-white font-bold rounded-2xl text-xs flex items-center justify-center gap-1"
+            className="w-full h-12 bg-red-600 hover:bg-red-700 text-white font-bold rounded-2xl text-sm flex items-center justify-center gap-1"
           >
             <X className="w-4 h-4" />
             <span>End Call</span>

@@ -53,11 +53,11 @@ export const BottomNav: React.FC<BottomNavProps> = ({ currentScreen, onNavigate 
               variant="ghost"
               size="icon"
               onClick={() => onNavigate(item.id)}
-              className={`flex flex-col h-12 w-12 items-center rounded-xl transition-all ${
+              className={`flex flex-col h-12 w-12 items-center justify-center rounded-xl transition-all ${
                 isActive ? 'text-primary bg-primary/10 hover:bg-primary/20 hover:text-primary' : 'text-muted-foreground hover:text-foreground'
               }`}
             >
-              <Icon className={`w-5 h-5 mb-0.5 ${isActive ? 'stroke-[2.5]' : 'stroke-2'}`} />
+              <Icon className={`w-5 h-5 ${isActive ? 'stroke-[2.5]' : 'stroke-2'}`} />
               <span className="text-[10px] leading-none">{item.label}</span>
             </Button>
           );

@@ -33,8 +33,8 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
               <User className="w-5 h-5" />
             </div>
             <div>
-              <h1 className="text-base font-extrabold text-slate-900 leading-tight">Profile & App Settings</h1>
-              <p className="text-xs text-slate-500">Account Preferences & Support</p>
+              <h1 className="text-xl font-extrabold text-slate-900 leading-tight">Profile & App Settings</h1>
+              <p className="text-sm text-slate-500">Account Preferences & Support</p>
             </div>
           </div>
         </CardContent>
@@ -49,14 +49,14 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
             </div>
             <div>
               <h2 className="text-base font-extrabold text-slate-900">{userName}</h2>
-              <p className="text-xs text-slate-500">{userPhone}</p>
-              <Badge className="text-[10px] text-primary bg-blue-50 hover:bg-blue-50 font-bold px-2.5 py-0.5 rounded-full border border-blue-100 mt-1">
+              <p className="text-sm text-slate-500">{userPhone}</p>
+              <Badge className="text-xs text-primary bg-blue-50 hover:bg-blue-50 font-bold px-2.5 py-0.5 rounded-full border border-blue-100 mt-1">
                 Verified Swap Account
               </Badge>
             </div>
           </div>
 
-          <div className="pt-3 border-t border-slate-100 space-y-2 text-xs">
+          <div className="pt-3 border-t border-slate-100 space-y-2 text-sm">
             <div className="flex items-center gap-2 text-slate-700">
               <MapPin className="w-4 h-4 text-primary shrink-0" />
               <span className="font-medium">{userAddress}</span>
@@ -67,17 +67,17 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
 
       {/* Quick Navigation Links */}
       <Card className="rounded-3xl border-blue-50 shadow-sm">
-        <CardContent className="p-2 space-y-1 text-xs font-bold text-slate-800">
+        <CardContent className="p-2 space-y-1 text-sm font-bold text-slate-800">
           <Button
             variant="ghost"
             onClick={() => onNavigate('deposits')}
-            className="w-full sm:w-auto h-auto p-3 hover:bg-blue-50 rounded-2xl flex items-center justify-between text-left transition-colors font-bold text-slate-800"
+            className="w-full sm:w-auto h-auto p-3 hover:bg-blue-50 rounded-2xl flex items-center justify-between gap-2 text-left transition-colors font-bold text-sm text-slate-800"
           >
-            <div className="flex items-center gap-3">
-              <Award className="w-4 h-4 text-primary" />
-              <span>Containers & Milestone Rewards</span>
+            <div className="flex items-center gap-3 min-w-0">
+              <Award className="w-4 h-4 text-primary shrink-0" />
+              <span className="truncate">Containers & Milestone Rewards</span>
             </div>
-            <Badge className="text-[10px] bg-amber-100 hover:bg-amber-100 text-amber-800 font-bold px-2 py-0.5 rounded-full border-none">
+            <Badge className="text-xs bg-amber-100 hover:bg-amber-100 text-amber-800 font-bold px-2 py-0.5 rounded-full border-none shrink-0">
               7/10 Swaps
             </Badge>
           </Button>
@@ -85,7 +85,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
           <Button
             variant="ghost"
             onClick={() => onNavigate('notifications')}
-            className="w-full sm:w-auto h-auto p-3 hover:bg-blue-50 rounded-2xl flex items-center justify-between text-left transition-colors font-bold text-slate-800"
+            className="w-full sm:w-auto h-auto p-3 hover:bg-blue-50 rounded-2xl flex items-center justify-between gap-2 text-left transition-colors font-bold text-sm text-slate-800"
           >
             <div className="flex items-center gap-3">
               <Bell className="w-4 h-4 text-primary" />
@@ -97,31 +97,31 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
 
       {/* Language Selector */}
       <Card className="rounded-3xl border-blue-50 shadow-sm">
-        <CardContent className="p-4 flex items-center justify-between">
+        <CardContent className="p-4 flex items-center justify-between flex-wrap gap-2">
           <div className="flex items-center gap-2">
             <Globe className="w-4 h-4 text-primary" />
-            <h3 className="text-xs font-bold uppercase text-slate-800 tracking-wider">App Language</h3>
+            <h3 className="text-sm font-bold uppercase text-slate-800 tracking-wider">App Language</h3>
           </div>
 
           <Select value={language} onValueChange={(val: 'English' | 'Twi' | 'Ga') => setLanguage(val)}>
-            <SelectTrigger className="w-[120px] h-9 rounded-xl bg-white border-slate-200 text-xs font-bold shadow-sm focus:ring-primary focus:ring-offset-0">
+            <SelectTrigger className="w-[120px] h-9 rounded-xl bg-white border-slate-200 text-sm font-bold shadow-sm focus:ring-primary focus:ring-offset-0">
               <SelectValue placeholder="Language" />
             </SelectTrigger>
             <SelectContent className="rounded-xl border-slate-200 shadow-lg">
-              <SelectItem value="English" className="text-xs font-bold rounded-lg cursor-pointer">English</SelectItem>
-              <SelectItem value="Twi" className="text-xs font-bold rounded-lg cursor-pointer">Twi</SelectItem>
-              <SelectItem value="Ga" className="text-xs font-bold rounded-lg cursor-pointer">Ga</SelectItem>
+              <SelectItem value="English" className="text-sm font-bold rounded-lg cursor-pointer">English</SelectItem>
+              <SelectItem value="Twi" className="text-sm font-bold rounded-lg cursor-pointer">Twi</SelectItem>
+              <SelectItem value="Ga" className="text-sm font-bold rounded-lg cursor-pointer">Ga</SelectItem>
             </SelectContent>
           </Select>
         </CardContent>
       </Card>
 
       {/* Support & Logout */}
-      <div className="flex flex-col sm:flex-row items-center gap-3 pt-4 border-t border-slate-100">
+      <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-4 border-t border-slate-100">
         <Button
           variant="outline"
           onClick={() => alert("Nsupa Ghana Customer Support Line: +233 30 200 9988\nWhatsApp Support: +233 24 000 1122")}
-          className="w-full sm:w-auto h-12 px-6 bg-white rounded-2xl border-slate-200 text-xs font-bold text-slate-800 flex items-center justify-center gap-2 hover:bg-slate-50 shadow-sm"
+          className="w-full sm:w-auto h-12 px-6 bg-white rounded-2xl border-slate-200 text-sm font-bold text-slate-800 flex items-center justify-center gap-2 hover:bg-slate-50 shadow-sm"
         >
           <HelpCircle className="w-4 h-4 text-primary" />
           <span>Support & Help</span>
@@ -130,7 +130,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
         <Button
           variant="outline"
           onClick={onLogout}
-          className="w-full sm:w-auto h-12 px-6 bg-red-50 hover:bg-red-100 text-red-700 rounded-2xl border-red-200 text-xs font-bold flex items-center justify-center gap-2 transition-colors shadow-none"
+          className="w-full sm:w-auto h-12 px-6 bg-red-50 hover:bg-red-100 text-red-700 rounded-2xl border-red-200 text-sm font-bold flex items-center justify-center gap-2 transition-colors shadow-none"
         >
           <LogOut className="w-4 h-4 text-red-600" />
           <span>Logout Account</span>

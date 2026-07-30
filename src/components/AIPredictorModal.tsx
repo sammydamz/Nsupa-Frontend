@@ -8,6 +8,55 @@ interface AIPredictorModalProps {
   onApplyPlan: (plan: string) => void;
 }
 
+// Generate a realistic AI prediction from mock data
+const generatePrediction = async (
+  householdSize: number,
+  _location: string,
+  currentBottles: number,
+  _usagePattern: string,
+): Promise<AIPredictionResult> => {
+  // Simulate API delay
+  await new Promise((r) => setTimeout(r, 1200));
+
+  const dailyConsumptionL = householdSize * 2.5; // ~2.5L per person per day
+  const litresRemaining = currentBottles * 15;
+  const daysRemaining = Math.max(1, Math.round(litresRemaining / dailyConsumptionL));
+  const now = new Date();
+  const predictedDate = new Date(now);
+  predictedDate.setDate(predictedDate.getDate() + daysRemaining);
+  const recommendedDate = new Date(predictedDate);
+  recommendedDate.setDate(recommendedDate.getDate() - 2);
+
+  const fmt = (d: Date) => d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+  const sachetsPerMonth = Math.round(householdSize * 30 * 2); // ~60 sachets/person/month
+
+  const plans = [
+    `Weekly Auto-Refill (${householdSize > 4 ? '2× 15L' : '1× 15L'})`,
+    `Bi-Weekly Subscription (${householdSize > 6 ? '4× 15L' : '2× 15L'})`,
+    `Monthly Bulk (${householdSize > 8 ? '8× 15L' : '4× 15L'})`,
+  ];
+
+  const insights = [
+    `Your household of ${householdSize} people consumes ~${dailyConsumptionL.toFixed(1)}L of water daily through drinking and cooking.`,
+    `With ${currentBottles} bottle(s) (${litresRemaining}L) remaining, you have approximately ${daysRemaining} days before running out.`,
+    `Switching to Nsupa's 1:1 swap system saves ~${sachetsPerMonth} single-use sachets from entering Accra's drains every month.`,
+    `${householdSize > 4 ? 'Your household qualifies for the Family Pack (2× 15L bi-weekly) — 12% discount applied.' : 'The Individual Plan (1× 15L weekly) matches your usage pattern.'}`,
+  ];
+
+  return {
+    daysRemaining,
+    predictedRunOutDate: fmt(predictedDate),
+    recommendedRefillDate: fmt(recommendedDate),
+    suggestedPlan: plans[1],
+    sachetsSavedPerMonth: sachetsPerMonth,
+    co2SavedKg: Math.round(sachetsPerMonth * 0.03 * 100) / 100,
+    insights,
+    smartTip: householdSize > 4
+      ? `Schedule a bi-weekly subscription to lock in 12% off and never worry about run-outs.`
+      : `Pro tip: Order 2 days before your predicted empty date to avoid delivery delays during Accra traffic.`,
+  };
+};
+
 export const AIPredictorModal: React.FC<AIPredictorModalProps> = ({ isOpen, onClose, onApplyPlan }) => {
   const [householdSize, setHouseholdSize] = useState<number>(4);
   const [location, setLocation] = useState<string>('East Legon, Accra');
@@ -24,18 +73,20 @@ export const AIPredictorModal: React.FC<AIPredictorModalProps> = ({ isOpen, onCl
       const res = await fetch('/api/ai/predict', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          householdSize,
-          location,
-          currentBottles,
-          usagePattern,
-          role: 'customer',
-        }),
+        body: JSON.stringify({ householdSize, location, currentBottles, usagePattern }),
       });
-      const data = await res.json();
-      setResult(data);
-    } catch (err) {
-      console.error('Failed to get prediction:', err);
+      if (res.ok) {
+        const data = await res.json();
+        setResult(data);
+      } else {
+        // Fallback to local prediction when backend is unavailable
+        const local = await generatePrediction(householdSize, location, currentBottles, usagePattern);
+        setResult(local);
+      }
+    } catch {
+      // Backend unreachable — use local mock prediction
+      const local = await generatePrediction(householdSize, location, currentBottles, usagePattern);
+      setResult(local);
     } finally {
       setLoading(false);
     }
@@ -43,7 +94,7 @@ export const AIPredictorModal: React.FC<AIPredictorModalProps> = ({ isOpen, onCl
 
   return (
     <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4 overflow-y-auto">
-      <div className="bg-white rounded-3xl max-w-lg w-full shadow-2xl overflow-hidden border border-sky-100 animate-in fade-in zoom-in-95 duration-200">
+      <div className="bg-white rounded-3xl max-w-lg w-full shadow-2xl overflow-hidden border border-blue-100 animate-in fade-in zoom-in-95 duration-200">
         {/* Modal Header */}
         <div className="bg-gradient-to-r from-primary to-primary/80 p-5 text-white flex items-center justify-between">
           <div className="flex items-center gap-2.5">
@@ -72,7 +123,7 @@ export const AIPredictorModal: React.FC<AIPredictorModalProps> = ({ isOpen, onCl
                 <select
                   value={householdSize}
                   onChange={(e) => setHouseholdSize(Number(e.target.value))}
-                  className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-sky-500"
+                  className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-primary/30"
                 >
                   <option value={1}>1 Person (Solo)</option>
                   <option value={2}>2 People (Couple)</option>
@@ -87,7 +138,7 @@ export const AIPredictorModal: React.FC<AIPredictorModalProps> = ({ isOpen, onCl
                 <select
                   value={currentBottles}
                   onChange={(e) => setCurrentBottles(Number(e.target.value))}
-                  className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-sky-500"
+                  className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-primary/30"
                 >
                   <option value={1}>1 Bottle (15 Litres)</option>
                   <option value={2}>2 Bottles (30 Litres)</option>
@@ -103,7 +154,7 @@ export const AIPredictorModal: React.FC<AIPredictorModalProps> = ({ isOpen, onCl
                   type="text"
                   value={location}
                   onChange={(e) => setLocation(e.target.value)}
-                  className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-sky-500"
+                  className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-primary/30"
                   placeholder="e.g. East Legon, Accra"
                 />
               </div>
@@ -113,7 +164,7 @@ export const AIPredictorModal: React.FC<AIPredictorModalProps> = ({ isOpen, onCl
                 <select
                   value={usagePattern}
                   onChange={(e) => setUsagePattern(e.target.value)}
-                  className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-sky-500"
+                  className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-primary/30"
                 >
                   <option value="Drinking only">Drinking only</option>
                   <option value="Standard drinking & cooking">Drinking & Cooking</option>
@@ -143,28 +194,28 @@ export const AIPredictorModal: React.FC<AIPredictorModalProps> = ({ isOpen, onCl
 
           {/* AI Result Card */}
           {result && (
-            <div className="space-y-4 pt-3 border-t border-sky-100 animate-in fade-in duration-300">
-              <div className="bg-sky-50/80 border border-sky-200 rounded-2xl p-4 space-y-3">
+            <div className="space-y-4 pt-3 border-t border-blue-100 animate-in fade-in duration-300">
+              <div className="bg-blue-50/80 border border-blue-200 rounded-2xl p-4 space-y-3">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold text-sky-900 uppercase tracking-wide">Predicted Run-Out</span>
-                  <span className="px-2.5 py-0.5 bg-amber-100 text-amber-800 text-[11px] font-bold rounded-full">
+                  <span className="text-xs font-bold text-blue-900 uppercase tracking-wide">Predicted Run-Out</span>
+                  <span className="px-2.5 py-0.5 bg-amber-100 text-amber-800 text-xs font-bold rounded-full">
                     {result.daysRemaining} Days Left
                   </span>
                 </div>
 
                 <div className="grid grid-cols-2 gap-2 text-xs">
-                  <div className="bg-white p-2.5 rounded-xl border border-sky-100">
-                    <span className="text-[10px] text-slate-500 block">Estimated Empty Date</span>
+                  <div className="bg-white p-2.5 rounded-xl border border-blue-100">
+                    <span className="text-xs text-slate-500 block">Estimated Empty Date</span>
                     <span className="font-bold text-slate-800 text-sm flex items-center gap-1 mt-0.5">
-                      <Calendar className="w-3.5 h-3.5 text-sky-600" />
+                      <Calendar className="w-3.5 h-3.5 text-primary" />
                       {result.predictedRunOutDate}
                     </span>
                   </div>
 
-                  <div className="bg-white p-2.5 rounded-xl border border-sky-100">
-                    <span className="text-[10px] text-slate-500 block">Recommended Refill</span>
-                    <span className="font-bold text-sky-700 text-sm flex items-center gap-1 mt-0.5">
-                      <RefreshCw className="w-3.5 h-3.5 text-sky-600" />
+                  <div className="bg-white p-2.5 rounded-xl border border-blue-100">
+                    <span className="text-xs text-slate-500 block">Recommended Refill</span>
+                    <span className="font-bold text-primary text-sm flex items-center gap-1 mt-0.5">
+                      <RefreshCw className="w-3.5 h-3.5 text-primary" />
                       {result.recommendedRefillDate}
                     </span>
                   </div>
@@ -182,7 +233,7 @@ export const AIPredictorModal: React.FC<AIPredictorModalProps> = ({ isOpen, onCl
                   <ul className="space-y-1 text-xs text-slate-600">
                     {result.insights.map((insight, idx) => (
                       <li key={idx} className="flex items-start gap-1.5">
-                        <Droplet className="w-3.5 h-3.5 text-sky-500 shrink-0 mt-0.5" />
+                        <Droplet className="w-3.5 h-3.5 text-primary shrink-0 mt-0.5" />
                         <span>{insight}</span>
                       </li>
                     ))}
@@ -191,7 +242,7 @@ export const AIPredictorModal: React.FC<AIPredictorModalProps> = ({ isOpen, onCl
 
                 {/* Smart Tip */}
                 {result.smartTip && (
-                  <div className="p-2.5 bg-sky-100/70 text-sky-900 text-xs rounded-xl font-medium">
+                  <div className="p-2.5 bg-blue-100/70 text-blue-900 text-xs rounded-xl font-medium">
                     <Lightbulb className="w-3.5 h-3.5 inline mr-1 text-amber-500" /> <strong>Smart Tip:</strong> {result.smartTip}
                   </div>
                 )}
@@ -203,7 +254,7 @@ export const AIPredictorModal: React.FC<AIPredictorModalProps> = ({ isOpen, onCl
                     onApplyPlan(result.suggestedPlan);
                     onClose();
                   }}
-                  className="flex-1 py-2.5 bg-sky-600 hover:bg-sky-700 text-white text-xs font-bold rounded-xl flex items-center justify-center gap-1.5 shadow-2xs"
+                  className="flex-1 py-2.5 bg-primary hover:bg-primary/90 text-white text-xs font-bold rounded-xl flex items-center justify-center gap-1.5 shadow-sm"
                 >
                   <span>Schedule Refill for {result.recommendedRefillDate}</span>
                   <ArrowRight className="w-4 h-4" />

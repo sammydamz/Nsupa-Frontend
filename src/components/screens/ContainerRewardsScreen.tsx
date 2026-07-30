@@ -35,7 +35,7 @@ export const ContainerRewardsScreen: React.FC<ContainerRewardsScreenProps> = ({
               <Award className="w-6 h-6" />
             </div>
             <div>
-              <h1 className="text-lg font-extrabold text-slate-900 leading-tight">Swap Rewards</h1>
+              <h1 className="text-xl font-extrabold text-slate-900 leading-tight">Swap Rewards</h1>
               <p className="text-base text-slate-500 mt-1">11th Refill is FREE</p>
             </div>
           </div>
@@ -50,7 +50,7 @@ export const ContainerRewardsScreen: React.FC<ContainerRewardsScreenProps> = ({
             <Gift className="w-48 h-48 text-white" />
           </div>
 
-          <div className="relative z-10 flex items-start justify-between gap-4">
+          <div className="relative z-10 flex items-start justify-between gap-4 flex-wrap">
             <div className="space-y-3">
               <span className="text-sm uppercase font-bold text-blue-200 tracking-wider flex items-center gap-2">
                 <Sparkles className="w-5 h-5 text-amber-300" />
@@ -76,7 +76,7 @@ export const ContainerRewardsScreen: React.FC<ContainerRewardsScreenProps> = ({
             <Progress value={progressPercent} className="h-3 bg-black/20 p-0.5 border border-white/20 [&>div]:bg-gradient-to-r [&>div]:from-amber-300 [&>div]:to-amber-400" />
             
             {/* 10 Milestone Badges Row */}
-            <div className="grid grid-cols-10 gap-1 pt-1">
+            <div className="grid grid-cols-5 sm:grid-cols-10 gap-1 pt-1">
               {Array.from({ length: 10 }).map((_, idx) => {
                 const swapNum = idx + 1;
                 const isDone = swapNum <= currentSwaps;
@@ -128,7 +128,7 @@ export const ContainerRewardsScreen: React.FC<ContainerRewardsScreenProps> = ({
         <div className="space-y-4">
           {bottles.map((bottle) => (
             <Card key={bottle.id} className="rounded-3xl border-blue-50 shadow-sm">
-              <CardContent className="p-6 space-y-5">
+              <CardContent className="p-5 sm:p-6 space-y-5">
                 <div className="flex items-center justify-between">
                   <div>
                     <span className="text-lg font-extrabold text-slate-900 block">{bottle.id}</span>
@@ -185,7 +185,7 @@ export const ContainerRewardsScreen: React.FC<ContainerRewardsScreenProps> = ({
         <CardContent className="p-5 space-y-4">
           <div className="flex items-center justify-between border-b border-slate-100 pb-3">
             <h3 className="text-sm font-bold uppercase text-slate-800 tracking-wider">Recent Swap History</h3>
-            <span className="text-xs text-slate-400">Scan verified</span>
+            <span className="text-sm text-slate-400">Scan verified</span>
           </div>
 
           <div className="space-y-4">
@@ -196,13 +196,13 @@ export const ContainerRewardsScreen: React.FC<ContainerRewardsScreenProps> = ({
                 </div>
                 <div>
                   <span className="font-bold text-slate-900 block text-sm">1:1 Container Swap (2x 15L Shells)</span>
-                  <span className="text-xs text-slate-500 block mt-0.5">Jul 20, 2026 • Driver Kwame Osei</span>
-                  <span className="text-xs text-emerald-700 font-bold block mt-1">+2 Milestone Swaps Credited</span>
+                  <span className="text-sm text-slate-500 block mt-0.5">Jul 20, 2026 • Driver Kwame Osei</span>
+                  <span className="text-sm text-emerald-700 font-bold block mt-1">+2 Milestone Swaps Credited</span>
                 </div>
               </div>
               <div className="text-right">
                 <span className="font-extrabold text-slate-900 block text-sm">GH₵ 30.00</span>
-                <span className="text-xs bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-md font-bold mt-1 inline-block">Saved GH₵ 40</span>
+                <span className="text-sm bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-md font-bold mt-1 inline-block">Saved GH₵ 40</span>
               </div>
             </div>
 
@@ -213,13 +213,13 @@ export const ContainerRewardsScreen: React.FC<ContainerRewardsScreenProps> = ({
                 </div>
                 <div>
                   <span className="font-bold text-slate-900 block text-sm">1:1 Container Swap (2x 15L Shells)</span>
-                  <span className="text-xs text-slate-500 block mt-0.5">Jul 15, 2026 • Driver Kwame Osei</span>
-                  <span className="text-xs text-emerald-700 font-bold block mt-1">+2 Milestone Swaps Credited</span>
+                  <span className="text-sm text-slate-500 block mt-0.5">Jul 15, 2026 • Driver Kwame Osei</span>
+                  <span className="text-sm text-emerald-700 font-bold block mt-1">+2 Milestone Swaps Credited</span>
                 </div>
               </div>
               <div className="text-right">
                 <span className="font-extrabold text-slate-900 block text-sm">GH₵ 30.00</span>
-                <span className="text-xs bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-md font-bold mt-1 inline-block">Saved GH₵ 40</span>
+                <span className="text-sm bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-md font-bold mt-1 inline-block">Saved GH₵ 40</span>
               </div>
             </div>
           </div>

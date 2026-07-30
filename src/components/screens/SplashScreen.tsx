@@ -34,15 +34,15 @@ export const SplashScreen: React.FC<SplashScreenProps> = ({ onStart }) => {
 
       {/* Visual illustration box */}
       <div className="my-6 p-4 bg-white/80 backdrop-blur-sm rounded-2xl border border-sky-100 shadow-sm w-full max-w-xs space-y-2 text-left">
-        <div className="flex items-center gap-2 text-xs text-sky-900 font-bold">
+        <div className="flex items-center gap-2 text-sm text-sky-900 font-bold">
           <span className="w-2 h-2 rounded-full bg-sky-500" />
           Zero Single-Use Sachets
         </div>
-        <div className="flex items-center gap-2 text-xs text-sky-900 font-bold">
+        <div className="flex items-center gap-2 text-sm text-sky-900 font-bold">
           <span className="w-2 h-2 rounded-full bg-emerald-500" />
           Ghana Mobile Money Deposit Refunds
         </div>
-        <div className="flex items-center gap-2 text-xs text-sky-900 font-bold">
+        <div className="flex items-center gap-2 text-sm text-sky-900 font-bold">
           <span className="w-2 h-2 rounded-full bg-blue-500" />
           Doorstep Delivery & AI Refill Prediction
         </div>
@@ -57,7 +57,7 @@ export const SplashScreen: React.FC<SplashScreenProps> = ({ onStart }) => {
           <ArrowRight className="w-4 h-4" />
         </Button>
 
-        <p className="text-[11px] text-slate-400">
+        <p className="text-xs text-slate-400">
           Empowering Accra, Kumasi & Tema with sustainable hydration.
         </p>
       </div>
