@@ -30,23 +30,22 @@ export const QRScannerScreen: React.FC<QRScannerScreenProps> = ({
       setScannedBottle(b);
       if (onBottleScanned) onBottleScanned(b);
     } else {
-      try {
-        const res = await fetch('/api/scan', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ bottleId: input })
-        });
-        if (res.ok) {
-          const b = bottles.find((b) => b.id === input) || bottles[0];
-          setIsScanning(false);
-          setScannedBottle(b);
-          if (onBottleScanned) onBottleScanned(b);
-        } else {
-          alert('Bottle not found in system. Try selecting from the list below.');
-        }
-      } catch {
-        alert('Bottle not found in system. Try selecting from the list below.');
-      }
+      // Show scanned text even if not a known bottle
+      setIsScanning(false);
+      setScannedBottle({
+        id: input,
+        qrCode: input,
+        sizeLitres: 0,
+        type: '15L Reusable Dispenser Bottle',
+        status: 'with_customer',
+        linerState: 'freshly_filled',
+        tamperEvidentRingIntact: true,
+        depositAmountGHS: 0,
+        refillCount: 0,
+        lastRefilledAt: new Date().toLocaleString(),
+        depotLocation: 'External QR Code — Not in Nsupa System',
+        batchNumber: 'N/A',
+      });
     }
   };
 
@@ -150,13 +149,21 @@ export const QRScannerScreen: React.FC<QRScannerScreenProps> = ({
                       <ShieldCheck className="w-6 h-6" />
                     </div>
                     <div>
-                      <span className="text-sm font-bold uppercase text-primary tracking-wider block">Container QR Asset Verified</span>
-                      <h2 className="text-xl font-extrabold text-slate-900">{scannedBottle.qrCode}</h2>
+                      <span className={`text-sm font-bold uppercase tracking-wider block ${scannedBottle.depotLocation.includes('External') ? 'text-amber-700' : 'text-primary'}`}>
+                        {scannedBottle.depotLocation.includes('External') ? 'QR Code Scanned' : 'Container QR Asset Verified'}
+                      </span>
+                      <h2 className="text-xl font-extrabold text-slate-900 mt-0.5 break-all">{scannedBottle.qrCode}</h2>
                     </div>
                   </div>
-                  <Badge className="bg-blue-100 hover:bg-blue-100 text-primary text-sm font-extrabold rounded-full border-none">
-                    Depot Verified
-                  </Badge>
+                  {scannedBottle.depotLocation.includes('External') ? (
+                    <Badge className="bg-amber-100 hover:bg-amber-100 text-amber-800 text-sm font-bold rounded-full border-none">
+                      Unverified QR
+                    </Badge>
+                  ) : (
+                    <Badge className="bg-blue-100 hover:bg-blue-100 text-primary text-sm font-extrabold rounded-full border-none">
+                      Depot Verified
+                    </Badge>
+                  )}
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm pt-1">
                   <div className="bg-white p-3 rounded-2xl border border-blue-100">
