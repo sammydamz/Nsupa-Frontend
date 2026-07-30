@@ -1,23 +1,17 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Html5Qrcode } from 'html5-qrcode';
-import { QrCode, ShieldCheck, CheckCircle2, Truck, Factory, History, ArrowLeft } from 'lucide-react';
+import { QrCode, ShieldCheck, CheckCircle2, Truck, Factory, History } from 'lucide-react';
 import { Bottle, CustomerScreenId } from '../../types';
-import { initialBottles } from '../../data/mockData';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 
 interface QRScannerScreenProps {
-  bottles?: Bottle[];
   onNavigate: (screen: CustomerScreenId) => void;
   onBottleScanned?: (bottle: Bottle) => void;
 }
 
-// Local bottle list — never overwritten by API
-const localBottles: Bottle[] = initialBottles;
-
 export const QRScannerScreen: React.FC<QRScannerScreenProps> = ({
-  bottles,
   onNavigate,
   onBottleScanned,
 }) => {
@@ -30,7 +24,14 @@ export const QRScannerScreen: React.FC<QRScannerScreenProps> = ({
       const input = scanInput.trim();
       if (!input) return;
 
-      const b = localBottles.find(
+      const b = [
+  { id: 'NS-BTL-8821', qrCode: 'Nsupa-15L-8821-ACCR', type: '15L Reusable Dispenser Bottle', sizeLitres: 15, status: 'with_customer', linerState: 'partially_used', tamperEvidentRingIntact: true, depositAmountGHS: 25, refillCount: 14, lastRefilledAt: '2026-07-18 09:30 AM', depotLocation: 'Achimota Certified Depot #1', batchNumber: 'BATCH-2026-0718-A' } as Bottle,
+  { id: 'NS-BTL-8822', qrCode: 'Nsupa-15L-8822-ACCR', type: '15L Reusable Dispenser Bottle', sizeLitres: 15, status: 'with_customer', linerState: 'empty_ready_return', tamperEvidentRingIntact: false, depositAmountGHS: 25, refillCount: 22, lastRefilledAt: '2026-07-02 02:15 PM', depotLocation: 'Achimota Certified Depot #1', batchNumber: 'BATCH-2026-0702-B' } as Bottle,
+  { id: 'NS-BTL-9003', qrCode: 'Nsupa-15L-9003-ACCR', type: '15L Reusable Dispenser Bottle', sizeLitres: 15, status: 'in_transit', linerState: 'freshly_filled', tamperEvidentRingIntact: true, depositAmountGHS: 25, refillCount: 8, lastRefilledAt: '2026-07-21 07:45 AM', depotLocation: 'East Legon Dispatch Station', batchNumber: 'BATCH-2026-0721-C' } as Bottle,
+  { id: 'NS-BTL-4110', qrCode: 'Nsupa-5L-4110-KMS', type: '5L Eco Pouch', sizeLitres: 5, status: 'at_depot_cleaning', linerState: 'empty_ready_return', tamperEvidentRingIntact: false, depositAmountGHS: 10, refillCount: 31, lastRefilledAt: '2026-07-10 11:00 AM', depotLocation: 'Kumasi Central Hub', batchNumber: 'BATCH-2026-0710-A' } as Bottle,
+  { id: 'NS-BTL-4433', qrCode: 'Nsupa-15L-4433-ACCR', type: '15L Reusable Dispenser Bottle', sizeLitres: 15, status: 'at_depot_refilling', linerState: 'empty_ready_return', tamperEvidentRingIntact: false, depositAmountGHS: 25, refillCount: 42, lastRefilledAt: '2026-07-21 06:00 AM', depotLocation: 'Achimota Certified Depot #1', batchNumber: 'BATCH-2026-0721-D' } as Bottle,
+  { id: 'NS-BTL-5541', qrCode: 'Nsupa-15L-5541-ACCR', type: '15L Reusable Dispenser Bottle', sizeLitres: 15, status: 'ready_for_dispatch', linerState: 'freshly_filled', tamperEvidentRingIntact: true, depositAmountGHS: 25, refillCount: 9, lastRefilledAt: '2026-07-22 08:15 AM', depotLocation: 'Achimota Certified Depot #1', batchNumber: 'BATCH-2026-0722-A' } as Bottle,
+].find(
         (b: any) => b && (b.id === input || b.qrCode === input || (b.qrCode && b.qrCode.endsWith(input)))
       );
       if (b) {
@@ -61,12 +62,8 @@ export const QRScannerScreen: React.FC<QRScannerScreenProps> = ({
       console.error('Scan error', e);
       // Still show what was scanned even on error
       setIsScanning(false);
-      setScannedBottle(localBottles[0] || null);
+      setScannedBottle(null);
     }
-  };
-
-  const handleSimulateScan = (bottle: Bottle) => {
-    handleRealScan(bottle.id);
   };
 
   // Separate camera component that fully mounts/unmounts — key forces clean lifecycle
@@ -120,27 +117,6 @@ export const QRScannerScreen: React.FC<QRScannerScreenProps> = ({
             <div className="relative mx-auto w-full max-w-sm rounded-3xl overflow-hidden shadow-inner bg-slate-50">
               <div id="reader" className="w-full h-full min-h-[300px]"></div>
               <CameraView key="cam" onScan={handleRealScan} />
-            </div>
-
-            <div className="space-y-3">
-              <p className="text-sm text-slate-600 font-medium text-center">Or select a container below:</p>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                {localBottles.map((b) => (
-                  <Button
-                    key={b.id}
-                    variant="outline"
-                    onClick={() => handleSimulateScan(b)}
-                    className="h-auto p-3 bg-slate-50 hover:bg-blue-50 border-slate-200 hover:border-blue-200 rounded-2xl flex flex-col items-start justify-start text-left text-sm transition-colors"
-                  >
-                    <span className="font-extrabold text-primary block">{b.id}</span>
-                    <span className="text-sm text-slate-500 block truncate w-full text-left font-normal">{b.type}</span>
-                    <span className="text-xs font-bold text-emerald-600 block mt-1">
-                      Refill Cycle #{b.refillCount}
-                    </span>
-                  </Button>
-                ))}
-              </div>
             </div>
           </CardContent>
         </Card>
