@@ -30,7 +30,7 @@ export const OrderWaterScreen: React.FC<OrderWaterScreenProps> = ({ onOrderPlace
   const [loading, setLoading] = useState<boolean>(false);
 
   // Diagram Pricing Logic:
-  const contentPricePerUnitGHS = selectedType === '15L Shell' ? 15 : 8;
+  const contentPricePerUnitGHS = selectedType === '15L Shell' ? 12 : 8;
   const surchargePerUnitGHS = hasEmptyToSwap ? 0 : (selectedType === '15L Shell' ? 10 : 4);
   
   const subtotalWaterGHS = quantity * contentPricePerUnitGHS;
@@ -142,7 +142,7 @@ export const OrderWaterScreen: React.FC<OrderWaterScreenProps> = ({ onOrderPlace
                     {selectedType === '15L Shell' && <CheckCircle2 className="w-5 h-5 text-primary" />}
                   </div>
                   <p className="text-xs text-slate-500 font-medium leading-tight mb-3 text-left">Reusable 15L bottle</p>
-                  <span className="text-sm font-extrabold text-primary mt-auto">GH₵ 15.00</span>
+                  <span className="text-sm font-extrabold text-primary mt-auto">GH₵ 12.00</span>
                 </Label>
               </div>
 

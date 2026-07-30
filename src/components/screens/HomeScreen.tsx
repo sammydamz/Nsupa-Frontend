@@ -175,7 +175,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
             <CardContent className="p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
               <div className="space-y-0.5">
                 <p className="text-sm opacity-80 uppercase font-bold tracking-wider mb-1">1:1 Container Swap System</p>
-                <p className="text-lg font-black leading-tight">GH₵ 15.00 Water Refill</p>
+                <p className="text-lg font-black leading-tight">GH₵ 12.00 Water Refill</p>
                 <p className="text-sm text-blue-100">Simple 1:1 empty-for-full container exchange model</p>
               </div>
 

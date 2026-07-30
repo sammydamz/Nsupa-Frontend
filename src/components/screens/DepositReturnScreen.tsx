@@ -76,7 +76,7 @@ export const DepositReturnScreen: React.FC<DepositReturnScreenProps> = ({
               <div className="bg-emerald-950/80 border border-emerald-500/50 p-3 rounded-2xl text-emerald-100 space-y-1">
                 <span className="font-extrabold text-emerald-300 block text-sm">Brings back empty shell</span>
                 <p className="text-xs text-emerald-200 leading-tight">
-                  Pays content price only e.g. <strong className="text-white">GH₵15</strong>, same as today
+                  Pays content price only e.g. <strong className="text-white">GH₵12</strong>, same as today
                 </p>
               </div>
 
@@ -84,7 +84,7 @@ export const DepositReturnScreen: React.FC<DepositReturnScreenProps> = ({
               <div className="bg-amber-950/80 border border-amber-500/50 p-3 rounded-2xl text-amber-100 space-y-1">
                 <span className="font-extrabold text-amber-300 block text-sm">No empty shell to trade</span>
                 <p className="text-xs text-amber-200 leading-tight">
-                  Pays content + shell surcharge e.g. <strong className="text-white">GH₵15 + GH₵10</strong>
+                  Pays content + shell surcharge e.g. <strong className="text-white">GH₵12 + GH₵10</strong>
                 </p>
               </div>
             </div>
@@ -141,7 +141,7 @@ export const DepositReturnScreen: React.FC<DepositReturnScreenProps> = ({
 
                   <div>
                     <span className="text-xs text-slate-400 block">Refill Trade Value</span>
-                    <span className="font-extrabold text-emerald-700">GH₵ 15.00 Content Price</span>
+                    <span className="font-extrabold text-emerald-700">GH₵ 12.00 Content Price</span>
                   </div>
                 </div>
 

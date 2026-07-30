@@ -152,7 +152,7 @@ export const ContainerRewardsScreen: React.FC<ContainerRewardsScreenProps> = ({
 
                   <div>
                     <span className="text-sm text-slate-500 block mb-1">Refill Price</span>
-                    <span className="font-extrabold text-emerald-700">GH₵ {bottle.sizeLitres === 15 ? '15.00' : '8.00'}</span>
+                    <span className="font-extrabold text-emerald-700">GH₵ {bottle.sizeLitres === 15 ? '12.00' : '8.00'}</span>
                   </div>
                 </div>
 
