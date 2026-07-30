@@ -24,7 +24,7 @@ export const AuthScreens: React.FC<AuthScreensProps> = ({
             <img src="/nsupa_blue.svg" alt="Nsupa Logo" className="w-20 h-20 drop-shadow-md object-contain" />
           </div>
           <div className="space-y-1">
-            <CardTitle className="text-3xl font-black tracking-tight text-white font-display">Nsupa Auth</CardTitle>
+            <CardTitle className="text-3xl font-black tracking-tight text-white font-display">Nsupa GH</CardTitle>
             <CardDescription className="text-blue-100 font-medium text-xs uppercase tracking-widest px-2">
               A reusable alternative to single-use plastics
             </CardDescription>
