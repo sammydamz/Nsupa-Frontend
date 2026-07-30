@@ -82,7 +82,8 @@ export const QRScannerScreen: React.FC<QRScannerScreenProps> = ({
         { fps: 10, qrbox: { width: 250, height: 250 } },
         (text) => {
           started = false;
-          scanner.stop().then(() => scanner.clear().then(() => onScan(text))).catch(() => {});
+          onScan(text);
+          scanner.stop().then(() => scanner.clear()).catch(() => {});
         },
         () => {}
       ).then(() => {
