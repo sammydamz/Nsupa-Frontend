@@ -146,14 +146,7 @@ export const DepositReturnScreen: React.FC<DepositReturnScreenProps> = ({
                 </div>
 
                 <div className="flex gap-2 pt-1">
-                  <Button
-                    variant="outline"
-                    onClick={() => onNavigate('qr_scanner')}
-                    className="flex-1 h-10 bg-blue-50 text-primary font-bold rounded-2xl text-sm flex items-center justify-center gap-1.5 hover:bg-blue-100 hover:text-primary border border-blue-100"
-                  >
-                    <QrCode className="w-4 h-4" />
-                    <span>Scan QR Code</span>
-                  </Button>
+
 
                   <Button
                     onClick={() => onNavigate('order')}

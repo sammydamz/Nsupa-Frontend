@@ -202,11 +202,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
                   icon={ShoppingBag}
                   onClick={() => onNavigate('order')}
                 />
-                <ActionCard 
-                  title="Scan QR"
-                  icon={QrCode}
-                  onClick={() => onNavigate('qr_scanner')}
-                />
+
                 <ActionCard 
                   title="Container Swap"
                   icon={RefreshCw}

@@ -157,14 +157,7 @@ export const ContainerRewardsScreen: React.FC<ContainerRewardsScreenProps> = ({
                 </div>
 
                 <div className="flex items-center gap-3 pt-2">
-                  <Button
-                    variant="outline"
-                    onClick={() => onNavigate('qr_scanner')}
-                    className="flex-1 h-12 bg-blue-50 text-primary font-bold rounded-2xl text-sm flex items-center justify-center gap-2 hover:bg-blue-100 hover:text-primary border border-blue-100"
-                  >
-                    <QrCode className="w-5 h-5" />
-                    <span>Scan QR Code</span>
-                  </Button>
+
 
                   <Button
                     onClick={() => onNavigate('order')}

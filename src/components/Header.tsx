@@ -26,7 +26,6 @@ export const Header: React.FC<HeaderProps> = ({
     { id: 'order', label: 'Order', icon: ShoppingBag },
     { id: 'subscription', label: 'Sub', icon: Calendar },
     { id: 'deposits', label: 'Rewards', icon: Award },
-    { id: 'qr_scanner', label: 'Scan', icon: QrCode },
     { id: 'wallet', label: 'Wallet', icon: Wallet },
     { id: 'impact', label: 'Impact', icon: Leaf },
     { id: 'profile', label: 'Profile', icon: User },
