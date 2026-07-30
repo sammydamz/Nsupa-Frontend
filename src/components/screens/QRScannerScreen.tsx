@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Html5QrcodeScanner } from 'html5-qrcode';
-import { QrCode, ShieldCheck, CheckCircle2, RefreshCw, Info, MapPin, Truck, Factory, History, Calendar, StopCircle } from 'lucide-react';
+import { Html5Qrcode } from 'html5-qrcode';
+import { QrCode, ShieldCheck, CheckCircle2, Truck, Factory, History, StopCircle } from 'lucide-react';
 import { Bottle, CustomerScreenId } from '../../types';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -19,46 +19,6 @@ export const QRScannerScreen: React.FC<QRScannerScreenProps> = ({
 }) => {
   const [isScanning, setIsScanning] = useState<boolean>(true);
   const [scannedBottle, setScannedBottle] = useState<Bottle | null>(bottles[0] || null);
-  const scannerRef = useRef<Html5QrcodeScanner | null>(null);
-  const initializedRef = useRef(false);
-
-  useEffect(() => {
-    if (isScanning && !initializedRef.current) {
-      initializedRef.current = true;
-
-      // Nuke any leftover DOM
-      const readerEl = document.getElementById('reader');
-      if (readerEl) readerEl.innerHTML = '';
-
-      const scanner = new Html5QrcodeScanner(
-        "reader",
-        { fps: 10, qrbox: { width: 250, height: 250 } },
-        /* verbose= */ false
-      );
-      scannerRef.current = scanner;
-
-      scanner.render((decodedText) => {
-        scanner.clear();
-        handleRealScan(decodedText);
-      }, (err) => {
-        // ignore ongoing errors
-      });
-
-      return () => {
-        scanner.clear().catch(e => console.error(e));
-        scannerRef.current = null;
-        initializedRef.current = false;
-      };
-    }
-  }, [isScanning]);
-
-  const handleStopScanning = () => {
-    if (scannerRef.current) {
-      scannerRef.current.clear();
-      scannerRef.current = null;
-    }
-    setIsScanning(false);
-  };
 
   const handleRealScan = async (scanInput: string) => {
     const input = scanInput.trim();
@@ -77,7 +37,6 @@ export const QRScannerScreen: React.FC<QRScannerScreenProps> = ({
           body: JSON.stringify({ bottleId: input })
         });
         if (res.ok) {
-          const result = await res.json();
           const b = bottles.find((b) => b.id === input) || bottles[0];
           setIsScanning(false);
           setScannedBottle(b);
@@ -93,6 +52,36 @@ export const QRScannerScreen: React.FC<QRScannerScreenProps> = ({
 
   const handleSimulateScan = (bottle: Bottle) => {
     handleRealScan(bottle.id);
+  };
+
+  const handleStopScanning = () => setIsScanning(false);
+
+  // Separate camera component that fully mounts/unmounts — key forces clean lifecycle
+  const CameraView: React.FC<{ onScan: (text: string) => void }> = ({ onScan }) => {
+    useEffect(() => {
+      const el = document.getElementById('reader');
+      if (el) el.innerHTML = '';
+      const scanner = new Html5Qrcode('reader');
+      let started = false;
+      scanner.start(
+        { facingMode: 'environment' },
+        { fps: 10, qrbox: { width: 250, height: 250 } },
+        (text) => {
+          started = false;
+          scanner.stop().then(() => scanner.clear().then(() => onScan(text))).catch(() => {});
+        },
+        () => {}
+      ).then(() => {
+        started = true;
+      }).catch(() => {});
+
+      return () => {
+        if (started) {
+          scanner.stop().then(() => scanner.clear()).catch(() => {});
+        }
+      };
+    }, []);
+    return null;
   };
 
   return (
@@ -113,17 +102,11 @@ export const QRScannerScreen: React.FC<QRScannerScreenProps> = ({
       </Card>
 
       {isScanning ? (
-        /* Camera Scanner View */
-        <Card key="scanner-view" className="bg-white rounded-3xl text-slate-900 shadow-lg border-2 border-blue-100 relative overflow-hidden">
+        <Card className="bg-white rounded-3xl text-slate-900 shadow-lg border-2 border-blue-100 relative overflow-hidden">
           <CardContent className="p-6 space-y-5">
             <div className="relative mx-auto w-full max-w-sm rounded-3xl overflow-hidden shadow-inner bg-slate-50">
-              <style>{`
-                #reader video { margin: 0 auto !important; display: block !important; }
-                #reader img { margin: 0 auto !important; display: block !important; max-width: 100%; }
-                #reader__dashboard_section { display: none !important; }
-                #reader__scan_region { display: flex !important; flex-direction: column !important; align-items: center !important; }
-              `}</style>
               <div id="reader" className="w-full h-full min-h-[300px]"></div>
+              <CameraView key="cam" onScan={handleRealScan} />
             </div>
 
             <div className="space-y-3">
@@ -157,7 +140,6 @@ export const QRScannerScreen: React.FC<QRScannerScreenProps> = ({
           </CardContent>
         </Card>
       ) : (
-        /* Scanned Container Details */
         scannedBottle && (
           <div className="space-y-4 animate-in fade-in zoom-in-95 duration-200">
             <Card className="bg-blue-50 border-2 border-blue-200 rounded-3xl shadow-none">

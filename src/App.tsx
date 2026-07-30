@@ -59,7 +59,7 @@ export default function App() {
         fetch('/api/bottles')
       ]);
       
-      if (meRes.ok) {
+      if (meRes.ok && meRes.headers.get('content-type')?.includes('json')) {
         const { user, transactions: txs } = await meRes.json();
         setWalletBalanceGHS(user.wallet_balance_ghs);
         setTransactions(txs.map((tx: any) => ({
@@ -74,7 +74,7 @@ export default function App() {
         })));
       }
       
-      if (bottlesRes.ok) {
+      if (bottlesRes.ok && bottlesRes.headers.get('content-type')?.includes('json')) {
         const data = await bottlesRes.json();
         setBottles(data.map((b: any) => ({
           id: b.id,

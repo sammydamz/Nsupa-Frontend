@@ -104,13 +104,12 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
                     <p className="text-sm font-bold text-slate-800">{activeOrder.driverName}</p>
                     <p className="text-sm text-slate-500">Arriving in ~12 mins</p>
                   </div>
-                  <Button
-                    asChild
-                    size="sm"
-                    className="ml-auto bg-primary text-white rounded-xl text-sm font-bold shadow-sm hover:bg-primary/90"
+                  <a
+                    href={`tel:${activeOrder.driverPhone}`}
+                    className="ml-auto inline-flex items-center justify-center h-8 px-4 bg-primary text-white rounded-xl text-sm font-bold shadow-sm hover:bg-primary/90 transition-colors"
                   >
-                    <a href={`tel:${activeOrder.driverPhone}`}>Call Rider</a>
-                  </Button>
+                    Call Rider
+                  </a>
                 </div>
 
                 <div className="space-y-1.5">
