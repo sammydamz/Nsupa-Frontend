@@ -79,13 +79,19 @@ export default function App() {
         if (data && data.length > 0 && data[0].id) {
           setBottles(data.map((b: any) => ({
             id: b.id,
-            type: b.type,
-            sizeLitres: b.size_litres,
-            refillCount: b.refill_count,
-            status: b.liner_state === 'empty_ready_return' ? 'empty_at_home' : 'with_customer',
-            linerState: b.liner_state,
-            purchaseDate: b.last_scanned_at || new Date().toISOString(),
-            depositAmountGHS: 25.00
+            qrCode: b.qr_code || b.qrCode || b.id,
+            sizeLitres: b.size_litres || b.sizeLitres || 15,
+            type: b.type || '15L Reusable Dispenser Bottle',
+            status: b.status || 'with_customer',
+            linerState: b.liner_state || b.linerState || 'freshly_filled',
+            tamperEvidentRingIntact: b.tamper_evident_ring_intact ?? true,
+            depositAmountGHS: b.deposit_amount_ghs || b.depositAmountGHS || 25,
+            refillCount: b.refill_count || b.refillCount || 0,
+            lastRefilledAt: b.last_refilled_at || b.lastRefilledAt || new Date().toISOString(),
+            depotLocation: b.depot_location || b.depotLocation || 'Achimota Certified Depot #1',
+            batchNumber: b.batch_number || b.batchNumber || 'BATCH-N/A',
+            assignedCustomer: b.assigned_customer || b.assignedCustomer,
+            assignedDriver: b.assigned_driver || b.assignedDriver,
           })));
         }
       }
