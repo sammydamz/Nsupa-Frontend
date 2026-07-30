@@ -198,7 +198,7 @@ export const DepotDashboardScreen: React.FC<DepotDashboardScreenProps> = ({ bott
                   <Truck className="w-4 h-4 text-emerald-600" />
                   Ready for Dispatch ({dispatchBottles.length})
                 </h2>
-                <span className="text-xs text-slate-400">Assigned to driver route</span>
+                <span className="text-xs text-slate-400">Assigned to rider route</span>
               </div>
               {renderBottleList(dispatchBottles, 'All shells dispatched — nothing waiting')}
             </>

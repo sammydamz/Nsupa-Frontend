@@ -92,7 +92,7 @@ export const DepositReturnScreen: React.FC<DepositReturnScreenProps> = ({
             {/* Bottom Purple Box */}
             <div className="bg-indigo-950/90 border border-indigo-400/50 p-3.5 rounded-2xl text-indigo-100 text-center space-y-1 shadow-md">
               <span className="text-sm font-extrabold text-indigo-200 block">
-                Driver scans empty out, scans full in — seamless exchange
+                Rider scans empty out, scans full in — seamless exchange
               </span>
               <p className="text-xs text-indigo-300 leading-snug">
                 Simple, transparent container swap model designed for households, offices, and schools across Ghana

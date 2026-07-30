@@ -46,7 +46,7 @@ export const AuthScreens: React.FC<AuthScreensProps> = ({
           <Button 
             className="w-full h-14 flex items-center justify-start gap-4 rounded-2xl px-6 bg-white/10 text-white hover:bg-white/20 border-transparent shadow-sm hover:scale-[1.02] transition-transform" 
             variant="outline"
-            onClick={() => onAuthSuccess('driver')}
+            onClick={() => onAuthSuccess('rider')}
           >
             <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center shrink-0 text-white">
               <Truck className="w-4 h-4" />

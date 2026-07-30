@@ -64,7 +64,7 @@ export const AdminDashboardScreen: React.FC = () => {
             </div>
 
             <div>
-              <span className="text-xs text-primary-foreground/80 block">Recommended Driver Dispatch</span>
+              <span className="text-xs text-primary-foreground/80 block">Recommended Rider Dispatch</span>
               <span className="font-extrabold text-white text-sm">24 Electric Riders</span>
             </div>
           </div>
@@ -80,15 +80,15 @@ export const AdminDashboardScreen: React.FC = () => {
 
           <div className="space-y-2 text-sm">
             {[
-              { region: 'East Legon & Spintex, Accra', activeShells: 8200, refillRate: '98.4%', drivers: 18 },
-              { region: 'Osu & Cantonments, Accra', activeShells: 6400, refillRate: '97.2%', drivers: 14 },
-              { region: 'KNUST & Kumasi Central', activeShells: 5800, refillRate: '99.1%', drivers: 12 },
-              { region: 'Tema Community 1-12', activeShells: 4100, refillRate: '96.5%', drivers: 9 },
+              { region: 'East Legon & Spintex, Accra', activeShells: 8200, refillRate: '98.4%', riders: 18 },
+              { region: 'Osu & Cantonments, Accra', activeShells: 6400, refillRate: '97.2%', riders: 14 },
+              { region: 'KNUST & Kumasi Central', activeShells: 5800, refillRate: '99.1%', riders: 12 },
+              { region: 'Tema Community 1-12', activeShells: 4100, refillRate: '96.5%', riders: 9 },
             ].map((item, idx) => (
               <div key={idx} className="p-3 bg-slate-50 rounded-xl border border-slate-200 flex items-center justify-between">
                 <div>
                   <span className="font-extrabold text-slate-900 block">{item.region}</span>
-                  <span className="text-xs text-slate-500 block">{item.drivers} Active Riders • {item.activeShells.toLocaleString()} 15L Shells</span>
+                  <span className="text-xs text-slate-500 block">{item.riders} Active Riders • {item.activeShells.toLocaleString()} 15L Shells</span>
                 </div>
 
                 <div className="text-right">

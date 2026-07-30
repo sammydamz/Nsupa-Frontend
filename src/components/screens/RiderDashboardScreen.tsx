@@ -1,22 +1,55 @@
 import React, { useState, useEffect } from 'react';
 import { Truck, MapPin, QrCode, Phone, CheckCircle2, RotateCcw, RefreshCw, Check, DollarSign, Award, X } from 'lucide-react';
+import { Html5Qrcode } from 'html5-qrcode';
 import { Order } from '../../types';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { DashboardHeader, MetricCard } from '../shared';
 
-interface DriverDashboardScreenProps {
+interface RiderDashboardScreenProps {
   orders: Order[];
   onCompleteDelivery: (orderId: string) => void;
 }
 
-export const DriverDashboardScreen: React.FC<DriverDashboardScreenProps> = ({ orders, bottles, onCompleteDelivery }) => {
+const CameraView: React.FC<{ elementId: string; onScan: (text: string) => void }> = ({ elementId, onScan }) => {
+  useEffect(() => {
+    const el = document.getElementById(elementId);
+    if (el) el.innerHTML = '';
+    const scanner = new Html5Qrcode(elementId);
+    let started = false;
+    scanner.start(
+      { facingMode: 'environment' },
+      { fps: 10, qrbox: { width: 250, height: 250 } },
+      (text) => {
+        started = false;
+        onScan(text);
+        scanner.stop().then(() => scanner.clear()).catch(() => {});
+      },
+      () => {}
+    ).then(() => {
+      started = true;
+    }).catch(() => {});
+
+    return () => {
+      if (started) {
+        scanner.stop().then(() => scanner.clear()).catch(() => {});
+      }
+    };
+  }, [elementId, onScan]);
+  return null;
+};
+
+export const RiderDashboardScreen: React.FC<RiderDashboardScreenProps> = ({ orders, bottles, onCompleteDelivery }) => {
   const [isOffline, setIsOffline] = useState<boolean>(false);
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
   const [scannerOpen, setScannerOpen] = useState<boolean>(false);
   const [scanStep, setScanStep] = useState<'scan_empty_out' | 'scan_full_in' | 'completed'>('scan_empty_out');
   const [scanCompleted, setScanCompleted] = useState<boolean>(false);
+
+  const [scannedEmptyQR, setScannedEmptyQR] = useState<string | null>(null);
+  const [scannedFullQR, setScannedFullQR] = useState<string | null>(null);
+
   const [deliveryConfirmed, setDeliveryConfirmed] = useState<boolean>(false);
   const [completedToday, setCompletedToday] = useState<number>(14);
   const [earningsToday, setEarningsToday] = useState<number>(185);
@@ -32,6 +65,8 @@ export const DriverDashboardScreen: React.FC<DriverDashboardScreenProps> = ({ or
 
   const handleStartScan = () => {
     setScanStep('scan_empty_out');
+    setScannedEmptyQR(null);
+    setScannedFullQR(null);
     setScannerOpen(true);
   };
 
@@ -68,7 +103,7 @@ export const DriverDashboardScreen: React.FC<DriverDashboardScreenProps> = ({ or
   const scannedEmpty = emptyBottles[0] || null;
   const scannedFresh = freshBottles[0] || null;  return (
     <div className="space-y-5 pb-24">
-      {/* Driver Header */}
+      {/* Rider Header */}
       <DashboardHeader 
         title="Kwame Osei (Rider #12)"
         subtitle="East Legon & Boundary Rd Route"
@@ -78,7 +113,7 @@ export const DriverDashboardScreen: React.FC<DriverDashboardScreenProps> = ({ or
         badgeClassName={isOffline ? 'bg-amber-500 hover:bg-amber-600 text-slate-950' : 'bg-emerald-500 hover:bg-emerald-600 text-white'}
       />
 
-      {/* Driver Daily Metrics — now dynamic */}
+      {/* Rider Daily Metrics — now dynamic */}
       <div className="grid grid-cols-3 gap-2 text-center text-sm">
         <MetricCard 
           title="Today's Earnings"
@@ -180,7 +215,7 @@ export const DriverDashboardScreen: React.FC<DriverDashboardScreenProps> = ({ or
               >
                 <QrCode className="w-4 h-4" />
                 <span>
-                  {scanCompleted ? '✅ Scan Complete' : 'Driver Scan Workflow (Empty OUT + Full IN)'}
+                  {scanCompleted ? '✅ Scan Complete' : 'Rider Scan Workflow (Empty OUT + Full IN)'}
                 </span>
               </Button>
 
@@ -207,12 +242,12 @@ export const DriverDashboardScreen: React.FC<DriverDashboardScreenProps> = ({ or
         </Card>
       )}
 
-      {/* Driver QR Scan Modal */}
+      {/* Rider QR Scan Modal */}
       {scannerOpen && (
         <div className="fixed inset-0 z-50 bg-primary/80 backdrop-blur-sm flex items-center justify-center p-4">
           <Card className="bg-white rounded-3xl p-5 max-w-sm w-full space-y-4 shadow-2xl border-blue-100">
             <div className="flex items-center justify-between border-b border-blue-100 pb-2">
-              <h3 className="text-sm font-extrabold text-slate-900">Driver Dual-Scan Exchange Scanner</h3>
+              <h3 className="text-sm font-extrabold text-slate-900">Rider Dual-Scan Exchange Scanner</h3>
               <div className="flex items-center gap-2">
                 <Badge variant="outline" className="text-sm font-mono bg-blue-100 text-primary border-none rounded-full font-bold">
                   {scanStep === 'scan_empty_out' ? 'Step 1/2' : scanStep === 'scan_full_in' ? 'Step 2/2' : 'Done'}
@@ -234,19 +269,21 @@ export const DriverDashboardScreen: React.FC<DriverDashboardScreenProps> = ({ or
                   <p className="text-sm text-blue-800 mt-1">Scan QR on the returned container to log the depot return & refill cycle.</p>
                 </div>
 
-                <div className="p-4 bg-primary rounded-2xl text-center text-white space-y-2">
-                  <QrCode className="w-16 h-16 text-white/60 mx-auto animate-pulse" />
-                  <p className="text-sm font-mono text-white/80">SCANNED: {scannedEmpty?.qrCode || 'Nsupa-15L-BTL-8822'}</p>
-                  <span className="text-sm text-emerald-400 font-bold flex items-center gap-1 justify-center"><CheckCircle2 className="w-3 h-3" /> Container Return Logged for Depot Refill</span>
-                </div>
-
-                <Button
-                  onClick={handleNextStep}
-                  className="w-full sm:w-auto h-11 bg-primary hover:bg-primary/90 text-white font-bold rounded-xl text-sm flex items-center justify-center gap-2 shadow-sm"
-                >
-                  <span>Proceed to Scan Delivered Container</span>
-                  <RefreshCw className="w-4 h-4" />
-                </Button>
+                {!scannedEmptyQR ? (
+                  <div className="rounded-2xl overflow-hidden border-2 border-primary/20 bg-black max-w-[250px] mx-auto w-full aspect-square relative">
+                    <div id="reader-empty" className="w-full h-full object-cover"></div>
+                    <CameraView elementId="reader-empty" onScan={(text) => { setScannedEmptyQR(text); setTimeout(handleNextStep, 800); }} />
+                  </div>
+                ) : (
+                  <div className="space-y-3">
+                    <div className="p-4 bg-primary rounded-2xl text-center text-white space-y-2">
+                      <QrCode className="w-12 h-12 text-white/60 mx-auto" />
+                      <p className="text-sm font-mono text-white/80">SCANNED: {scannedEmptyQR}</p>
+                      <span className="text-sm text-emerald-400 font-bold flex items-center gap-1 justify-center"><CheckCircle2 className="w-3 h-3" /> Return Logged!</span>
+                    </div>
+                    <Button onClick={handleNextStep} className="w-full h-11 bg-primary text-white font-bold rounded-xl shadow-sm">Proceed to Next Scan</Button>
+                  </div>
+                )}
               </div>
             )}
 
@@ -257,19 +294,21 @@ export const DriverDashboardScreen: React.FC<DriverDashboardScreenProps> = ({ or
                   <p className="text-sm text-blue-800 mt-1">Scan QR on the fresh container to record the customer handoff.</p>
                 </div>
 
-                <div className="p-4 bg-primary rounded-2xl text-center text-white space-y-2">
-                  <QrCode className="w-16 h-16 text-white/60 mx-auto animate-pulse" />
-                  <p className="text-sm font-mono text-white/80">SCANNED: {scannedFresh?.qrCode || 'Nsupa-15L-BTL-9003'}</p>
-                  <span className="text-sm text-emerald-400 font-bold flex items-center gap-1 justify-center"><CheckCircle2 className="w-3 h-3" /> Delivery Handoff Logged</span>
-                </div>
-
-                <Button
-                  onClick={handleNextStep}
-                  className="w-full sm:w-auto h-11 bg-primary hover:bg-primary/90 text-white font-bold rounded-xl text-sm flex items-center justify-center gap-2 shadow-sm"
-                >
-                  <span>Verify Delivery Handoff</span>
-                  <Check className="w-4 h-4" />
-                </Button>
+                {!scannedFullQR ? (
+                  <div className="rounded-2xl overflow-hidden border-2 border-primary/20 bg-black max-w-[250px] mx-auto w-full aspect-square relative">
+                    <div id="reader-full" className="w-full h-full object-cover"></div>
+                    <CameraView elementId="reader-full" onScan={(text) => { setScannedFullQR(text); setTimeout(handleNextStep, 800); }} />
+                  </div>
+                ) : (
+                  <div className="space-y-3">
+                    <div className="p-4 bg-primary rounded-2xl text-center text-white space-y-2">
+                      <QrCode className="w-12 h-12 text-white/60 mx-auto" />
+                      <p className="text-sm font-mono text-white/80">SCANNED: {scannedFullQR}</p>
+                      <span className="text-sm text-emerald-400 font-bold flex items-center gap-1 justify-center"><CheckCircle2 className="w-3 h-3" /> Delivery Logged!</span>
+                    </div>
+                    <Button onClick={handleNextStep} className="w-full h-11 bg-primary text-white font-bold rounded-xl shadow-sm">Verify Delivery Handoff</Button>
+                  </div>
+                )}
               </div>
             )}
 

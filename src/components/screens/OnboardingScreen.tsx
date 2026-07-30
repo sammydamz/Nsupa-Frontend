@@ -33,11 +33,11 @@ export const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ onComplete }
     {
       title: 'Fast MoMo Doorstep Delivery & Deposit Refunds',
       subtitle: 'Order on MTN MoMo, Track Live',
-      description: 'Schedule recurring deliveries or quick refills. Return your empty shells to our drivers for instant deposit refunds!',
+      description: 'Schedule recurring deliveries or quick refills. Return your empty shells to our riders for instant deposit refunds!',
       icon: Truck,
       color: 'from-emerald-600 to-sky-600',
       badge: 'Ghana Mobile Money',
-      highlights: ['Instant deposit refund to MoMo wallet', 'Live GPS driver tracking', 'AI Smart Refill Prediction'],
+      highlights: ['Instant deposit refund to MoMo wallet', 'Live GPS rider tracking', 'AI Smart Refill Prediction'],
     }
   ];
 

@@ -101,11 +101,11 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
                     <Truck className="w-5 h-5" />
                   </div>
                   <div>
-                    <p className="text-sm font-bold text-slate-800">{activeOrder.driverName}</p>
+                    <p className="text-sm font-bold text-slate-800">{activeOrder.riderName}</p>
                     <p className="text-sm text-slate-500">Arriving in ~12 mins</p>
                   </div>
                   <a
-                    href={`tel:${activeOrder.driverPhone}`}
+                    href={`tel:${activeOrder.riderPhone}`}
                     className="ml-auto inline-flex items-center justify-center h-8 px-4 bg-primary text-white rounded-xl text-sm font-bold shadow-sm hover:bg-primary/90 transition-colors"
                   >
                     Call Rider

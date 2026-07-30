@@ -1,4 +1,4 @@
-export type UserRole = 'customer' | 'driver' | 'depot' | 'admin';
+export type UserRole = 'customer' | 'rider' | 'depot' | 'admin';
 
 export type CustomerScreenId = 
   | 'splash'
@@ -19,7 +19,7 @@ export type CustomerScreenId =
   | 'profile'
   | 'settings';
 
-export type ScreenId = CustomerScreenId | 'driver_dashboard' | 'depot_dashboard' | 'admin_dashboard';
+export type ScreenId = CustomerScreenId | 'rider_dashboard' | 'depot_dashboard' | 'admin_dashboard';
 
 export type BottleLinerState = 'freshly_filled' | 'partially_used' | 'empty_ready_return';
 
@@ -33,7 +33,7 @@ export interface Bottle {
   tamperEvidentRingIntact: boolean;
   depositAmountGHS: number;
   assignedCustomer?: string;
-  assignedDriver?: string;
+  assignedRider?: string;
   refillCount: number;
   lastRefilledAt: string;
   depotLocation: string;
@@ -58,14 +58,14 @@ export interface Order {
   surchargeTotalGHS: number;
   paymentMethod: 'mtn_momo' | 'telecel_cash' | 'at_money' | 'card' | 'wallet';
   paymentStatus: 'paid' | 'pending' | 'refunded';
-  deliveryStatus: 'order_placed' | 'assigned_to_driver' | 'out_for_delivery' | 'delivered' | 'cancelled';
+  deliveryStatus: 'order_placed' | 'assigned_to_rider' | 'out_for_delivery' | 'delivered' | 'cancelled';
   scheduledDate: string;
   scheduledTimeSlot: string;
-  driverName?: string;
-  driverPhone?: string;
-  driverPhoto?: string;
-  driverLat?: number;
-  driverLng?: number;
+  riderName?: string;
+  riderPhone?: string;
+  riderPhoto?: string;
+  riderLat?: number;
+  riderLng?: number;
   emptyBottlesToCollect: number;
   emptyBottlesSwapped?: number;
   createdAt: string;

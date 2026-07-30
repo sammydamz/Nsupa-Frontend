@@ -59,8 +59,8 @@ async function migrate() {
         status TEXT NOT NULL,
         total_amount_ghs REAL NOT NULL,
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-        driver_name TEXT,
-        driver_phone TEXT,
+        rider_name TEXT,
+        rider_phone TEXT,
         FOREIGN KEY (user_id) REFERENCES users(id)
       )
     `);

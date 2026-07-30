@@ -18,7 +18,7 @@ import { WalletScreen } from './components/screens/WalletScreen';
 import { NotificationsScreen } from './components/screens/NotificationsScreen';
 import { EnvironmentalImpactScreen } from './components/screens/EnvironmentalImpactScreen';
 import { ProfileSettingsScreen } from './components/screens/ProfileSettingsScreen';
-import { DriverDashboardScreen } from './components/screens/DriverDashboardScreen';
+import { RiderDashboardScreen } from './components/screens/RiderDashboardScreen';
 import { DepotDashboardScreen } from './components/screens/DepotDashboardScreen';
 import { AdminDashboardScreen } from './components/screens/AdminDashboardScreen';
 import { AIPredictorModal } from './components/AIPredictorModal';
@@ -91,7 +91,7 @@ export default function App() {
             depotLocation: b.depot_location || b.depotLocation || 'Achimota Certified Depot #1',
             batchNumber: b.batch_number || b.batchNumber || 'BATCH-N/A',
             assignedCustomer: b.assigned_customer || b.assignedCustomer,
-            assignedDriver: b.assigned_driver || b.assignedDriver,
+            assignedRider: b.assigned_rider || b.assignedRider,
           })));
         }
       }
@@ -162,7 +162,7 @@ export default function App() {
     }
   };
 
-  const handleCompleteDriverDelivery = (orderId: string) => {
+  const handleCompleteRiderDelivery = (orderId: string) => {
     setOrders((prev) =>
       prev.map((o) => (o.id === orderId ? { ...o, deliveryStatus: 'delivered' } : o))
     );
@@ -277,12 +277,12 @@ export default function App() {
           />
         );
 
-      case 'driver_dashboard':
+      case 'rider_dashboard':
         return (
-          <DriverDashboardScreen
+          <RiderDashboardScreen
             orders={orders}
             bottles={bottles}
-            onCompleteDelivery={handleCompleteDriverDelivery}
+            onCompleteDelivery={handleCompleteRiderDelivery}
           />
         );
 

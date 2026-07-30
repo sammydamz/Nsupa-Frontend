@@ -15,8 +15,8 @@ export const DeliveryTrackingScreen: React.FC<DeliveryTrackingScreenProps> = ({ 
   const [etaMins, setEtaMins] = useState<number>(18);
   const [showCallModal, setShowCallModal] = useState<boolean>(false);
   const [chatMessage, setChatMessage] = useState<string>('');
-  const [chatHistory, setChatHistory] = useState<Array<{ sender: 'driver' | 'user'; text: string; time: string }>>([
-    { sender: 'driver', text: "Hello! I am near Boundary Road with your 2x 15L factory-sealed refills. I'll arrive in ~18 minutes.", time: '10:02 AM' },
+  const [chatHistory, setChatHistory] = useState<Array<{ sender: 'rider' | 'user'; text: string; time: string }>>([
+    { sender: 'rider', text: "Hello! I am near Boundary Road with your 2x 15L factory-sealed refills. I'll arrive in ~18 minutes.", time: '10:02 AM' },
   ]);
 
   // Simulate ETA ticking down
@@ -35,11 +35,11 @@ export const DeliveryTrackingScreen: React.FC<DeliveryTrackingScreenProps> = ({ 
     setChatHistory((prev) => [...prev, userMsg]);
     setChatMessage('');
 
-    // Simulate driver reply
+    // Simulate rider reply
     setTimeout(() => {
       setChatHistory((prev) => [
         ...prev,
-        { sender: 'driver' as const, text: "Understood! I will call when I arrive at your gate.", time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) }
+        { sender: 'rider' as const, text: "Understood! I will call when I arrive at your gate.", time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) }
       ]);
     }, 1500);
   };
@@ -47,7 +47,7 @@ export const DeliveryTrackingScreen: React.FC<DeliveryTrackingScreenProps> = ({ 
   const steps = [
     { title: 'Order Confirmed', subtitle: 'Payment via MoMo Received', status: 'completed' },
     { title: 'Depot Quality Check', subtitle: 'Factory Sealed & Scanned at Achimota Hub', status: 'completed' },
-    { title: 'Out for Delivery', subtitle: `Rider ${order.driverName || 'Kwame Osei'} on the way`, status: 'active' },
+    { title: 'Out for Delivery', subtitle: `Rider ${order.riderName || 'Kwame Osei'} on the way`, status: 'active' },
     { title: 'Delivered & Empty Swap', subtitle: 'Inspect tamper ring & receive deposit refund', status: 'pending' },
   ];
 
@@ -95,7 +95,7 @@ export const DeliveryTrackingScreen: React.FC<DeliveryTrackingScreenProps> = ({ 
           <circle cx="280" cy="80" r="18" className="fill-emerald-500 animate-ping opacity-30" />
           <text x="280" y="60" textAnchor="middle" className="fill-emerald-600" fontSize="10" fontWeight="bold">East Legon House</text>
 
-          {/* Moving Driver Icon */}
+          {/* Moving Rider Icon */}
           <g transform="translate(180, 120)">
             <circle cx="0" cy="0" r="14" className="fill-sky-400 border-2 border-white" />
             <circle cx="0" cy="0" r="20" className="fill-sky-400 animate-ping opacity-30" />
@@ -118,18 +118,18 @@ export const DeliveryTrackingScreen: React.FC<DeliveryTrackingScreenProps> = ({ 
         </div>
       </div>
 
-      {/* Driver Info Card */}
+      {/* Rider Info Card */}
       <Card className="rounded-2xl border-sky-100 shadow-sm">
         <CardContent className="p-4 space-y-3">
           <div className="flex items-center justify-between flex-wrap gap-2">
             <div className="flex items-center gap-3">
               <img
-                src={order.driverPhoto || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=200'}
+                src={order.riderPhoto || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=200'}
                 alt="Rider"
                 className="w-12 h-12 rounded-2xl object-cover border-2 border-sky-300 shadow-sm"
               />
               <div>
-                <h3 className="text-sm font-extrabold text-slate-900">{order.driverName || 'Kwame Osei'}</h3>
+                <h3 className="text-sm font-extrabold text-slate-900">{order.riderName || 'Kwame Osei'}</h3>
                 <p className="text-sm text-slate-500">Certified Nsupa Delivery Rider #12</p>
                 <span className="text-xs text-emerald-600 font-bold">⭐ 4.98 Rating (480 deliveries)</span>
               </div>
@@ -238,8 +238,8 @@ export const DeliveryTrackingScreen: React.FC<DeliveryTrackingScreenProps> = ({ 
           </div>
 
           <div>
-            <h3 className="font-bold text-slate-900 text-base">Calling {order.driverName || 'Kwame Osei'}</h3>
-            <p className="text-sm text-slate-500 mt-1">{order.driverPhone || '+233 20 882 1109'}</p>
+            <h3 className="font-bold text-slate-900 text-base">Calling {order.riderName || 'Kwame Osei'}</h3>
+            <p className="text-sm text-slate-500 mt-1">{order.riderPhone || '+233 20 882 1109'}</p>
           </div>
 
           <div className="p-3 bg-slate-50 rounded-2xl text-sm text-slate-600">

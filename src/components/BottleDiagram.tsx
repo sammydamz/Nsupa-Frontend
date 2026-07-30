@@ -221,7 +221,7 @@ export const BottleDiagram: React.FC<BottleDiagramProps> = ({
           <div className="bg-[#F3FAFF] border border-blue-100 p-3.5 rounded-2xl flex items-start gap-2.5 text-xs text-slate-800">
             <Info className="w-4 h-4 text-primary shrink-0 mt-0.5" />
             <p className="text-[11px] leading-relaxed">
-              When empty, hand container to driver or kiosk. Pay only the lower water refill price (e.g. GH₵ 15.00) and get a fresh full container.
+              When empty, hand container to rider or kiosk. Pay only the lower water refill price (e.g. GH₵ 15.00) and get a fresh full container.
             </p>
           </div>
         </div>

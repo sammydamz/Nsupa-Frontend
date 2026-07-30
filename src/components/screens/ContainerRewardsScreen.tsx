@@ -196,7 +196,7 @@ export const ContainerRewardsScreen: React.FC<ContainerRewardsScreenProps> = ({
                 </div>
                 <div>
                   <span className="font-bold text-slate-900 block text-sm">1:1 Container Swap (2x 15L Shells)</span>
-                  <span className="text-sm text-slate-500 block mt-0.5">Jul 20, 2026 • Driver Kwame Osei</span>
+                  <span className="text-sm text-slate-500 block mt-0.5">Jul 20, 2026 • Rider Kwame Osei</span>
                   <span className="text-sm text-emerald-700 font-bold block mt-1">+2 Milestone Swaps Credited</span>
                 </div>
               </div>
@@ -213,7 +213,7 @@ export const ContainerRewardsScreen: React.FC<ContainerRewardsScreenProps> = ({
                 </div>
                 <div>
                   <span className="font-bold text-slate-900 block text-sm">1:1 Container Swap (2x 15L Shells)</span>
-                  <span className="text-sm text-slate-500 block mt-0.5">Jul 15, 2026 • Driver Kwame Osei</span>
+                  <span className="text-sm text-slate-500 block mt-0.5">Jul 15, 2026 • Rider Kwame Osei</span>
                   <span className="text-sm text-emerald-700 font-bold block mt-1">+2 Milestone Swaps Credited</span>
                 </div>
               </div>
