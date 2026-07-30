@@ -20,32 +20,40 @@ export const QRScannerScreen: React.FC<QRScannerScreenProps> = ({
   const [isScanning, setIsScanning] = useState<boolean>(true);
   const [scannedBottle, setScannedBottle] = useState<Bottle | null>(bottles[0] || null);
 
-  const handleRealScan = async (scanInput: string) => {
-    const input = scanInput.trim();
-    const b = bottles.find(
-      (b) => b.id === input || b.qrCode === input || b.qrCode.endsWith(input)
-    );
-    if (b) {
+  const handleRealScan = (scanInput: string) => {
+    try {
+      const input = scanInput.trim();
+      if (!input) return;
+
+      const b = (bottles || []).find(
+        (b: any) => b && (b.id === input || b.qrCode === input || (b.qrCode && b.qrCode.endsWith(input)))
+      );
+      if (b) {
+        setIsScanning(false);
+        setScannedBottle(b);
+        if (onBottleScanned) onBottleScanned(b);
+      } else {
+        setIsScanning(false);
+        setScannedBottle({
+          id: input,
+          qrCode: input,
+          sizeLitres: 0,
+          type: '15L Reusable Dispenser Bottle',
+          status: 'with_customer',
+          linerState: 'freshly_filled',
+          tamperEvidentRingIntact: true,
+          depositAmountGHS: 0,
+          refillCount: 0,
+          lastRefilledAt: new Date().toLocaleString(),
+          depotLocation: 'External QR Code — Not in Nsupa System',
+          batchNumber: 'N/A',
+        } as Bottle);
+      }
+    } catch (e) {
+      console.error('Scan error', e);
+      // Still show what was scanned even on error
       setIsScanning(false);
-      setScannedBottle(b);
-      if (onBottleScanned) onBottleScanned(b);
-    } else {
-      // Show scanned text even if not a known bottle
-      setIsScanning(false);
-      setScannedBottle({
-        id: input,
-        qrCode: input,
-        sizeLitres: 0,
-        type: '15L Reusable Dispenser Bottle',
-        status: 'with_customer',
-        linerState: 'freshly_filled',
-        tamperEvidentRingIntact: true,
-        depositAmountGHS: 0,
-        refillCount: 0,
-        lastRefilledAt: new Date().toLocaleString(),
-        depotLocation: 'External QR Code — Not in Nsupa System',
-        batchNumber: 'N/A',
-      });
+      setScannedBottle(bottles && bottles[0] ? bottles[0] : null);
     }
   };
 
@@ -131,6 +139,15 @@ export const QRScannerScreen: React.FC<QRScannerScreenProps> = ({
       ) : (
         scannedBottle && (
           <div className="space-y-4 animate-in fade-in zoom-in-95 duration-200">
+            {/* Return to Scanner */}
+            <button
+              onClick={() => setIsScanning(true)}
+              className="flex items-center gap-2 text-sm font-bold text-primary hover:text-primary/80 transition-colors"
+            >
+              <QrCode className="w-4 h-4" />
+              <span>← Return to Scanner</span>
+            </button>
+
             <Card className="bg-blue-50 border-2 border-blue-200 rounded-3xl shadow-none">
               <CardContent className="p-5 space-y-3">
                 <div className="flex flex-wrap items-center justify-between gap-2">
